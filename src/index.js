@@ -1,29 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>SPACEBLAZER</title>
-    <style>* { padding: 0; margin: 0; }</style>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.7.1/pixi.min.js"></script>
-</head>
-<body>
-<script>
+import * as PIXI from 'pixi.js';
+
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container
 const app = new PIXI.Application();
-var keyboard = require('pixi-keyboard');
 
 // The application will create a canvas element for you that you
 // can then insert into the DOM
 document.body.appendChild(app.view);
 
-let options = {
-  crossOrigin: true
-};
+import bunnyImg from './bunny.jpg';
 
 // load the texture we need
-PIXI.loader.add('bunny', 'bunny.jpg', options).load((loader, resources) => {
+PIXI.loader.add('bunny', bunnyImg).load((loader, resources) => {
     // This creates a texture from a 'bunny.png' image
     const bunny = new PIXI.Sprite(resources.bunny.texture);
 
@@ -45,10 +34,3 @@ PIXI.loader.add('bunny', 'bunny.jpg', options).load((loader, resources) => {
     });
 });
 
-PIXI.keyboardManager.on('down', function(key){
-    //If a key is down
-    console.log('Key down:' + key);
-})
-</script>
-</body>
-</html>
