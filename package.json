@@ -2,6 +2,7 @@
   "name": "spaceblazer",
   "version": "1.0.0",
   "description": "Cody and friends go to space!",
+  "repository": "https://github.com/thejonanshow/spaceblazer",
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
