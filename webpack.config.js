@@ -38,14 +38,23 @@ module.exports = {
     },
 
     devServer: {
-        contentBase: './dist'
+        contentBase: './dist',
+        compress: true,
+        proxy: {
+            '/ws': {
+                target: 'ws://localhost:3001',
+                pathRewrite: {'^/ws' : ''},
+                ws: true
+            }
+        }
     },
 
 
     plugins: [
         new CleanWebpackPlugin([distDir]),
         new HtmlWebpackPlugin({
-            template: 'src/index.html'
+            template: 'src/index.html',
+            inject: false
         })
     ]
 };
