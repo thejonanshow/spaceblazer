@@ -1,55 +1,20 @@
 import * as PIXI from 'pixi.js';
+import keyboard from './keyboard.js';
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container
 const app = new PIXI.Application();
 
-const speed = 0.1;
+const speed = 5;
+const bulletSpeed = 5;
 
 // The application will create a canvas element for you that you
 // can then insert into the DOM
 document.body.appendChild(app.view);
 
 import bunnyImg from './assets/images/einstein.png';
-
-function keyboard(keyCode) {
-  let key = {};
-  key.code = keyCode;
-  key.isDown = false;
-  key.isUp = true;
-  key.press = undefined;
-  key.release = undefined;
-  //The `downHandler`
-  key.downHandler = event => {
-    console.log(event.keyCode);
-    if (event.keyCode === key.code) {
-      key.press();
-      key.isDown = true;
-      key.isUp = false;
-      event.preventDefault();
-    }
-  };
-
-  //The `upHandler`
-  key.upHandler = event => {
-    if (event.keyCode === key.code) {
-      if (key.isDown && key.release) key.release();
-      key.isDown = false;
-      key.isUp = true;
-    }
-    event.preventDefault();
-  };
-
-  //Attach event listeners
-  window.addEventListener(
-    "keydown", key.downHandler.bind(key), false
-  );
-  window.addEventListener(
-    "keyup", key.upHandler.bind(key), false
-  );
-  return key;
-}
+import rainbowBall from './assets/images/rainbowball.png';
 
 let leftKey  = keyboard(37);
 let upKey    = keyboard(38);
@@ -58,32 +23,35 @@ let downKey  = keyboard(40);
 let spaceKey = keyboard(32);
 
 // load the texture we need
-PIXI.loader.add('bunny', bunnyImg).load((loader, resources) => {
+PIXI.loader.add('bunny', bunnyImg).add('ball', rainbowBall).load((loader, resources) => {
     // This creates a texture from a 'bunny.png' image
     const bunny = new PIXI.Sprite(resources.bunny.texture);
-
+    const bullets = [];
     // Setup the position of the bunny
     bunny.x = app.renderer.width / 2;
     bunny.y = app.renderer.height / 2;
 
-    // Rotate around the center
-    bunny.anchor.x = 0.5;
-    bunny.anchor.y = 0.5;
+    bunny.anchor.x = 0.5
+    bunny.anchor.y = 0.5
 
     rightKey.press = () => {
-      bunny.anchor.x = bunny.anchor.x - speed;
+      bunny.x = bunny.x + speed;
     }
     downKey.press = () => {
-      bunny.anchor.y = bunny.anchor.y - speed;
+      bunny.y = bunny.y + speed;
     }
     leftKey.press = () => {
-      bunny.anchor.x = bunny.anchor.x + speed;
+      bunny.x = bunny.x - speed;
     }
     upKey.press = () => {
-      bunny.anchor.y = bunny.anchor.y + speed;
+      bunny.y = bunny.y - speed;
     }
     spaceKey.press = () => {
-      alert("POW");
+      var ball = new PIXI.Sprite(resources.ball.texture);
+      ball.x = bunny.x;
+      ball.y = bunny.y;
+      app.stage.addChild(ball);
+      bullets.push(ball);
     }
 
     // Add the bunny to the scene we are building
@@ -91,7 +59,14 @@ PIXI.loader.add('bunny', bunnyImg).load((loader, resources) => {
 
     // Listen for frame updates
     app.ticker.add(() => {
-         // each frame we spin the bunny around a bit
+      bullets.forEach(function(bullet, index) {
+        console.log('updating bullet');
+        bullet.x += bulletSpeed;
+
+        if (bullet.x > app.renderer.width) {
+          delete bullets[index]; 
+        };
+      });
     });
 });
 
