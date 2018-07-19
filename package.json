@@ -6,6 +6,7 @@
   "dependencies": {
     "npm": "^6.2.0",
     "phaser": "^3.11.0",
+    "pixi-keyboard": "^0.9.4",
     "webpack": "^4.16.1"
   },
   "devDependencies": {},
