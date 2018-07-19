@@ -5,11 +5,57 @@ import * as PIXI from 'pixi.js';
 // and the root stage PIXI.Container
 const app = new PIXI.Application();
 
+const speed = 0.1;
+
 // The application will create a canvas element for you that you
 // can then insert into the DOM
 document.body.appendChild(app.view);
 
-import bunnyImg from './bunny.jpg';
+import bunnyImg from './assets/images/einstein.png';
+
+function keyboard(keyCode) {
+  let key = {};
+  key.code = keyCode;
+  key.isDown = false;
+  key.isUp = true;
+  key.press = undefined;
+  key.release = undefined;
+  //The `downHandler`
+  key.downHandler = event => {
+    console.log(event.keyCode);
+    if (event.keyCode === key.code) {
+      key.press();
+      key.isDown = true;
+      key.isUp = false;
+      event.preventDefault();
+    }
+  };
+
+  //The `upHandler`
+  key.upHandler = event => {
+    if (event.keyCode === key.code) {
+      if (key.isDown && key.release) key.release();
+      key.isDown = false;
+      key.isUp = true;
+    }
+    event.preventDefault();
+  };
+
+  //Attach event listeners
+  window.addEventListener(
+    "keydown", key.downHandler.bind(key), false
+  );
+  window.addEventListener(
+    "keyup", key.upHandler.bind(key), false
+  );
+  return key;
+}
+
+let leftKey  = keyboard(37);
+let upKey    = keyboard(38);
+let rightKey = keyboard(39);
+let downKey  = keyboard(40);
+let spaceKey = keyboard(32);
 
 // load the texture we need
 PIXI.loader.add('bunny', bunnyImg).load((loader, resources) => {
@@ -24,13 +70,28 @@ PIXI.loader.add('bunny', bunnyImg).load((loader, resources) => {
     bunny.anchor.x = 0.5;
     bunny.anchor.y = 0.5;
 
+    rightKey.press = () => {
+      bunny.anchor.x = bunny.anchor.x - speed;
+    }
+    downKey.press = () => {
+      bunny.anchor.y = bunny.anchor.y - speed;
+    }
+    leftKey.press = () => {
+      bunny.anchor.x = bunny.anchor.x + speed;
+    }
+    upKey.press = () => {
+      bunny.anchor.y = bunny.anchor.y + speed;
+    }
+    spaceKey.press = () => {
+      alert("POW");
+    }
+
     // Add the bunny to the scene we are building
     app.stage.addChild(bunny);
 
     // Listen for frame updates
     app.ticker.add(() => {
          // each frame we spin the bunny around a bit
-        bunny.rotation += 0.01;
     });
 });
 
