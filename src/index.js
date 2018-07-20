@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import keyboard from './keyboard.js';
+import { keyboard, redisEvent } from './keyboard.js';
 
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
@@ -21,6 +21,7 @@ let upKey    = keyboard(38);
 let rightKey = keyboard(39);
 let downKey  = keyboard(40);
 let spaceKey = keyboard(32);
+let bButton = redisEvent('b');
 
 // load the texture we need
 PIXI.loader.add('bunny', bunnyImg).add('ball', rainbowBall).load((loader, resources) => {
@@ -34,19 +35,19 @@ PIXI.loader.add('bunny', bunnyImg).add('ball', rainbowBall).load((loader, resour
     bunny.anchor.x = 0.5
     bunny.anchor.y = 0.5
 
-    rightKey.press = () => {
-      bunny.x = bunny.x + speed;
-    }
-    downKey.press = () => {
-      bunny.y = bunny.y + speed;
-    }
-    leftKey.press = () => {
-      bunny.x = bunny.x - speed;
-    }
-    upKey.press = () => {
-      bunny.y = bunny.y - speed;
-    }
+    rightKey.press = () => bunny.x = bunny.x + speed;
+    downKey.press  = () => bunny.y = bunny.y + speed;
+    leftKey.press  = () => bunny.x = bunny.x - speed;
+    upKey.press    = () => bunny.y = bunny.y - speed;
     spaceKey.press = () => {
+      var ball = new PIXI.Sprite(resources.ball.texture);
+      ball.x = bunny.x;
+      ball.y = bunny.y;
+      app.stage.addChild(ball);
+      bullets.push(ball);
+    }
+
+    bButton.press = () => {
       var ball = new PIXI.Sprite(resources.ball.texture);
       ball.x = bunny.x;
       ball.y = bunny.y;
@@ -69,29 +70,3 @@ PIXI.loader.add('bunny', bunnyImg).add('ball', rainbowBall).load((loader, resour
       });
     });
 });
-
-
-const messages = document.querySelector('#messages');
-const wsButton = document.querySelector('#wsButton');
-
-const showMessage = (message) => {
-  messages.textContent += `\n${message}`;
-  messages.scrollTop = messages.scrollHeight;
-};
-
-let ws;
-
-wsButton.onclick = () => {
-  if (ws) {
-    ws.onerror = ws.onopen = ws.onclose = null;
-    ws.close();
-  }
-  let url = `ws://${location.host}/ws`
-  if (window.location.protocol.match('https')) url = url.replace(/^ws:/, 'wss:');
-  console.log("Connecting to ", url);
-  ws = new WebSocket(url);
-  ws.onerror = () => showMessage('-----> WebSocket error');
-  ws.onopen = () => showMessage('-----> WebSocket connection established');
-  ws.onclose = () => showMessage('-----> WebSocket connection closed');
-  ws.onmessage = event => showMessage(event.data);
-};
