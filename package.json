@@ -1,0 +1,26 @@
+{
+  "name": "spaceblazer",
+  "version": "1.0.0",
+  "description": "Cody and friends go to space!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thejonanshow/spaceblazer.git"
+  },
+  "author": "Jonan Scheffler & Chris Castle",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thejonanshow/spaceblazer/issues"
+  },
+  "homepage": "https://github.com/thejonanshow/spaceblazer#readme",
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "npm": "^6.2.0",
+    "phaser": "^3.11.0",
+    "webpack": "^4.16.3"
+  }
+}
