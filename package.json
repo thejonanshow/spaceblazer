@@ -2,9 +2,8 @@
   "name": "spaceblazer",
   "version": "1.0.0",
   "description": "Cody and friends go to space!",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "webpack-serve ./webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -19,8 +18,13 @@
   "dependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
     "npm": "^6.2.0",
-    "phaser": "^3.11.0",
-    "webpack": "^4.16.3"
+    "phaser": "^3.11.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.16.3",
+    "webpack-cli": "^3.1.0",
+    "webpack-serve": "^2.0.2"
   }
 }
