@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Cody and friends go to space!",
   "scripts": {
-    "start": "webpack-serve ./webpack.config.js"
+    "start": "webpack-serve ./webpack.config.js",
+    "build": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -28,10 +29,13 @@
     "ws": "^6.0.0"
   },
   "devDependencies": {
+    "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
+    "dotenv": "^6.0.0",
     "style-loader": "^0.21.0",
     "webpack": "^4.16.3",
     "webpack-cli": "^3.1.0",
+    "webpack-node-externals": "^1.7.2",
     "webpack-serve": "^2.0.2"
   }
 }

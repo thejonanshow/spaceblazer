@@ -23,7 +23,7 @@ var game = new Phaser.Game(gameConfig);
 var player;
 
 function preload(){
-  this.load.spritesheet('einstein', 'assets/images/einstein-spritesheet.png', { frameWidth: 96, frameHeight: 50 });
+  this.load.spritesheet('einstein', 'einstein-spritesheet.png', { frameWidth: 96, frameHeight: 50 });
 }
 
 function create(){

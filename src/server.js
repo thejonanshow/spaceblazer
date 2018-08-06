@@ -1,35 +1,20 @@
+const path = require('path');
 const redis = require('redis');
 const express = require('express');
 const http = require('http');
 const nodeCleanup = require('node-cleanup');
-
 const WebSocket = require('ws');
 
 const app = express();
 
-//
-// Serve static files from the 'public' folder.
-//
-app.use(express.static('public'));
-
-//
-// Create HTTP and WebSocket servers
-//
 const server = http.createServer(app);
 const wss = new WebSocket.Server({server});
 
-//
-// Setup Redis
-//
 const client = redis.createClient(process.env.REDIS_URL);
 client.on("error", err => console.log("Redis error: " + err));
 client.on('subscribe', (channel, count) => console.log(`Subscribed to redis channel "${channel}"`));
 client.subscribe(process.env.REDIS_CHANNEL);
 
-//
-// Setup WebSocket event listeners
-// and redis message broadcaster
-//
 function noop() {}
 
 function heartbeat() {
@@ -49,22 +34,17 @@ wss.on('connection', (ws, req) => {
     }
   })
 
-  // When WebSocket connection is closed
   ws.on('close', (code, reason) => {
     console.log(`WebSocket connection closed: ${reason} (${code})`);
   })
 });
 
-//
-// Start the server.
-//
-const port = process.env.PORT
+app.use(express.static('assets/images'));
+app.use(express.static('build'));
+
+const port = (process.env.PORT ? process.env.PORT : 3000)
 server.listen(port, () => console.log(`Listening on port ${port}`));
 
-//
-// Ping WebSocket connections every 25s to keep them alive 
-// or terminate them if no pong response received
-//
 const interval = setInterval(function ping() {
   wss.clients.forEach(function each(ws) {
     if (ws.isAlive === false) {
