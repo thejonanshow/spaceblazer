@@ -22,8 +22,10 @@ const gameConfig = {
 var game = new Phaser.Game(gameConfig);
 var player;
 
+import einstein from '../assets/images/einstein-spritesheet.png'
+
 function preload(){
-  this.load.spritesheet('einstein', 'einstein-spritesheet.png', { frameWidth: 96, frameHeight: 50 });
+  this.load.spritesheet('einstein', einstein, { frameWidth: 96, frameHeight: 50 });
 }
 
 function create(){
