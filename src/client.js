@@ -18,7 +18,6 @@ const gameConfig = {
   }
 };
 
-
 var game = new Phaser.Game(gameConfig);
 var player;
 

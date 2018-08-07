@@ -2,23 +2,29 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const copyWebpackPlugin = require('copy-webpack-plugin');
 const startServerPlugin = require('start-server-webpack-plugin');
+const webpack = require('webpack');
 
 const serverConfig = {
   mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
 
   target: 'node',
-  entry: {
-    app: './src/server.js'
-  },
+  watch: true,
+  entry: [
+    './src/app.js',
+    'webpack/hot/poll?1000'
+  ],
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'server.bundle.js'
+    filename: 'app.bundle.js'
   },
-  externals: [nodeExternals()],
+  externals: [nodeExternals({
+    whitelist: ['webpack/hot/poll?1000']
+  })],
   plugins: [
     new startServerPlugin({
-      name: 'server.bundle.js'
-    })
+      name: 'app.bundle.js'
+    }),
+    new webpack.HotModuleReplacementPlugin()
   ]
 };
 
