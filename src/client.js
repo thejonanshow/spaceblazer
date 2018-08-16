@@ -1,53 +1,47 @@
-import 'phaser';
-import './styles/default.css'
+import './styles/default.css';
+const game = require('./game');
 
-const gameConfig = {
-  type: Phaser.AUTO,
-  width: screen.width,
-  height: screen.height,
-  physics: {
-    default: 'arcade',
-    arcade: {
-      debug: false
-    }
-  },
-  scene: {
-    preload: preload,
-    create: create,
-    update: update
+let ws;
+let url = `ws:\/\/${location.host}`
+console.log(url);
+if (window.location.protocol.match('https')) url = url.replace(/^ws:/, 'wss:');
+console.log("Connecting to ", url);
+
+ws = new WebSocket(url);
+
+ws.onerror = () => console.log('-----> WebSocket error');
+ws.onopen = () => console.log('-----> WebSocket connection established');
+ws.onclose = () => console.log('-----> WebSocket connection closed');
+
+ws.onmessage = event => {
+  console.log(event.data);
+  var command = JSON.parse(event.data)["command"];
+
+  if (command == 'd') {
+    game.moveDown();
   }
-};
-
-var game = new Phaser.Game(gameConfig);
-var player;
-
-import einstein from '../assets/images/einstein-spritesheet.png'
-
-function preload(){
-  this.load.spritesheet('einstein', einstein, { frameWidth: 96, frameHeight: 50 });
-}
-
-function create(){
-  player = this.physics.add.sprite(148, 150, 'einstein');
-  player.setCollideWorldBounds(true);
-}
-
-function update(){
-  var cursors = this.input.keyboard.createCursorKeys();
-  if (cursors.left.isDown) {
-    player.setVelocityX(-100);
+  else if (command == '8') {
+    game.stopY();
   }
-  else if (cursors.right.isDown) {
-    player.setVelocityX(100);
+  else if (command == 'u') {
+    game.moveUp();
   }
-  else if (cursors.up.isDown) {
-    player.setVelocityY(-100);
+  else if (command == '7') {
+    game.stopY();
   }
-  else if (cursors.down.isDown) {
-    player.setVelocityY(100);
+  else if (command == 'l') {
+    game.moveLeft();
   }
-  else {
-    player.setVelocityX(0);
-    player.setVelocityY(0);
+  else if (command == '9') {
+    game.stopX();
+  }
+  else if (command == 'r') {
+    game.moveRight();
+  }
+  else if (command == '0') {
+    game.stopX();
+  }
+  else if (command == 'b') {
+    game.fire();
   }
 }
