@@ -21,10 +21,6 @@ const serverConfig = {
     whitelist: ['webpack/hot/poll?1000']
   })],
   plugins: [
-    new startServerPlugin({
-      name: 'app.bundle.js'
-    }),
-    new webpack.HotModuleReplacementPlugin()
   ]
 };
 
