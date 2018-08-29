@@ -11,7 +11,7 @@ const serverConfig = {
   mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
 
   target: 'node',
-  watch: true,
+  watch: false,
   entry: [
     './src/app.js',
     'webpack/hot/poll?1000'
@@ -37,6 +37,7 @@ if (process.env.SPACEBLAZER_ENV == "development") {
   serverConfig["plugins"].push(
     new webpack.HotModuleReplacementPlugin()
   );
+  serverConfig["watch"] = true;
 };
 
 const clientConfig = {
