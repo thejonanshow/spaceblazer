@@ -1,3 +1,6 @@
+const dotEnv = require('dotenv');
+dotEnv.config();
+
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const copyWebpackPlugin = require('copy-webpack-plugin');
@@ -24,7 +27,8 @@ const serverConfig = {
   ]
 };
 
-if (serverConfig["mode"] == "development") {
+if (process.env.SPACEBLAZER_ENV == "development") {
+  console.log("******* Including development plugins *******")
   serverConfig["plugins"].push(
     new startServerPlugin({
       name: 'app.bundle.js'
