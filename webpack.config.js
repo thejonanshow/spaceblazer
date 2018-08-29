@@ -24,6 +24,17 @@ const serverConfig = {
   ]
 };
 
+if (serverConfig["mode"] == "development") {
+  serverConfig["plugins"].push(
+    new startServerPlugin({
+      name: 'app.bundle.js'
+    }),
+  );
+  serverConfig["plugins"].push(
+    new webpack.HotModuleReplacementPlugin()
+  );
+};
+
 const clientConfig = {
   mode: process.env.WEBPACK_SERVE ? 'development' : 'production',
 
