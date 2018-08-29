@@ -13,8 +13,7 @@ const serverConfig = {
   target: 'node',
   watch: false,
   entry: [
-    './src/app.js',
-    'webpack/hot/poll?1000'
+    './src/app.js'
   ],
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -38,6 +37,7 @@ if (process.env.SPACEBLAZER_ENV == "development") {
     new webpack.HotModuleReplacementPlugin()
   );
   serverConfig["watch"] = true;
+  serverConfig["entry"].push('webpack/hot/poll?1000');
 };
 
 const clientConfig = {
