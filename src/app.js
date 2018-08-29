@@ -17,7 +17,7 @@ app.use(express.static('assets/images'));
 app.use(express.static('build'));
 server.listen(port, () => console.log(`Listening on port ${port}`));
 
-if (module.hot) {
+if (process.env.SPACEBLAZER_ENV == "development" && module.hot) {
   module.hot.accept('./server', () => {
     server.removeListener('request', currentApp)
     server.on('request', app)
