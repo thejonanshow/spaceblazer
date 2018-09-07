@@ -17,28 +17,22 @@ ws.onmessage = event => {
   console.log(event.data);
   var command = JSON.parse(event.data)["command"];
 
-  if (command == 'd') {
-    game.moveDown();
-  }
-  else if (command == '8') {
-    game.stopY();
-  }
-  else if (command == 'u') {
+  if (command == 'u') {
     game.moveUp();
   }
-  else if (command == '7') {
-    game.stopY();
+  else if (command == 'd') {
+    game.moveDown();
   }
   else if (command == 'l') {
     game.moveLeft();
   }
-  else if (command == '9') {
-    game.stopX();
-  }
   else if (command == 'r') {
     game.moveRight();
   }
-  else if (command == '0') {
+  else if (command == '9' || command == '0') {
+    game.stopY();
+  }
+  else if (command == '-' || command == '=') {
     game.stopX();
   }
   else if (command == 'b') {
