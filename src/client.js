@@ -32,7 +32,7 @@ ws.onmessage = event => {
   else if (command == '9' || command == '0') {
     game.stopY();
   }
-  else if (command == '-' || command == '=') {
+  else if (command == 'k' || command == 'e') {
     game.stopX();
   }
   else if (command == 'b') {
