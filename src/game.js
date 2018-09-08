@@ -39,7 +39,6 @@ var small;
 var medium;
 var big;
 var rainbow;
-var game;
 
 function create(){
   game = this;
