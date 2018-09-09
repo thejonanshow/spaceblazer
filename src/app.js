@@ -7,16 +7,11 @@ const express = require('express');
 const http = require('http');
 const nodeCleanup = require('node-cleanup');
 const WebSocket = require('ws');
-const sslRedirect = require('heroku-ssl-redirect');
 
 import app from './server'
 const server = http.createServer(app);
 let currentApp = app
 const port = (process.env.PORT ? process.env.PORT : 3000)
-
-app.use(express.static('assets/images'));
-app.use(express.static('build'));
-app.use(sslRedirect(['production'], 301));
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
 
