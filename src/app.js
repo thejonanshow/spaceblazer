@@ -7,6 +7,7 @@ const express = require('express');
 const http = require('http');
 const nodeCleanup = require('node-cleanup');
 const WebSocket = require('ws');
+const enforce = require('express-sslify');
 
 import app from './server'
 const server = http.createServer(app);
@@ -15,6 +16,8 @@ const port = (process.env.PORT ? process.env.PORT : 3000)
 
 app.use(express.static('assets/images'));
 app.use(express.static('build'));
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
+
 server.listen(port, () => console.log(`Listening on port ${port}`));
 
 if (process.env.SPACEBLAZER_ENV == "development" && module.hot) {

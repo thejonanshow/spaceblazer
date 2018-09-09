@@ -22,6 +22,7 @@
     "babel-preset-env": "^1.7.0",
     "dotenv-webpack": "^1.5.7",
     "express": "^4.16.3",
+    "express-sslify": "^1.2.0",
     "node-cleanup": "^2.1.2",
     "npm": "^6.2.0",
     "phaser": "^3.11.0",
