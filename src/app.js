@@ -16,7 +16,7 @@ const port = (process.env.PORT ? process.env.PORT : 3000)
 
 app.use(express.static('assets/images'));
 app.use(express.static('build'));
-app.use(sslRedirect);
+app.use(sslRedirect(['production'], 301));
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
 
