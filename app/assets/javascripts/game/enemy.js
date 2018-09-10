@@ -8,6 +8,8 @@ class Enemy {
     this.sprite = enemies.create(700, 300, this.avatar + '1');
     this.sprite.play(this.avatar);
     this.sprite.setCollideWorldBounds(true);
+
+    this.bullet = 'floppy';
   };
 
   static preload() {
@@ -22,6 +24,17 @@ class Enemy {
     create_animations(this.avatars);
     create_animations(this.bullets);
   };
+
+  fire() {
+    let bullet = bullets.create(this.sprite.x - 30, this.sprite.y, this.bullet + '1');
+    scene.physics.add.collider(bullet, players, this.bullet_strike, null, scene);
+    bullet.play(this.bullet);
+    bullet.setVelocityX(Enemy.bullets[this.bullet].speed);
+  };
+
+  bullet_strike(bullet, player) {
+    bullet.destroy();
+  }
 };
 
 Enemy.avatars = {
