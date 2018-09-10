@@ -24,6 +24,7 @@ let debug = false;
 let scene = {};
 let players = {};
 let enemies = {};
+let bullets = {};
 
 this.App = {};
 App.cable = ActionCable.createConsumer();

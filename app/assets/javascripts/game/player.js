@@ -7,7 +7,9 @@ class Player {
     this.sprite.play(this.avatar);
     this.sprite.setCollideWorldBounds(true);
 
-    Player.active_players[id] = this
+    this.bullet = 'rainbow_bomb';
+
+    Player.active_players[id] = this;
   };
 
   static preload() {
@@ -17,6 +19,8 @@ class Player {
 
   static load() {
     players = scene.physics.add.group();
+    bullets = scene.physics.add.group();
+
     create_animations(this.avatars);
     create_animations(this.bullets);
   };
@@ -51,6 +55,9 @@ class Player {
   };
 
   fire() {
+    let bullet = bullets.create(this.sprite.x + 50, this.sprite.y + 20, this.bullet + '1');
+    bullet.play(this.bullet);
+    bullet.setVelocityX(Player.bullets[this.bullet].speed);
   };
 };
 
@@ -100,7 +107,8 @@ Player.bullets = {
     frames: [],
     path: 'bullets/rainbow_bomb/rainbow_bomb',
     frame_count: 12,
-    frame_rate: 12
+    frame_rate: 200,
+    speed: 400
   }
 };
 

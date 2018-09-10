@@ -35,5 +35,6 @@ function handle_command(data) {
     player.stop_x();
   }
   else if (command == 'b') {
+    player.fire();
   }
 };
