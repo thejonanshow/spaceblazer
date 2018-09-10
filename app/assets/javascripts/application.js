@@ -16,4 +16,5 @@
 //= require phaser/dist/phaser
 //= require helpers
 //= require game
+//= require_tree ./channels
 //= require_tree .

@@ -27,53 +27,6 @@ let avatars = {
 let available_avatars = Object.keys(avatars);
 let used_avatars = [];
 
-let ws;
-let url = `ws:\/\/${location.host}`
-console.log(url);
-if (window.location.protocol.match('https')) url = url.replace(/^ws:/, 'wss:');
-console.log("Connecting to ", url);
-
-ws = new WebSocket(url);
-
-ws.onerror = () => console.log('-----> WebSocket error');
-ws.onopen = () => console.log('-----> WebSocket connection established');
-ws.onclose = () => console.log('-----> WebSocket connection closed');
-
-ws.onmessage = event => {
-  console.log(event.data);
-  let data = JSON.parse(event.data);
-  let id = data.id
-  let command = data.command
-
-  if (command == 'online') {
-    let avatar_key = available_avatars[Math.floor(Math.random()*items.length)];
-    available_avatars.remove(avatar_key);
-    used_avatars.push(avatar_key);
-    players[id] = { avatar: avatar_key, score: 0 }
-  }
-  else if (command == 'u') {
-    moveUp();
-  }
-  else if (command == 'd') {
-    moveDown();
-  }
-  else if (command == 'l') {
-    moveLeft();
-  }
-  else if (command == 'r') {
-    moveRight();
-  }
-  else if (command == '9' || command == '0') {
-    stopY();
-  }
-  else if (command == 'k' || command == 'e') {
-    stopX();
-  }
-  else if (command == 'b') {
-    fire();
-  }
-}
-
 function preload(){
   this.load.path = 'https://s3-us-west-1.amazonaws.com/spaceblazer/players/';
   
