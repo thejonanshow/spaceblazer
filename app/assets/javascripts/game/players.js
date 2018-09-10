@@ -2,13 +2,43 @@ class Player {
   constructor(id) {
     this.avatar = Player.available_avatars[Math.floor(Math.random() * Player.available_avatars.length)];
     Player.available_avatars.remove(this.avatar);
-    Player.used_avatars.push(this.avatar);
 
-    let player = players.create(400, 300, this.avatar + '1');
-    player.play(this.avatar);
-    player.setCollideWorldBounds(true);
+    let sprite = players.create(400, 300, this.avatar + '1');
+    sprite.play(this.avatar);
+    sprite.setCollideWorldBounds(true);
 
-    Player.active_players[id] = { avatar: this.avatar, score: 0, sprite: player }
+    this.sprite = sprite;
+
+    Player.active_players[id] = this
+  };
+
+  move_up() {
+    this.sprite.setVelocityY(-Player.speed);
+  };
+
+  move_down() {
+    this.sprite.setVelocityY(Player.speed);
+  };
+
+  move_left() {
+    this.sprite.setVelocityX(-Player.speed);
+  };
+
+  move_right() {
+    this.sprite.setVelocityX(Player.speed);
+  };
+
+  stop() {
+    this.sprite.setVelocityX(0);
+    this.sprite.setVelocityY(0);
+  };
+
+  stop_x() {
+    this.sprite.setVelocityX(0);
+  };
+
+  stop_y() {
+    this.sprite.setVelocityY(0);
   };
 
   static preload() {
@@ -62,3 +92,5 @@ Player.avatars = {
 Player.available_avatars = Object.keys(Player.avatars);
 Player.used_avatars = [];
 Player.active_players = {};
+
+Player.speed = 200;

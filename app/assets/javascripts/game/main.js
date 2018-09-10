@@ -25,8 +25,6 @@ let scene = {};
 let players = {};
 let enemies = {};
 
-const playerSpeed = 200;
-
 this.App = {};
 App.cable = ActionCable.createConsumer();
 

@@ -12,27 +12,27 @@ function handle_command(data) {
     new_enemy();
   }
 
-  let sprite = Player.active_players[id].sprite;
+  let player = Player.active_players[id]
 
   if (command == 'online') {
   }
   else if (command == 'u') {
-    moveUp(sprite);
+    player.move_up();
   }
   else if (command == 'd') {
-    moveDown(sprite);
+    player.move_down();
   }
   else if (command == 'l') {
-    moveLeft(sprite);
+    player.move_left();
   }
   else if (command == 'r') {
-    moveRight(sprite);
+    player.move_right();
   }
   else if (command == '9' || command == '0') {
-    stopY(sprite);
+    player.stop_y();
   }
   else if (command == '-' || command == '=') {
-    stopX(sprite);
+    player.stop_x();
   }
   else if (command == 'b') {
   }
