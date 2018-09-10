@@ -1,46 +1,7 @@
 {
   "name": "spaceblazer",
-  "version": "1.0.0",
-  "description": "Cody and friends go to space!",
-  "scripts": {
-    "start": "node -r dotenv/config build/app.bundle.js",
-    "postinstall": "webpack --config webpack.config.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/thejonanshow/spaceblazer.git"
-  },
-  "author": "Jonan Scheffler & Chris Castle",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/thejonanshow/spaceblazer/issues"
-  },
-  "homepage": "https://github.com/thejonanshow/spaceblazer#readme",
+  "private": true,
   "dependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
-    "dotenv-webpack": "^1.5.7",
-    "express": "^4.16.3",
-    "heroku-ssl-redirect": "0.0.4",
-    "node-cleanup": "^2.1.2",
-    "npm": "^6.2.0",
-    "phaser": "^3.11.0",
-    "redis": "^2.8.0",
-    "ws": "^6.0.0"
-  },
-  "devDependencies": {
-    "copy-webpack-plugin": "^4.5.2",
-    "css-loader": "^1.0.0",
-    "dotenv": "^6.0.0",
-    "file-loader": "^1.1.11",
-    "nodemon": "^1.18.3",
-    "start-server-webpack-plugin": "^2.2.5",
-    "style-loader": "^0.21.0",
-    "webpack": "^4.16.3",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.5",
-    "webpack-node-externals": "^1.7.2",
-    "webpack-serve": "^2.0.2"
+    "phaser": "^3.12.0"
   }
 }
