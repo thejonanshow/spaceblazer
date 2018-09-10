@@ -1,12 +1,12 @@
 function preload(){
   scene = this;
-  setup_players();
-  setup_enemies();
+  Player.preload();
+  Enemy.preload()
 };
 
 function create(){
-  create_players();
-  create_enemies();
+  Player.load();
+  Enemy.load();
 };
 
 function update(){

@@ -23,22 +23,20 @@ function new_enemy() {
   enemy.setCollideWorldBounds(true);
 };
 
-function create_enemies() {
-  enemies = scene.physics.add.group();
-  scene.physics.add.collider(players, enemies, hit_enemy, null, scene);
-  create_enemy_animations();
-};
-
-function setup_enemies() {
-  load_animations(enemy_avatars);
-  load_animations(enemy_bullets);
-};
-
-function create_enemy_animations() {
-  create_animations(enemy_avatars);
-  create_animations(enemy_bullets);
-};
-
 function hit_enemy() {
   console.log("BOOM");
+};
+
+class Enemy {
+  static preload() {
+    load_animations(enemy_avatars);
+    load_animations(enemy_bullets);
+  };
+
+  static load() {
+    enemies = scene.physics.add.group();
+    scene.physics.add.collider(players, enemies, hit_enemy, null, scene);
+    create_animations(enemy_avatars);
+    create_animations(enemy_bullets);
+  };
 };

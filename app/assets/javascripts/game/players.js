@@ -42,11 +42,6 @@ let used_avatars = [];
 function fire(player){
 };
 
-function create_players() {
-  players = scene.physics.add.group();
-  create_player_animations();
-};
-
 function new_player(id) {
   let avatar_key = available_avatars[Math.floor(Math.random() * available_avatars.length)];
   available_avatars.remove(avatar_key);
@@ -59,17 +54,16 @@ function new_player(id) {
   players[id] = { avatar: avatar_key, score: 0, sprite: player }
 };
 
-function setup_players() {
-  load_player_avatars();
-};
-
 function load_player_bullets() {
 };
 
-function load_player_avatars() {
-  load_animations(player_avatars);
-};
+class Player {
+  static preload() {
+    load_animations(player_avatars);
+  };
 
-function create_player_animations() {
-  create_animations(player_avatars);
+  static load() {
+    players = scene.physics.add.group();
+    create_animations(player_avatars);
+  };
 };
