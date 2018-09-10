@@ -1,4 +1,27 @@
-let player_avatars = {
+class Player {
+  constructor(id) {
+    this.avatar = Player.available_avatars[Math.floor(Math.random() * Player.available_avatars.length)];
+    Player.available_avatars.remove(this.avatar);
+    Player.used_avatars.push(this.avatar);
+
+    let player = players.create(400, 300, this.avatar + '1');
+    player.play(this.avatar);
+    player.setCollideWorldBounds(true);
+
+    Player.active_players[id] = { avatar: this.avatar, score: 0, sprite: player }
+  };
+
+  static preload() {
+    load_animations(this.avatars);
+  };
+
+  static load() {
+    players = scene.physics.add.group();
+    create_animations(this.avatars);
+  };
+};
+
+Player.avatars = {
   astro_blue: {
     frames: [],
     path: 'players/astro/blue/blue_astro',
@@ -36,34 +59,6 @@ let player_avatars = {
     frame_rate: 8
   },
 };
-let available_avatars = Object.keys(player_avatars);
-let used_avatars = [];
-
-function fire(player){
-};
-
-function new_player(id) {
-  let avatar_key = available_avatars[Math.floor(Math.random() * available_avatars.length)];
-  available_avatars.remove(avatar_key);
-  used_avatars.push(avatar_key);
-
-  let player = players.create(400, 300, avatar_key + '1');
-  player.play(avatar_key);
-  player.setCollideWorldBounds(true);
-
-  players[id] = { avatar: avatar_key, score: 0, sprite: player }
-};
-
-function load_player_bullets() {
-};
-
-class Player {
-  static preload() {
-    load_animations(player_avatars);
-  };
-
-  static load() {
-    players = scene.physics.add.group();
-    create_animations(player_avatars);
-  };
-};
+Player.available_avatars = Object.keys(Player.avatars);
+Player.used_avatars = [];
+Player.active_players = {};

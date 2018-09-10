@@ -7,12 +7,12 @@ function handle_command(data) {
     console.log(command);
   };
 
-  if (!players[id]) {
-    new_player(id);
+  if (!Player.active_players[id]) {
+    new Player(id);
     new_enemy();
   }
 
-  let sprite = players[id].sprite;
+  let sprite = Player.active_players[id].sprite;
 
   if (command == 'online') {
   }
@@ -35,6 +35,5 @@ function handle_command(data) {
     stopX(sprite);
   }
   else if (command == 'b') {
-    fire(sprite);
   }
 };
