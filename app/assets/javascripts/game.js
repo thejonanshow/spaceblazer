@@ -22,29 +22,55 @@ const gameConfig = {
 let game = new Phaser.Game(gameConfig);
 let players = {};
 
+const playerSpeed = 200;
+
 let avatars = {
+  astro_blue: {
+    frames: [],
+    filename: 'astro/blue/blue_astro'
+  },
+  astro_green: {
+    frames: [],
+    filename: 'astro/green/green_astro'
+  },
   astro_yellow: {
-    frames: []
-  }
+    frames: [],
+    filename: 'astro/yellow/yellow_astro'
+  },
+  astro_orange: {
+    frames: [],
+    filename: 'astro/orange/orange_astro'
+  },
+  astro_red: {
+    frames: [],
+    filename: 'astro/red/red_astro'
+  },
+  astro_purple: {
+    frames: [],
+    filename: 'astro/purple/purple_astro'
+  },
 };
+let avatar_keys = Object.keys(avatars);
 
 let available_avatars = Object.keys(avatars);
 let used_avatars = [];
 
 function preload(){
   this.load.path = 'https://s3-us-west-1.amazonaws.com/spaceblazer/players/';
+  let dis = this;
   
-  for (i of range(1, 6)) {
-    key = 'astro_yellow' + i;
-    avatars.astro_yellow.frames.push({ key: key });
-    this.load.image(key, 'astro/yellow/yellow_astro' + i + '.png');
-  };
-}
+  avatar_keys.forEach(function(avatar_key) {
+    for (i of range(1, 6)) {
+      frame_key = avatar_key + i;
+      avatars[avatar_key].frames.push({ key: frame_key });
+      dis.load.image(frame_key, avatars[avatar_key].filename + i + '.png');
+    };
+  });
+};
 
 let phaser = {};
 function create(){
   phaser = this;
-  let avatar_keys = Object.keys(avatars);
 
   avatar_keys.forEach(function(key) {
     phaser.anims.create({
@@ -63,19 +89,19 @@ function fire(player){
 };
 
 function moveUp(player){
-  player.setVelocityY(-100);
+  player.setVelocityY(-playerSpeed);
 };
 
 function moveDown(player){
-  player.setVelocityY(100);
+  player.setVelocityY(playerSpeed);
 };
 
 function moveLeft(player){
-  player.setVelocityX(-100);
+  player.setVelocityX(-playerSpeed);
 };
 
 function moveRight(player){
-  player.setVelocityX(100);
+  player.setVelocityX(playerSpeed);
 };
 
 function stop(player){
@@ -105,7 +131,9 @@ function new_player(id) {
   available_avatars.remove(avatar_key);
   used_avatars.push(avatar_key);
 
-  let sprite = phaser.add.sprite(400, 300, 'astro_yellow1').play('astro_yellow');
+  let sprite = phaser.physics.add.sprite(400, 300, avatar_key + '1');
+  sprite.play(avatar_key);
+  sprite.setCollideWorldBounds(true);
 
   players[id] = { avatar: avatar_key, score: 0, sprite: sprite }
 };
@@ -114,12 +142,13 @@ function handle_command(data) {
   let parsed = JSON.parse(data);
   let id = parsed.id;
   let command = parsed.command;
+  console.log(command);
 
   if (!players[id]) {
     new_player(id);
   }
 
-  let sprite = players[id];
+  let sprite = players[id].sprite;
 
   if (command == 'online') {
   }
@@ -138,7 +167,7 @@ function handle_command(data) {
   else if (command == '9' || command == '0') {
     stopY(sprite);
   }
-  else if (command == 'k' || command == 'e') {
+  else if (command == '-' || command == '=') {
     stopX(sprite);
   }
   else if (command == 'b') {
