@@ -36,7 +36,6 @@ let player_avatars = {
     frame_rate: 8
   },
 };
-let player_avatar_keys = Object.keys(player_avatars);
 let available_avatars = Object.keys(player_avatars);
 let used_avatars = [];
 
