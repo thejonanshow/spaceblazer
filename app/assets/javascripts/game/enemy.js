@@ -8,6 +8,7 @@ class Enemy {
     this.sprite = enemies.create(700, 300, this.avatar + '1');
     this.sprite.play(this.avatar);
     this.sprite.setCollideWorldBounds(true);
+    this.sprite.wrapper = this;
 
     this.bullet = 'floppy';
   };
@@ -15,6 +16,7 @@ class Enemy {
   static preload() {
     load_animations(this.avatars);
     load_animations(this.bullets);
+    load_animations(this.explosions);
   };
 
   static load() {
@@ -23,6 +25,7 @@ class Enemy {
 
     create_animations(this.avatars);
     create_animations(this.bullets);
+    create_animations(this.explosions);
   };
 
   fire() {
@@ -34,7 +37,14 @@ class Enemy {
 
   bullet_strike(bullet, player) {
     bullet.destroy();
-  }
+  };
+
+  die() {
+    this.sprite.destroy();
+    let explosion = scene.add.sprite(this.sprite.x, this.sprite.y, 'explosion1');
+    explosion.on('animationcomplete', function() { explosion.destroy(); });
+    explosion.play('explosion');
+  };
 };
 
 Enemy.avatars = {
@@ -42,7 +52,18 @@ Enemy.avatars = {
     frames: [],
     path: 'enemies/server/server',
     frame_count: 2,
-    frame_rate: 2
+    frame_rate: 2,
+    repeat: -1
+  }
+};
+
+Enemy.explosions = {
+  explosion: {
+    frames: [],
+    path: 'explosions/server/explosion',
+    frame_count: 3,
+    frame_rate: 10,
+    repeat: 0
   }
 };
 
@@ -51,6 +72,7 @@ Enemy.bullets = {
     frames: [],
     path: 'bullets/floppy/floppy',
     frame_count: 2,
-    frame_rate: 4
+    frame_rate: 4,
+    repeat: -1
   }
 };

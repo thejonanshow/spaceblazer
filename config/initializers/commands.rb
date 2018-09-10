@@ -3,7 +3,6 @@ Thread.new do
 
   redis.subscribe(ENV["REDIS_CHANNEL"]) do |on|
     on.message do |channel, message|
-      puts "****************************** #{message}"
       ActionCable.server.broadcast("commands", message)
     end
   end

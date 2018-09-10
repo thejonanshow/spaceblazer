@@ -20,7 +20,7 @@ function create_animations(animations) {
       key: key,
       frames: animations[key].frames,
       frameRate: animations[key].frame_rate,
-      repeat: -1
+      repeat: animations[key].repeat
     });
   });
 };
