@@ -9,7 +9,7 @@ function handle_command(data) {
 
   if (!Player.active_players[id]) {
     new Player(id);
-    new_enemy();
+    new Enemy();
   }
 
   let player = Player.active_players[id]

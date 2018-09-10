@@ -1,15 +1,15 @@
-function new_enemy() {
-  let avatar_key = 'server';
-  let enemy = enemies.create(700, 300, avatar_key + '1');
-  enemy.play(avatar_key);
-  enemy.setCollideWorldBounds(true);
-};
-
 function hit_enemy() {
   console.log("BOOM");
 };
 
 class Enemy {
+  constructor() {
+    this.avatar = 'server';
+    this.sprite = enemies.create(700, 300, this.avatar + '1');
+    this.sprite.play(this.avatar);
+    this.sprite.setCollideWorldBounds(true);
+  };
+
   static preload() {
     load_animations(this.avatars);
     load_animations(this.bullets);

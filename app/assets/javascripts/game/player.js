@@ -3,13 +3,22 @@ class Player {
     this.avatar = Player.available_avatars[Math.floor(Math.random() * Player.available_avatars.length)];
     Player.available_avatars.remove(this.avatar);
 
-    let sprite = players.create(400, 300, this.avatar + '1');
-    sprite.play(this.avatar);
-    sprite.setCollideWorldBounds(true);
-
-    this.sprite = sprite;
+    this.sprite = players.create(400, 300, this.avatar + '1');
+    this.sprite.play(this.avatar);
+    this.sprite.setCollideWorldBounds(true);
 
     Player.active_players[id] = this
+  };
+
+  static preload() {
+    load_animations(this.avatars);
+    load_animations(this.bullets);
+  };
+
+  static load() {
+    players = scene.physics.add.group();
+    create_animations(this.avatars);
+    create_animations(this.bullets);
   };
 
   move_up() {
@@ -41,13 +50,7 @@ class Player {
     this.sprite.setVelocityY(0);
   };
 
-  static preload() {
-    load_animations(this.avatars);
-  };
-
-  static load() {
-    players = scene.physics.add.group();
-    create_animations(this.avatars);
+  fire() {
   };
 };
 
@@ -91,6 +94,15 @@ Player.avatars = {
 };
 Player.available_avatars = Object.keys(Player.avatars);
 Player.used_avatars = [];
-Player.active_players = {};
 
+Player.bullets = {
+  rainbow_bomb: {
+    frames: [],
+    path: 'bullets/rainbow_bomb/rainbow_bomb',
+    frame_count: 12,
+    frame_rate: 12
+  }
+};
+
+Player.active_players = {};
 Player.speed = 200;
