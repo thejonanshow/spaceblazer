@@ -1,27 +1,39 @@
 let player_avatars = {
   astro_blue: {
     frames: [],
-    filename: 'astro/blue/blue_astro'
+    path: 'players/astro/blue/blue_astro',
+    frame_count: 6,
+    frame_rate: 8
   },
   astro_green: {
     frames: [],
-    filename: 'astro/green/green_astro'
+    path: 'players/astro/green/green_astro',
+    frame_count: 6,
+    frame_rate: 8
   },
   astro_yellow: {
     frames: [],
-    filename: 'astro/yellow/yellow_astro'
+    path: 'players/astro/yellow/yellow_astro',
+    frame_count: 6,
+    frame_rate: 8
   },
   astro_orange: {
     frames: [],
-    filename: 'astro/orange/orange_astro'
+    path: 'players/astro/orange/orange_astro',
+    frame_count: 6,
+    frame_rate: 8
   },
   astro_red: {
     frames: [],
-    filename: 'astro/red/red_astro'
+    path: 'players/astro/red/red_astro',
+    frame_count: 6,
+    frame_rate: 8
   },
   astro_purple: {
     frames: [],
-    filename: 'astro/purple/purple_astro'
+    path: 'players/astro/purple/purple_astro',
+    frame_count: 6,
+    frame_rate: 8
   },
 };
 let player_avatar_keys = Object.keys(player_avatars);
@@ -48,25 +60,17 @@ function new_player(id) {
   players[id] = { avatar: avatar_key, score: 0, sprite: player }
 };
 
-function load_player_avatars() {
-  scene.load.path = 'https://s3-us-west-1.amazonaws.com/spaceblazer/players/';
+function setup_players() {
+  load_player_avatars();
+};
 
-  player_avatar_keys.forEach(function(avatar_key) {
-    for (i of range(1, 6)) {
-      frame_key = avatar_key + i;
-      player_avatars[avatar_key].frames.push({ key: frame_key });
-      scene.load.image(frame_key, player_avatars[avatar_key].filename + i + '.png');
-    };
-  });
+function load_player_bullets() {
+};
+
+function load_player_avatars() {
+  load_animations(player_avatars);
 };
 
 function create_player_animations() {
-  player_avatar_keys.forEach(function(avatar_key) {
-    scene.anims.create({
-      key: avatar_key,
-      frames: player_avatars[avatar_key].frames,
-      frameRate: 8,
-      repeat: -1
-    });
-  });
+  create_animations(player_avatars);
 };

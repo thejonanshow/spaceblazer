@@ -1,10 +1,20 @@
 let enemy_avatars = {
   server: {
     frames: [],
-    filename: 'server/server'
+    path: 'enemies/server/server',
+    frame_count: 2,
+    frame_rate: 2
   }
 };
-let enemy_avatar_keys = Object.keys(enemy_avatars);
+
+let enemy_bullets = {
+  floppy: {
+    frames: [],
+    path: 'bullets/floppy/floppy',
+    frame_count: 2,
+    frame_rate: 4
+  }
+};
 
 function new_enemy() {
   let avatar_key = 'server';
@@ -19,27 +29,14 @@ function create_enemies() {
   create_enemy_animations();
 };
 
-function load_enemy_avatars() {
-  scene.load.path = 'https://s3-us-west-1.amazonaws.com/spaceblazer/enemies/';
-
-  enemy_avatar_keys.forEach(function(avatar_key) {
-    for (i of range(1, 2)) {
-      frame_key = avatar_key + i;
-      enemy_avatars[avatar_key].frames.push({ key: frame_key });
-      scene.load.image(frame_key, enemy_avatars[avatar_key].filename + i + '.png');
-    };
-  });
+function setup_enemies() {
+  load_animations(enemy_avatars);
+  load_animations(enemy_bullets);
 };
 
 function create_enemy_animations() {
-  enemy_avatar_keys.forEach(function(avatar_key) {
-    scene.anims.create({
-      key: avatar_key,
-      frames: enemy_avatars[avatar_key].frames,
-      frameRate: 2,
-      repeat: -1
-    });
-  });
+  create_animations(enemy_avatars);
+  create_animations(enemy_bullets);
 };
 
 function hit_enemy() {

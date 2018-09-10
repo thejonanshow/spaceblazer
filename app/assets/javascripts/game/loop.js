@@ -1,7 +1,7 @@
 function preload(){
   scene = this;
-  load_player_avatars();
-  load_enemy_avatars();
+  setup_players();
+  setup_enemies();
 };
 
 function create(){
