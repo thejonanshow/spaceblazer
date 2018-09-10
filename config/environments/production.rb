@@ -1,7 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.action_cable.url = 'wss://localhost:3000/cable'
+  config.action_cable.url = "wss://localhost:#{ENV['PORT'] || 3000}/cable"
 
   # Code is not reloaded between requests.
   config.cache_classes = true

@@ -12,7 +12,6 @@
 //
 //= require rails-ujs
 //= require activestorage
-//= require turbolinks
 //= require phaser/dist/phaser
 //= require helpers
 //= require game
