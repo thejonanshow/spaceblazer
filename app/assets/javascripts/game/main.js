@@ -16,6 +16,9 @@ const gameConfig = {
     preload: preload,
     create: create,
     update: update
+  },
+  audio: {
+    disableWebAudio: true
   }
 };
 
