@@ -1,0 +1,275 @@
+{
+   "anims" : [
+      {
+         "yoyo" : false,
+         "frames" : [
+            {
+               "key" : "multipass",
+               "frame" : "players/hootie/blue/hootie_blue1",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/hootie/blue/hootie_blue2"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/hootie/blue/hootie_blue3",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/hootie/blue/hootie_blue4"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/hootie/blue/hootie_blue5",
+               "key" : "multipass"
+            },
+            {
+               "frame" : "players/hootie/blue/hootie_blue6",
+               "key" : "multipass",
+               "duration" : 0
+            }
+         ],
+         "repeat" : -1,
+         "duration" : 750,
+         "repeatDelay" : 0,
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "hideOnComplete" : false,
+         "type" : "frame",
+         "frameRate" : 8,
+         "key" : "hootie_blue",
+         "delay" : 0
+      },
+      {
+         "repeat" : -1,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/hootie/yellow/hootie_yellow1",
+               "key" : "multipass"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/hootie/yellow/hootie_yellow2"
+            },
+            {
+               "frame" : "players/hootie/yellow/hootie_yellow3",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/hootie/yellow/hootie_yellow4",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/hootie/yellow/hootie_yellow5"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/hootie/yellow/hootie_yellow6",
+               "key" : "multipass"
+            }
+         ],
+         "yoyo" : false,
+         "repeatDelay" : 0,
+         "duration" : 750,
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "delay" : 0,
+         "key" : "hootie_yellow",
+         "frameRate" : 8,
+         "type" : "frame",
+         "hideOnComplete" : false
+      },
+      {
+         "delay" : 0,
+         "key" : "hootie_green",
+         "frameRate" : 8,
+         "hideOnComplete" : false,
+         "type" : "frame",
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "duration" : 750,
+         "repeatDelay" : 0,
+         "repeat" : -1,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/hootie/green/hootie_green1",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/hootie/green/hootie_green2",
+               "duration" : 0
+            },
+            {
+               "frame" : "players/hootie/green/hootie_green3",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/hootie/green/hootie_green4",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/hootie/green/hootie_green5",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/hootie/green/hootie_green6",
+               "duration" : 0
+            }
+         ],
+         "yoyo" : false
+      },
+      {
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "key" : "hootie_red",
+         "frameRate" : 8,
+         "delay" : 0,
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "repeatDelay" : 0,
+         "duration" : 750,
+         "yoyo" : false,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/hootie/red/hootie_red1",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/hootie/red/hootie_red2",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/hootie/red/hootie_red3",
+               "key" : "multipass"
+            },
+            {
+               "frame" : "players/hootie/red/hootie_red4",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/hootie/red/hootie_red5",
+               "duration" : 0
+            },
+            {
+               "frame" : "players/hootie/red/hootie_red6",
+               "key" : "multipass",
+               "duration" : 0
+            }
+         ],
+         "repeat" : -1
+      },
+      {
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "delay" : 0,
+         "frameRate" : 8,
+         "key" : "hootie_purple",
+         "frames" : [
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/hootie/purple/hootie_purple1"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/hootie/purple/hootie_purple2"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/hootie/purple/hootie_purple3",
+               "key" : "multipass"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/hootie/purple/hootie_purple4"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/hootie/purple/hootie_purple5",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/hootie/purple/hootie_purple6",
+               "key" : "multipass"
+            }
+         ],
+         "yoyo" : false,
+         "repeat" : -1,
+         "repeatDelay" : 0,
+         "duration" : 750
+      },
+      {
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "frameRate" : 8,
+         "key" : "hootie_orange",
+         "delay" : 0,
+         "yoyo" : false,
+         "frames" : [
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/hootie/orange/hootie_orange1"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/hootie/orange/hootie_orange2",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/hootie/orange/hootie_orange3"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/hootie/orange/hootie_orange4"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/hootie/orange/hootie_orange5"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/hootie/orange/hootie_orange6",
+               "key" : "multipass"
+            }
+         ],
+         "repeat" : -1,
+         "repeatDelay" : 0,
+         "duration" : 750
+      }
+   ],
+   "globalTimeScale" : 1
+}

@@ -1,0 +1,275 @@
+{
+   "anims" : [
+      {
+         "yoyo" : false,
+         "frames" : [
+            {
+               "key" : "multipass",
+               "frame" : "players/koa/blue/koa_blue1",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/koa/blue/koa_blue2"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/koa/blue/koa_blue3",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/koa/blue/koa_blue4"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/koa/blue/koa_blue5",
+               "key" : "multipass"
+            },
+            {
+               "frame" : "players/koa/blue/koa_blue6",
+               "key" : "multipass",
+               "duration" : 0
+            }
+         ],
+         "repeat" : -1,
+         "duration" : 750,
+         "repeatDelay" : 0,
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "hideOnComplete" : false,
+         "type" : "frame",
+         "frameRate" : 8,
+         "key" : "koa_blue",
+         "delay" : 0
+      },
+      {
+         "repeat" : -1,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/koa/yellow/koa_yellow1",
+               "key" : "multipass"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/koa/yellow/koa_yellow2"
+            },
+            {
+               "frame" : "players/koa/yellow/koa_yellow3",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/koa/yellow/koa_yellow4",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/koa/yellow/koa_yellow5"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/koa/yellow/koa_yellow6",
+               "key" : "multipass"
+            }
+         ],
+         "yoyo" : false,
+         "repeatDelay" : 0,
+         "duration" : 750,
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "delay" : 0,
+         "key" : "koa_yellow",
+         "frameRate" : 8,
+         "type" : "frame",
+         "hideOnComplete" : false
+      },
+      {
+         "delay" : 0,
+         "key" : "koa_green",
+         "frameRate" : 8,
+         "hideOnComplete" : false,
+         "type" : "frame",
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "duration" : 750,
+         "repeatDelay" : 0,
+         "repeat" : -1,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/koa/green/koa_green1",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/koa/green/koa_green2",
+               "duration" : 0
+            },
+            {
+               "frame" : "players/koa/green/koa_green3",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/koa/green/koa_green4",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/koa/green/koa_green5",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/koa/green/koa_green6",
+               "duration" : 0
+            }
+         ],
+         "yoyo" : false
+      },
+      {
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "key" : "koa_red",
+         "frameRate" : 8,
+         "delay" : 0,
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "repeatDelay" : 0,
+         "duration" : 750,
+         "yoyo" : false,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/koa/red/koa_red1",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/koa/red/koa_red2",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/koa/red/koa_red3",
+               "key" : "multipass"
+            },
+            {
+               "frame" : "players/koa/red/koa_red4",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/koa/red/koa_red5",
+               "duration" : 0
+            },
+            {
+               "frame" : "players/koa/red/koa_red6",
+               "key" : "multipass",
+               "duration" : 0
+            }
+         ],
+         "repeat" : -1
+      },
+      {
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "delay" : 0,
+         "frameRate" : 8,
+         "key" : "koa_purple",
+         "frames" : [
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/koa/purple/koa_purple1"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/koa/purple/koa_purple2"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/koa/purple/koa_purple3",
+               "key" : "multipass"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/koa/purple/koa_purple4"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/koa/purple/koa_purple5",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/koa/purple/koa_purple6",
+               "key" : "multipass"
+            }
+         ],
+         "yoyo" : false,
+         "repeat" : -1,
+         "repeatDelay" : 0,
+         "duration" : 750
+      },
+      {
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "frameRate" : 8,
+         "key" : "koa_orange",
+         "delay" : 0,
+         "yoyo" : false,
+         "frames" : [
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/koa/orange/koa_orange1"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/koa/orange/koa_orange2",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/koa/orange/koa_orange3"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/koa/orange/koa_orange4"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/koa/orange/koa_orange5"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/koa/orange/koa_orange6",
+               "key" : "multipass"
+            }
+         ],
+         "repeat" : -1,
+         "repeatDelay" : 0,
+         "duration" : 750
+      }
+   ],
+   "globalTimeScale" : 1
+}

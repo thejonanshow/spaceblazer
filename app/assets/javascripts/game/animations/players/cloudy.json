@@ -1,0 +1,275 @@
+{
+   "anims" : [
+      {
+         "yoyo" : false,
+         "frames" : [
+            {
+               "key" : "multipass",
+               "frame" : "players/cloudy/blue/cloudy_blue1",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/cloudy/blue/cloudy_blue2"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/cloudy/blue/cloudy_blue3",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/cloudy/blue/cloudy_blue4"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/cloudy/blue/cloudy_blue5",
+               "key" : "multipass"
+            },
+            {
+               "frame" : "players/cloudy/blue/cloudy_blue6",
+               "key" : "multipass",
+               "duration" : 0
+            }
+         ],
+         "repeat" : -1,
+         "duration" : 750,
+         "repeatDelay" : 0,
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "hideOnComplete" : false,
+         "type" : "frame",
+         "frameRate" : 8,
+         "key" : "cloudy_blue",
+         "delay" : 0
+      },
+      {
+         "repeat" : -1,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/cloudy/yellow/cloudy_yellow1",
+               "key" : "multipass"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/cloudy/yellow/cloudy_yellow2"
+            },
+            {
+               "frame" : "players/cloudy/yellow/cloudy_yellow3",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/cloudy/yellow/cloudy_yellow4",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/cloudy/yellow/cloudy_yellow5"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/cloudy/yellow/cloudy_yellow6",
+               "key" : "multipass"
+            }
+         ],
+         "yoyo" : false,
+         "repeatDelay" : 0,
+         "duration" : 750,
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "delay" : 0,
+         "key" : "cloudy_yellow",
+         "frameRate" : 8,
+         "type" : "frame",
+         "hideOnComplete" : false
+      },
+      {
+         "delay" : 0,
+         "key" : "cloudy_green",
+         "frameRate" : 8,
+         "hideOnComplete" : false,
+         "type" : "frame",
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "duration" : 750,
+         "repeatDelay" : 0,
+         "repeat" : -1,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/cloudy/green/cloudy_green1",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/cloudy/green/cloudy_green2",
+               "duration" : 0
+            },
+            {
+               "frame" : "players/cloudy/green/cloudy_green3",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/cloudy/green/cloudy_green4",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/cloudy/green/cloudy_green5",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/cloudy/green/cloudy_green6",
+               "duration" : 0
+            }
+         ],
+         "yoyo" : false
+      },
+      {
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "key" : "cloudy_red",
+         "frameRate" : 8,
+         "delay" : 0,
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "repeatDelay" : 0,
+         "duration" : 750,
+         "yoyo" : false,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/cloudy/red/cloudy_red1",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/cloudy/red/cloudy_red2",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/cloudy/red/cloudy_red3",
+               "key" : "multipass"
+            },
+            {
+               "frame" : "players/cloudy/red/cloudy_red4",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/cloudy/red/cloudy_red5",
+               "duration" : 0
+            },
+            {
+               "frame" : "players/cloudy/red/cloudy_red6",
+               "key" : "multipass",
+               "duration" : 0
+            }
+         ],
+         "repeat" : -1
+      },
+      {
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "delay" : 0,
+         "frameRate" : 8,
+         "key" : "cloudy_purple",
+         "frames" : [
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/cloudy/purple/cloudy_purple1"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/cloudy/purple/cloudy_purple2"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/cloudy/purple/cloudy_purple3",
+               "key" : "multipass"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/cloudy/purple/cloudy_purple4"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/cloudy/purple/cloudy_purple5",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/cloudy/purple/cloudy_purple6",
+               "key" : "multipass"
+            }
+         ],
+         "yoyo" : false,
+         "repeat" : -1,
+         "repeatDelay" : 0,
+         "duration" : 750
+      },
+      {
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "frameRate" : 8,
+         "key" : "cloudy_orange",
+         "delay" : 0,
+         "yoyo" : false,
+         "frames" : [
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/cloudy/orange/cloudy_orange1"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/cloudy/orange/cloudy_orange2",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/cloudy/orange/cloudy_orange3"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/cloudy/orange/cloudy_orange4"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/cloudy/orange/cloudy_orange5"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/cloudy/orange/cloudy_orange6",
+               "key" : "multipass"
+            }
+         ],
+         "repeat" : -1,
+         "repeatDelay" : 0,
+         "duration" : 750
+      }
+   ],
+   "globalTimeScale" : 1
+}

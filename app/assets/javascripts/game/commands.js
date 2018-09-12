@@ -1,6 +1,12 @@
 function handle_command(data) {
   let parsed = JSON.parse(data);
   let id = parsed.id;
+
+  if (id == "system") {
+    handle_system_command(data);
+    return;
+  };
+
   let command = parsed.command;
 
   if (debug) {
@@ -37,4 +43,13 @@ function handle_command(data) {
   else if (command == 'b') {
     player.fire();
   }
+};
+
+function handle_system_command(data) {
+  console.log("System command received");
+  let parsed = JSON.parse(data);
+
+  if (parsed.notice) {
+    console.log(parsed.notice);
+  };
 };

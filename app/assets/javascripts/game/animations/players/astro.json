@@ -1,0 +1,275 @@
+{
+   "anims" : [
+      {
+         "yoyo" : false,
+         "frames" : [
+            {
+               "key" : "multipass",
+               "frame" : "players/astro/blue/astro_blue1",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/astro/blue/astro_blue2"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/astro/blue/astro_blue3",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/astro/blue/astro_blue4"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/astro/blue/astro_blue5",
+               "key" : "multipass"
+            },
+            {
+               "frame" : "players/astro/blue/astro_blue6",
+               "key" : "multipass",
+               "duration" : 0
+            }
+         ],
+         "repeat" : -1,
+         "duration" : 750,
+         "repeatDelay" : 0,
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "hideOnComplete" : false,
+         "type" : "frame",
+         "frameRate" : 8,
+         "key" : "astro_blue",
+         "delay" : 0
+      },
+      {
+         "repeat" : -1,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/astro/yellow/astro_yellow1",
+               "key" : "multipass"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/astro/yellow/astro_yellow2"
+            },
+            {
+               "frame" : "players/astro/yellow/astro_yellow3",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/astro/yellow/astro_yellow4",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/astro/yellow/astro_yellow5"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/astro/yellow/astro_yellow6",
+               "key" : "multipass"
+            }
+         ],
+         "yoyo" : false,
+         "repeatDelay" : 0,
+         "duration" : 750,
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "delay" : 0,
+         "key" : "astro_yellow",
+         "frameRate" : 8,
+         "type" : "frame",
+         "hideOnComplete" : false
+      },
+      {
+         "delay" : 0,
+         "key" : "astro_green",
+         "frameRate" : 8,
+         "hideOnComplete" : false,
+         "type" : "frame",
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "duration" : 750,
+         "repeatDelay" : 0,
+         "repeat" : -1,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/astro/green/astro_green1",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/astro/green/astro_green2",
+               "duration" : 0
+            },
+            {
+               "frame" : "players/astro/green/astro_green3",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/astro/green/astro_green4",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/astro/green/astro_green5",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/astro/green/astro_green6",
+               "duration" : 0
+            }
+         ],
+         "yoyo" : false
+      },
+      {
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "key" : "astro_red",
+         "frameRate" : 8,
+         "delay" : 0,
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "repeatDelay" : 0,
+         "duration" : 750,
+         "yoyo" : false,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/astro/red/astro_red1",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/astro/red/astro_red2",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/astro/red/astro_red3",
+               "key" : "multipass"
+            },
+            {
+               "frame" : "players/astro/red/astro_red4",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/astro/red/astro_red5",
+               "duration" : 0
+            },
+            {
+               "frame" : "players/astro/red/astro_red6",
+               "key" : "multipass",
+               "duration" : 0
+            }
+         ],
+         "repeat" : -1
+      },
+      {
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "delay" : 0,
+         "frameRate" : 8,
+         "key" : "astro_purple",
+         "frames" : [
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/astro/purple/astro_purple1"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/astro/purple/astro_purple2"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/astro/purple/astro_purple3",
+               "key" : "multipass"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/astro/purple/astro_purple4"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/astro/purple/astro_purple5",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/astro/purple/astro_purple6",
+               "key" : "multipass"
+            }
+         ],
+         "yoyo" : false,
+         "repeat" : -1,
+         "repeatDelay" : 0,
+         "duration" : 750
+      },
+      {
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "frameRate" : 8,
+         "key" : "astro_orange",
+         "delay" : 0,
+         "yoyo" : false,
+         "frames" : [
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/astro/orange/astro_orange1"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/astro/orange/astro_orange2",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/astro/orange/astro_orange3"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/astro/orange/astro_orange4"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/astro/orange/astro_orange5"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/astro/orange/astro_orange6",
+               "key" : "multipass"
+            }
+         ],
+         "repeat" : -1,
+         "repeatDelay" : 0,
+         "duration" : 750
+      }
+   ],
+   "globalTimeScale" : 1
+}

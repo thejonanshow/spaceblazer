@@ -1,5 +1,4 @@
 function load_animations(animations) {
-  scene.load.path = 'https://s3-us-west-1.amazonaws.com/spaceblazer/';
 
   animation_keys = Object.keys(animations);
 

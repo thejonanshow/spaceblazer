@@ -1,0 +1,29 @@
+{
+   "anims" : [
+      {
+         "yoyo" : false,
+         "frames" : [
+            {
+               "key" : "multipass",
+               "frame" : "bullets/floppy/floppy1",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "bullets/floppy/floppy2",
+               "duration" : 0
+            }
+         ],
+         "repeat" : -1,
+         "duration" : 750,
+         "repeatDelay" : 0,
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "hideOnComplete" : false,
+         "type" : "frame",
+         "frameRate" : 4,
+         "key" : "floppy",
+         "delay" : 0
+      }
+   ]
+}

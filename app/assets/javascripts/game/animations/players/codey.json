@@ -1,0 +1,275 @@
+{
+   "anims" : [
+      {
+         "yoyo" : false,
+         "frames" : [
+            {
+               "key" : "multipass",
+               "frame" : "players/codey/blue/codey_blue1",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/codey/blue/codey_blue2"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/codey/blue/codey_blue3",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/codey/blue/codey_blue4"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/codey/blue/codey_blue5",
+               "key" : "multipass"
+            },
+            {
+               "frame" : "players/codey/blue/codey_blue6",
+               "key" : "multipass",
+               "duration" : 0
+            }
+         ],
+         "repeat" : -1,
+         "duration" : 750,
+         "repeatDelay" : 0,
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "hideOnComplete" : false,
+         "type" : "frame",
+         "frameRate" : 8,
+         "key" : "codey_blue",
+         "delay" : 0
+      },
+      {
+         "repeat" : -1,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/codey/yellow/codey_yellow1",
+               "key" : "multipass"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/codey/yellow/codey_yellow2"
+            },
+            {
+               "frame" : "players/codey/yellow/codey_yellow3",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/codey/yellow/codey_yellow4",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/codey/yellow/codey_yellow5"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/codey/yellow/codey_yellow6",
+               "key" : "multipass"
+            }
+         ],
+         "yoyo" : false,
+         "repeatDelay" : 0,
+         "duration" : 750,
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "delay" : 0,
+         "key" : "codey_yellow",
+         "frameRate" : 8,
+         "type" : "frame",
+         "hideOnComplete" : false
+      },
+      {
+         "delay" : 0,
+         "key" : "codey_green",
+         "frameRate" : 8,
+         "hideOnComplete" : false,
+         "type" : "frame",
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "duration" : 750,
+         "repeatDelay" : 0,
+         "repeat" : -1,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/codey/green/codey_green1",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/codey/green/codey_green2",
+               "duration" : 0
+            },
+            {
+               "frame" : "players/codey/green/codey_green3",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/codey/green/codey_green4",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/codey/green/codey_green5",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/codey/green/codey_green6",
+               "duration" : 0
+            }
+         ],
+         "yoyo" : false
+      },
+      {
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "key" : "codey_red",
+         "frameRate" : 8,
+         "delay" : 0,
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "repeatDelay" : 0,
+         "duration" : 750,
+         "yoyo" : false,
+         "frames" : [
+            {
+               "duration" : 0,
+               "frame" : "players/codey/red/codey_red1",
+               "key" : "multipass"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/codey/red/codey_red2",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/codey/red/codey_red3",
+               "key" : "multipass"
+            },
+            {
+               "frame" : "players/codey/red/codey_red4",
+               "key" : "multipass",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/codey/red/codey_red5",
+               "duration" : 0
+            },
+            {
+               "frame" : "players/codey/red/codey_red6",
+               "key" : "multipass",
+               "duration" : 0
+            }
+         ],
+         "repeat" : -1
+      },
+      {
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "delay" : 0,
+         "frameRate" : 8,
+         "key" : "codey_purple",
+         "frames" : [
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/codey/purple/codey_purple1"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/codey/purple/codey_purple2"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/codey/purple/codey_purple3",
+               "key" : "multipass"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/codey/purple/codey_purple4"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/codey/purple/codey_purple5",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/codey/purple/codey_purple6",
+               "key" : "multipass"
+            }
+         ],
+         "yoyo" : false,
+         "repeat" : -1,
+         "repeatDelay" : 0,
+         "duration" : 750
+      },
+      {
+         "showOnStart" : false,
+         "skipMissedFrames" : true,
+         "type" : "frame",
+         "hideOnComplete" : false,
+         "frameRate" : 8,
+         "key" : "codey_orange",
+         "delay" : 0,
+         "yoyo" : false,
+         "frames" : [
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/codey/orange/codey_orange1"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "players/codey/orange/codey_orange2",
+               "duration" : 0
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/codey/orange/codey_orange3"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/codey/orange/codey_orange4"
+            },
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "players/codey/orange/codey_orange5"
+            },
+            {
+               "duration" : 0,
+               "frame" : "players/codey/orange/codey_orange6",
+               "key" : "multipass"
+            }
+         ],
+         "repeat" : -1,
+         "repeatDelay" : 0,
+         "duration" : 750
+      }
+   ],
+   "globalTimeScale" : 1
+}

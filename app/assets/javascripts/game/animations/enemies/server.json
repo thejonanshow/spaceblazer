@@ -1,0 +1,30 @@
+{
+   "anims" : [
+      {
+         "delay" : 0,
+         "frames" : [
+            {
+               "duration" : 0,
+               "key" : "multipass",
+               "frame" : "enemies/server1"
+            },
+            {
+               "key" : "multipass",
+               "frame" : "enemies/server2",
+               "duration" : 0
+            }
+         ],
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "yoyo" : false,
+         "key" : "server",
+         "repeatDelay" : 0,
+         "hideOnComplete" : false,
+         "repeat" : -1,
+         "duration" : 1000,
+         "type" : "frame",
+         "frameRate" : 2
+      }
+   ],
+   "globalTimeScale" : 1
+}

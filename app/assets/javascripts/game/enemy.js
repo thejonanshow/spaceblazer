@@ -14,18 +14,11 @@ class Enemy {
   };
 
   static preload() {
-    load_animations(this.avatars);
-    load_animations(this.bullets);
-    load_animations(this.explosions);
   };
 
   static load() {
     enemies = scene.physics.add.group();
     scene.physics.add.collider(players, enemies, hit_enemy, null, scene);
-
-    create_animations(this.avatars);
-    create_animations(this.bullets);
-    create_animations(this.explosions);
   };
 
   fire() {
@@ -40,10 +33,9 @@ class Enemy {
   };
 
   die() {
+    let explosion = scene.add.sprite(this.sprite.x, this.sprite.y, 'animations/explosions/server/explosion1');
+    explosion.play('server_explosion');
     this.sprite.destroy();
-    let explosion = scene.add.sprite(this.sprite.x, this.sprite.y, 'explosion1');
-    explosion.on('animationcomplete', function() { explosion.destroy(); });
-    explosion.play('explosion');
   };
 };
 

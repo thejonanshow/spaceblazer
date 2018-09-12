@@ -1,0 +1,1 @@
+ActionCableClient.clear_all

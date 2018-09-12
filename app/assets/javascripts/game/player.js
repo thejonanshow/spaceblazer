@@ -1,8 +1,6 @@
 class Player {
   constructor(id) {
-    this.avatar = Player.available_avatars[Math.floor(Math.random() * Player.available_avatars.length)];
-    Player.available_avatars.remove(this.avatar);
-
+    this.avatar = 'astro_blue';
     this.sprite = players.create(400, 300, this.avatar + '1');
     this.sprite.play(this.avatar);
     this.sprite.setCollideWorldBounds(true);
@@ -14,16 +12,11 @@ class Player {
   };
 
   static preload() {
-    load_animations(this.avatars);
-    load_animations(this.bullets);
   };
 
   static load() {
     players = scene.physics.add.group();
     bullets = scene.physics.add.group();
-
-    create_animations(this.avatars);
-    create_animations(this.bullets);
   };
 
   move_up() {
@@ -67,53 +60,6 @@ class Player {
     bullet.destroy();
   };
 };
-
-Player.avatars = {
-  astro_blue: {
-    frames: [],
-    path: 'players/astro/blue/blue_astro',
-    frame_count: 6,
-    frame_rate: 8,
-    repeat: -1
-  },
-  astro_green: {
-    frames: [],
-    path: 'players/astro/green/green_astro',
-    frame_count: 6,
-    frame_rate: 8,
-    repeat: -1
-  },
-  astro_yellow: {
-    frames: [],
-    path: 'players/astro/yellow/yellow_astro',
-    frame_count: 6,
-    frame_rate: 8,
-    repeat: -1
-  },
-  astro_orange: {
-    frames: [],
-    path: 'players/astro/orange/orange_astro',
-    frame_count: 6,
-    frame_rate: 8,
-    repeat: -1
-  },
-  astro_red: {
-    frames: [],
-    path: 'players/astro/red/red_astro',
-    frame_count: 6,
-    frame_rate: 8,
-    repeat: -1
-  },
-  astro_purple: {
-    frames: [],
-    path: 'players/astro/purple/purple_astro',
-    frame_count: 6,
-    frame_rate: 8,
-    repeat: -1
-  },
-};
-Player.available_avatars = Object.keys(Player.avatars);
-Player.used_avatars = [];
 
 Player.bullets = {
   rainbow_bomb: {

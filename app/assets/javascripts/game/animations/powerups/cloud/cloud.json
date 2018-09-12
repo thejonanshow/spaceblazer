@@ -1,0 +1,39 @@
+{
+   "anims" : [
+      {
+         "yoyo" : false,
+         "frames" : [
+            {
+               "key" : "multipass",
+               "frame" : "powerups/cloud/cloud1",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "powerups/cloud/cloud2",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "powerups/cloud/cloud3",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "powerups/cloud/cloud4",
+               "duration" : 0
+            }
+         ],
+         "repeat" : -1,
+         "duration" : 750,
+         "repeatDelay" : 0,
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "hideOnComplete" : false,
+         "type" : "frame",
+         "frameRate" : 4,
+         "key" : "cloud",
+         "delay" : 0
+      }
+   ]
+}

@@ -1,0 +1,79 @@
+{
+   "anims" : [
+      {
+         "yoyo" : false,
+         "frames" : [
+            {
+               "key" : "multipass",
+               "frame" : "bullets/rainbow_bomb/rainbow_bomb1",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "bullets/rainbow_bomb/rainbow_bomb2",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "bullets/rainbow_bomb/rainbow_bomb3",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "bullets/rainbow_bomb/rainbow_bomb4",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "bullets/rainbow_bomb/rainbow_bomb5",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "bullets/rainbow_bomb/rainbow_bomb6",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "bullets/rainbow_bomb/rainbow_bomb7",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "bullets/rainbow_bomb/rainbow_bomb8",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "bullets/rainbow_bomb/rainbow_bomb9",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "bullets/rainbow_bomb/rainbow_bomb10",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "bullets/rainbow_bomb/rainbow_bomb11",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "bullets/rainbow_bomb/rainbow_bomb12",
+               "duration" : 0
+            }
+         ],
+         "repeat" : -1,
+         "duration" : 750,
+         "repeatDelay" : 0,
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "hideOnComplete" : false,
+         "type" : "frame",
+         "frameRate" : 50,
+         "key" : "rainbow_bomb",
+         "delay" : 0
+      }
+   ]
+}

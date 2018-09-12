@@ -1,0 +1,34 @@
+{
+   "anims" : [
+      {
+         "yoyo" : false,
+         "frames" : [
+            {
+               "key" : "multipass",
+               "frame" : "explosions/server/explosion1",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "explosions/server/explosion2",
+               "duration" : 0
+            },
+            {
+               "key" : "multipass",
+               "frame" : "explosions/server/explosion3",
+               "duration" : 0
+            }
+         ],
+         "repeat" : 0,
+         "duration" : 750,
+         "repeatDelay" : 0,
+         "skipMissedFrames" : true,
+         "showOnStart" : false,
+         "hideOnComplete" : true,
+         "type" : "frame",
+         "frameRate" : 10,
+         "key" : "server_explosion",
+         "delay" : 0
+      }
+   ]
+}
