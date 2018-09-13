@@ -8,4 +8,8 @@ class CommandsChannel < ApplicationCable::Channel
   def unsubscribed
     ActionCableClient.remove(uid)
   end
+
+  def register_player(data)
+    Game.add_player(data["id"])
+  end
 end

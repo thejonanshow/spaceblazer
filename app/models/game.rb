@@ -3,7 +3,7 @@ class Game
     ActionCable.server.broadcast("commands", { id: "system", command: "start" }.to_json)
   end
 
-  def self.add_player
+  def self.add_player(id)
     # when a controller connects it sends "online"
     # we choose a random avatar and add it to our sorted set as "avatar_id&id"
     # then tell clients to make a new player with that avatar and id
