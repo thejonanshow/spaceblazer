@@ -60,5 +60,8 @@ function handle_system_command(data) {
 
   if (parsed.notice) {
     console.log(parsed.notice);
-  };
+  }
+  else if (parsed.player_created) {
+    console.log(parsed.player_created);
+  }
 };
