@@ -1,9 +1,13 @@
-App.system = App.cable.subscriptions.create "SystemChannel",
-  connected: ->
-    # Called when the subscription is ready for use on the server
+App.system = App.cable.subscriptions.create("SystemChannel", {
+  connected: function() {
+    // Called when the subscription is ready for use on the server
+  },
 
-  disconnected: ->
-    # Called when the subscription has been terminated by the server
+  disconnected: function() {
+    // Called when the subscription has been terminated by the server
+  },
 
-  received: (data) ->
-    # Called when there's incoming data on the websocket for this channel
+  received: function(data) {
+    // Called when there's incoming data on the websocket for this channel
+  }
+});
