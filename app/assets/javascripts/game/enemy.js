@@ -13,10 +13,14 @@ class Enemy {
     this.bullet = 'floppy';
   };
 
-  static preload() {
+  static load_animations(scene) {
+    scene.load.animation('server', 'animations/enemies/server.json');
+    scene.load.animation('server_explosion', 'animations/explosions/server/explosion.json'); 
+    scene.load.animation('floppy', 'animations/bullets/floppy.json');
   };
 
   static load() {
+    bullets = scene.physics.add.group();
     enemies = scene.physics.add.group();
     scene.physics.add.collider(players, enemies, hit_enemy, null, scene);
   };

@@ -13,35 +13,44 @@ function handle_command(data) {
     console.log(command);
   };
 
-  if (!Player.active_players[id]) {
-    new Player(id);
-    new Enemy();
-  }
-
   let player = Player.active_players[id]
 
   if (command == 'online') {
   }
+  else if (command == 's') {
+    if (!Player.active_players[id]) {
+      game.scene.stop('title');
+      game.scene.start('main');
+      players = scene.physics.add.group();
+      bullets = scene.physics.add.group();
+
+      Player.active_players[id] = new Player(id);
+      new Enemy();
+    }
+
+    if (Object.keys(Player.active_players).length >= 1) {
+    }
+  }
   else if (command == 'u') {
-    player.move_up();
+    move_up(Player.active_players[id]);
   }
   else if (command == 'd') {
-    player.move_down();
+    move_down(Player.active_players[id]);
   }
   else if (command == 'l') {
-    player.move_left();
+    move_left(Player.active_players[id]);
   }
   else if (command == 'r') {
-    player.move_right();
+    move_right(Player.active_players[id]);
   }
   else if (command == '9' || command == '0') {
-    player.stop_y();
+    stop_y(Player.active_players[id]);
   }
   else if (command == '-' || command == '=') {
-    player.stop_x();
+    stop_x(Player.active_players[id]);
   }
   else if (command == 'b') {
-    player.fire();
+    Player.active_players[id].fire();
   }
 };
 

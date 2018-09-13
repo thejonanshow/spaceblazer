@@ -11,41 +11,18 @@ class Player {
     Player.active_players[id] = this;
   };
 
-  static preload() {
+  static load_animations(scene) {
+    names = ['appy', 'blaze', 'cloudy', 'codey', 'earnie', 'einstein', 'hootie', 'koa', 'astro']
+	names.forEach(function(name) {
+	  scene.load.animation(name, 'animations/players/' + name + '.json'); 
+    });
+
+    scene.load.animation('rainbow_bomb', 'animations/bullets/rainbow_bomb.json');
   };
 
   static load() {
-    players = scene.physics.add.group();
-    bullets = scene.physics.add.group();
-  };
-
-  move_up() {
-    this.sprite.setVelocityY(-Player.speed);
-  };
-
-  move_down() {
-    this.sprite.setVelocityY(Player.speed);
-  };
-
-  move_left() {
-    this.sprite.setVelocityX(-Player.speed);
-  };
-
-  move_right() {
-    this.sprite.setVelocityX(Player.speed);
-  };
-
-  stop() {
-    this.sprite.setVelocityX(0);
-    this.sprite.setVelocityY(0);
-  };
-
-  stop_x() {
-    this.sprite.setVelocityX(0);
-  };
-
-  stop_y() {
-    this.sprite.setVelocityY(0);
+    Player.players = scene.physics.add.group();
+    Player.bullets = scene.physics.add.group();
   };
 
   fire() {
@@ -59,17 +36,6 @@ class Player {
     enemy.wrapper.die();
     bullet.destroy();
   };
-};
-
-Player.bullets = {
-  rainbow_bomb: {
-    frames: [],
-    path: 'bullets/rainbow_bomb/rainbow_bomb',
-    frame_count: 12,
-    frame_rate: 200,
-    repeat: -1,
-    speed: 400
-  }
 };
 
 Player.active_players = {};
