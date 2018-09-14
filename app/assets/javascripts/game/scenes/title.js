@@ -14,7 +14,6 @@ const TitleScene = new Phaser.Class({
     this.load.multiatlas('multipass');
     this.load.tilemapTiledJSON('map', 'shapes.json');
 
-
     Player.load();
     Enemy.load();
 
@@ -24,6 +23,8 @@ const TitleScene = new Phaser.Class({
     this.load.audio('theme', ['audio/neoishiki.mp3']);
 
 	add_keyboard_controls(this);
+
+    let graphics = this.add.graphics();
   },
 
   create: function () {

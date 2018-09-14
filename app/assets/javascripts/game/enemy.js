@@ -172,6 +172,13 @@ class Enemy {
       return;
     }
 
+    // let player_ids = Object.keys(Player.active_players);
+    // let target_id = player_ids[Math.floor(Math.random() * player_ids.length)];
+	// let target = Player.active_players[target_id];
+
+	// let path = this.add.path(this.sprite.x, this.sprite.y);
+	// path.lineTo(target.sprite.x, target.sprite.y);
+
     let bullet = Enemy.bullets.create(this.sprite.x - 30, this.sprite.y, this.bullet + '1');
     scene.physics.add.collider(bullet, Player.players, this.bullet_strike, null, scene);
     this.bullets.push(bullet);
