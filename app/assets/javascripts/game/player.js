@@ -28,7 +28,6 @@ class Player {
 
   static create(data) {
     let player = new Player(data.id, data.avatar, data.game_id);
-    new Enemy();
   }
 
   fire() {
