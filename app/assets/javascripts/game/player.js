@@ -3,8 +3,9 @@ class Player {
     this.id = id;
     this.avatar = avatar;
     this.game_id = game_id;
+    this.spawn = Player.get_spawn_point();
 
-    this.sprite = Player.players.create(400, 300, this.avatar + '1');
+    this.sprite = Player.players.create(this.spawn.x, this.spawn.y, this.avatar + '1');
     this.sprite.play(this.avatar);
     this.sprite.setCollideWorldBounds(true);
     this.sprite.wrapper = this;
@@ -12,6 +13,32 @@ class Player {
     this.bullet = 'rainbow_bomb';
 
     Player.active_players[id] = this;
+  };
+
+  static width() {
+    return 212;
+  };
+
+  static height() {
+    return 125;
+  };
+
+  static get_spawn_point() {
+    let spawn_point = { x: Player.spawn_offset.x + (Player.width() / 2), y: Player.spawn_offset.y + (Player.height() / 2) };
+    console.log('spawn: ' + JSON.stringify(spawn_point));
+
+    if (screen.height > (spawn_point.y + (Player.height() * 2) + 50)) {
+      Player.spawn_offset.y += (Player.height() + 10);
+    }
+    else if (screen.availWidth > (spawn_point.x + Player.width() + 10)) {
+      Player.spawn_offset.x += (Player.width() + 10);
+      Player.spawn_offset.y = 10;
+    }
+    else {
+      Player.spawn_offset = { x: 10, y: 10 };
+    }
+
+    return spawn_point;
   };
 
   static load() {
@@ -46,3 +73,4 @@ class Player {
 
 Player.active_players = {};
 Player.speed = 200;
+Player.spawn_offset = { x: 10, y: 10 };
