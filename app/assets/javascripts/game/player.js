@@ -35,7 +35,7 @@ class Player {
     let bullet = Player.bullets.create(this.sprite.x + 50, this.sprite.y + 20, this.bullet + '1');
     scene.physics.add.collider(bullet, enemies, this.bullet_strike, null, scene);
     bullet.play(this.bullet);
-    bullet.setVelocityX(Player.bullets[this.bullet].speed);
+    bullet.setVelocityX(500);
   };
 
   bullet_strike(bullet, enemy) {
