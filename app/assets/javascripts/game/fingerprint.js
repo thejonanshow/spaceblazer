@@ -1,6 +1,7 @@
 //= require fingerprint2
 
 new Fingerprint2().get(function(result, components) {
+  fingerprint = result;
   console.log("Fingerprint: " + result);
   let cable_url = document.head.querySelector("[name~=action-cable-url][content]").content
 

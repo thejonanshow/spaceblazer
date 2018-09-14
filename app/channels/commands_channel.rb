@@ -12,4 +12,14 @@ class CommandsChannel < ApplicationCable::Channel
   def register_player(data)
     Game.add_player(data["id"])
   end
+
+  def echo_command(data)
+    ActionCable.server.broadcast(
+      "commands", 
+      {
+        id: data["id"],
+        command: data["command"]
+      }.to_json
+    );
+  end
 end

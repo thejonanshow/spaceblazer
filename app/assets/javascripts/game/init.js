@@ -27,3 +27,4 @@ let scene = {};
 let enemies = {};
 let players = {};
 let bullets = {};
+let fingerprint = null;

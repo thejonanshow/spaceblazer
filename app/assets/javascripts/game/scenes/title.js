@@ -37,17 +37,5 @@ const TitleScene = new Phaser.Class({
   update: function () {
     Player.update();
     Enemy.update();
-    // title = TitleScene.title_sprite;
-    // x_min = TitleScene.start_x - title_wiggle;
-    // x_max = TitleScene.start_x + title_wiggle;
-    // y_min = TitleScene.start_y - title_wiggle;
-    // y_max = TitleScene.start_y + title_wiggle;
-
-    // if ((title.x < x_min) || (title.x > x_max)) {
-    //   title.setVelocityX(title.velocity.x *= -1);
-    // }
-    // else if ((title.y < y_min) || (title.y > y_max)) {
-    //   title.setVelocityX(title.velocity.y *= -1);
-    // }
   }
 });
