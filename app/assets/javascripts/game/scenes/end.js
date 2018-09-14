@@ -7,7 +7,7 @@ const EndScene = new Phaser.Class({
 
   preload: function () {
     console.log("End preload");
-    this.load.path = 'https://s3-us-west-1.amazonaws.com/spaceblazer/';
+    this.load.path = game.asset_path;
   },
   create: function () {
     console.log("End create");

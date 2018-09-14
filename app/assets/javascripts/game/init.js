@@ -19,6 +19,9 @@ const gameConfig = {
 };
 
 let game = new Phaser.Game(gameConfig);
+// game.asset_path = 'https://s3-us-west-1.amazonaws.com/spaceblazer/';
+game.asset_path = "/offline/";
+
 let debug = false;
 let scene = {};
 let enemies = {};

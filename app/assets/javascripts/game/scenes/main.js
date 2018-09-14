@@ -7,7 +7,7 @@ const MainScene = new Phaser.Class({
   },
 
   preload: function () {
-    this.load.path = 'https://s3-us-west-1.amazonaws.com/spaceblazer/';
+    this.load.path = game.asset_path
     scene = this;
   },
 

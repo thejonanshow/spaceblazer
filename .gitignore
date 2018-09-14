@@ -28,4 +28,4 @@
 
 /node_modules
 
-/offline_assets
+/public/offline/

@@ -10,8 +10,11 @@ const TitleScene = new Phaser.Class({
 
   preload: function () {
 	scene = this
-    this.load.path = 'https://s3-us-west-1.amazonaws.com/spaceblazer/';
+    this.load.path = game.asset_path;
     this.load.multiatlas('multipass');
+
+    Player.load();
+    Enemy.load();
 
     TitleScene.start_x = screen.width / 2;
     TitleScene.start_y = screen.height / 3;

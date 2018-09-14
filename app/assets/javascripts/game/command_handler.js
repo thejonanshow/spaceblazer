@@ -19,16 +19,7 @@ function handle_command(data) {
   }
   else if (command == 's') {
     if (!Player.active_players[id]) {
-      game.scene.stop('title');
-      game.scene.start('main');
-      players = scene.physics.add.group();
-      bullets = scene.physics.add.group();
-
-      Player.active_players[id] = new Player(id);
-      new Enemy();
-    }
-
-    if (Object.keys(Player.active_players).length >= 1) {
+      App.cable.subscriptions.subscriptions[0].perform("register_player",  { id: id })
     }
   }
   else if (command == 'u') {
@@ -62,6 +53,7 @@ function handle_system_command(data) {
     console.log(parsed.notice);
   }
   else if (parsed.player_created) {
+    Player.create(parsed.player_created);
     console.log(parsed.player_created);
   }
 };
