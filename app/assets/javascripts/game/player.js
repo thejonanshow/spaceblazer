@@ -25,7 +25,7 @@ class Player {
 
   static get_spawn_point() {
     let spawn_point = { x: Player.spawn_offset.x + (Player.width() / 2), y: Player.spawn_offset.y + (Player.height() / 2) };
-    console.log('spawn: ' + JSON.stringify(spawn_point));
+    console.log('Player spawn: ' + JSON.stringify(spawn_point));
 
     if (screen.height > (spawn_point.y + (Player.height() * 2) + 50)) {
       Player.spawn_offset.y += (Player.height() + 10);

@@ -5,12 +5,40 @@ function hit_enemy() {
 class Enemy {
   constructor() {
     this.avatar = 'server';
-    this.sprite = Enemy.enemies.create(700, 300, this.avatar + '1');
+    this.spawn = Enemy.get_spawn_point();
+
+    this.sprite = Enemy.enemies.create(this.spawn.x, this.spawn.y, this.avatar + '1');
     this.sprite.play(this.avatar);
     this.sprite.setCollideWorldBounds(true);
     this.sprite.wrapper = this;
 
     this.bullet = 'floppy';
+  };
+
+  static width() {
+    return 105;
+  };
+
+  static height() {
+    return 167;
+  };
+
+  static get_spawn_point() {
+    let spawn_point = { x: Enemy.spawn_offset.x - (Enemy.width() / 2), y: Enemy.spawn_offset.y + (Enemy.height() / 2) };
+    console.log('Enemy spawn: ' + JSON.stringify(spawn_point));
+
+    if (screen.height > (spawn_point.y + (Enemy.height() * 2) + 50)) {
+      Enemy.spawn_offset.y += (Enemy.height() + 10);
+    }
+    else if (screen.availWidth > (spawn_point.x - (Enemy.width() + 10))) {
+      Enemy.spawn_offset.x -= (Enemy.width() + 10);
+      Enemy.spawn_offset.y = 10;
+    }
+    else {
+      Enemy.spawn_offset = { x: (screen.width - 10), y: 10 };
+    }
+
+    return spawn_point;
   };
 
   static load() {
@@ -40,3 +68,4 @@ class Enemy {
     this.sprite.destroy();
   };
 };
+Enemy.spawn_offset = { x: (screen.width - 10), y: 10 };
