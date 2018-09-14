@@ -1,5 +1,5 @@
-function hit_enemy() {
-  console.log("BOOM");
+function hit_enemy(player, enemy) {
+  player.wrapper.mayday();
 };
 
 class Enemy {
@@ -173,13 +173,14 @@ class Enemy {
     }
 
     let bullet = Enemy.bullets.create(this.sprite.x - 30, this.sprite.y, this.bullet + '1');
-    scene.physics.add.collider(bullet, players, this.bullet_strike, null, scene);
+    scene.physics.add.collider(bullet, Player.players, this.bullet_strike, null, scene);
     this.bullets.push(bullet);
     bullet.play(this.bullet);
     bullet.setVelocityX(-Enemy.bullet_speed);
   };
 
   bullet_strike(bullet, player) {
+    player.wrapper.mayday();
     bullet.destroy();
   };
 

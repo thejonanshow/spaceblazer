@@ -5,6 +5,7 @@ class Player {
     this.game_id = game_id;
     this.spawn = Player.get_spawn_point();
     this.bullets = [];
+    this.rotation = 0;
 
     this.sprite = Player.players.create(this.spawn.x, this.spawn.y, this.avatar + '1');
     this.sprite.play(this.avatar);
@@ -65,6 +66,21 @@ class Player {
     });
   };
 
+  mayday() {
+    this.rotation = 1;
+  }
+
+  check_mayday() {
+    if (this.rotation >= 6) {
+      this.rotation = 0;
+      this.sprite.setRotation(this.rotation);
+    }
+    else if (this.rotation > 0) {
+      this.sprite.setRotation(this.rotation);
+      this.rotation += 1;
+    }
+  }
+
   cleanup_bullets() {
     let player = this;
 
@@ -78,6 +94,7 @@ class Player {
 
   cleanup() {
     this.cleanup_bullets();
+    this.check_mayday();
   };
 
   fire() {
