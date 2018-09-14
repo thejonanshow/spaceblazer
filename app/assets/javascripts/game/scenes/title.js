@@ -12,6 +12,8 @@ const TitleScene = new Phaser.Class({
 	scene = this
     this.load.path = game.asset_path;
     this.load.multiatlas('multipass');
+    this.load.tilemapTiledJSON('map', 'shapes.json');
+
 
     Player.load();
     Enemy.load();
