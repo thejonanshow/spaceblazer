@@ -33,6 +33,14 @@ class Game < ApplicationRecord
     (COLORS - self.assigned_colors).sample
   end
 
+  def self.new_game
+    old_game = Game.current
+    old_game.active = false
+    old_game.save
+
+    Game.create(active: true)
+  end
+
   def self.add_player(player_id)
     self.current.add_player(player_id)
   end

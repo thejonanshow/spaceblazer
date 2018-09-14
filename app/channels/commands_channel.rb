@@ -22,4 +22,8 @@ class CommandsChannel < ApplicationCable::Channel
       }.to_json
     );
   end
+
+  def new_game
+    Game.new_game
+  end
 end

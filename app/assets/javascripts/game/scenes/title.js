@@ -1,6 +1,15 @@
 const title_wiggle = 10;
 const title_speed = 3;
 
+function new_game() {
+  App.cable.subscriptions.subscriptions[0].perform(
+    "new_game",
+    {
+      id: fingerprint,
+    }
+  );
+}
+
 const TitleScene = new Phaser.Class({
   Extends: Phaser.Scene,
   active: true,
@@ -30,6 +39,8 @@ const TitleScene = new Phaser.Class({
   },
 
   create: function () {
+    new_game();
+
     title = this.add.sprite(
       TitleScene.start_x,
       TitleScene.start_y,
