@@ -46,7 +46,7 @@ function handle_command(data) {
 };
 
 function handle_system_command(data) {
-  console.log("System command received");
+  console.log("System command received: " + JSON.stringify(data));
   let parsed = JSON.parse(data);
 
   if (parsed.notice) {
@@ -55,5 +55,14 @@ function handle_system_command(data) {
   else if (parsed.player_created) {
     Player.create(parsed.player_created);
     console.log(parsed.player_created);
+  }
+  else if (parsed.command == "start_game") {
+    scene.started = true;
+  }
+  else if (parsed.commmand == "stop_game") {
+    console.log("STOPPING");
+  }
+  else {
+    console.log("Unrecognized system command: " + parsed.command);
   }
 };

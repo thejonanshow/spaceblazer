@@ -9,7 +9,9 @@ const TitleScene = new Phaser.Class({
   },
 
   preload: function () {
-	scene = this
+	scene = this;
+
+	this.started = false;
     this.load.path = game.asset_path;
     this.load.multiatlas('multipass');
     this.load.tilemapTiledJSON('map', 'shapes.json');
@@ -28,16 +30,32 @@ const TitleScene = new Phaser.Class({
   },
 
   create: function () {
-    title = title_sprite = this.add.sprite(
+    title = this.add.sprite(
       TitleScene.start_x,
       TitleScene.start_y,
       'multipass',
       'start/title'
     );
-    TitleScene.title_sprite = title;
+    scene.title_sprite = title;
+
+    scene.music = this.sound.add('theme');
+
+    scene.title_tween = scene.add.tween({
+      targets: [scene.title_sprite],
+      ease: 'Sine.easeInOut',
+      duration: 1000,
+      delay: 0,
+      x: { getStart: scene.title_sprite.x, getEnd: scene.title_sprite.x },
+      y: { getStart: scene.title_sprite.y, getEnd: scene.title_sprite.y },
+      alpha: { getStart: 1, getEnd: 0 }
+    });
   },
 
   update: function () {
+    if (scene.started && (scene.music.isPlaying == false)) {
+      scene.music.play();
+    };
+
     Player.update();
     Enemy.update();
   }

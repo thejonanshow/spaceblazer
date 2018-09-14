@@ -14,7 +14,11 @@ class Game < ApplicationRecord
   end
 
   def start
-    ActionCable.server.broadcast("commands", { id: "system", command: "start" }.to_json)
+    ActionCable.server.broadcast("commands", { id: "system", command: "start_game" }.to_json)
+  end
+
+  def stop
+    ActionCable.server.broadcast("commands", { id: "system", command: "stop_game" }.to_json)
   end
 
   def random_avatar
@@ -54,6 +58,10 @@ class Game < ApplicationRecord
     ActionCable.server.broadcast("commands", message.to_json)
 
     self.save
+
+    if self.players.length > 4
+      start
+    end
   end
 
   def players
