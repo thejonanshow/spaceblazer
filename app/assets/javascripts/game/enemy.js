@@ -18,6 +18,7 @@ class Enemy {
     this.avatar = 'server';
     this.spawn = Enemy.get_spawn_point();
     this.bullets = [];
+    this.direction = Enemy.directions[Math.floor(Math.random() * Enemy.directions.length)];
 
     this.sprite = Enemy.enemies.create(this.spawn.x, this.spawn.y, this.avatar + '1');
     this.sprite.play(this.avatar);
@@ -27,6 +28,8 @@ class Enemy {
     this.bullet = 'floppy';
 
     Enemy.active_enemies[this.id] = this;
+
+    this.start_moving();
   };
 
   static width() {
@@ -69,24 +72,84 @@ class Enemy {
     Object.values(Enemy.active_enemies).forEach(function(enemy) {
       if (enemy != null) {
         enemy.fire();
+        enemy.change_direction();
         enemy.cleanup();
       }
     });
 
-    let time_now = scene.sys.time.now;
+    let time_now = scene.time.now;
     Object.keys(Enemy.dead_enemies).forEach(function(time_of_death) {
       if (time_of_death != null) {
         if ((time_now - time_of_death) > 3000) {
           let dead_enemy_id = Enemy.dead_enemies[time_of_death]
 
           if (Enemy.active_enemies[dead_enemy_id] == null) {
-            console.log("Reviving dead enemy: " + dead_enemy_id);
-            Enemy.dead_enemies[time_of_death] = null;
-            new Enemy(dead_enemy_id);
+            if (dead_enemy_id != null) {
+              console.log("Reviving dead enemy: " + dead_enemy_id);
+              Enemy.dead_enemies[time_of_death] = null;
+              new Enemy(dead_enemy_id);
+            }
           }
         }
       }
     });
+  };
+
+  start_moving() {
+    if (this.direction == "NE") {
+      move_up(this);
+      move_right(this);
+    }
+    else if (this.direction == "SE") {
+      move_down(this);
+      move_right(this);
+    }
+    else if (this.direction == "SW") {
+      move_down(this);
+      move_left(this);
+    }
+    else if (this.direction == "NW") {
+      move_up(this);
+      move_left(this);
+    }
+  };
+
+  change_direction() {
+    if (this.sprite.x < (this.sprite.width / 2)) {
+      if (this.direction == "NW") {
+        this.direction = "NE";
+      }
+      else {
+        this.direction = "SE";
+      }
+    }
+    else if (this.sprite.y < (this.sprite.height / 2)) {
+      if (this.direction == "NE") {
+        this.direction = "SE";
+      }
+      else {
+        this.direction = "SW";
+      }
+    }
+    else if (this.sprite.x > (screen.availWidth - (this.sprite.width / 2))) {
+      if (this.direction == "NE") {
+        this.direction = "NW";
+      }
+      else {
+        this.direction = "SW";
+      }
+    }
+    else if (this.sprite.y > (screen.height - (this.sprite.height))) {
+      if (this.direction == "SE") {
+        this.direction = "NE";
+      }
+      else {
+        this.direction = "NW";
+      }
+    }
+
+    stop(this);
+    this.start_moving();
   };
 
   cleanup_bullets() {
@@ -128,7 +191,9 @@ class Enemy {
     Enemy.dead_enemies[scene.sys.time.now] = this.id;
   };
 };
+Enemy.speed = 100;
 Enemy.active_enemies = {};
 Enemy.dead_enemies = {};
 Enemy.spawn_offset = { x: (screen.width - 10), y: 10 };
 Enemy.bullet_speed = 500;
+Enemy.directions = ["NE", "SE", "SW", "NW"]
