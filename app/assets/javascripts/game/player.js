@@ -13,7 +13,7 @@ class Player {
 
     this.bullet = 'rainbow_bomb';
 
-    Player.active_players[id] = this;
+    Player.active_players[this.id] = this;
   };
 
   static width() {

@@ -36,6 +36,7 @@ const TitleScene = new Phaser.Class({
 
   update: function () {
     Player.update();
+    Enemy.update();
     // title = TitleScene.title_sprite;
     // x_min = TitleScene.start_x - title_wiggle;
     // x_max = TitleScene.start_x + title_wiggle;

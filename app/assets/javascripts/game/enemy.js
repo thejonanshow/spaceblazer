@@ -3,9 +3,21 @@ function hit_enemy() {
 };
 
 class Enemy {
-  constructor() {
+  constructor(id) {
+    if (typeof(id) == "undefined") {
+      console.log("Revived " + id);
+      this.id = "enemy" + (Object.keys(Enemy.active_enemies).length + 1)
+    } else if (id == null) {
+      return;
+    }
+    else {
+      console.log("New enemy id was " + id);
+      this.id = id;
+    }
+
     this.avatar = 'server';
     this.spawn = Enemy.get_spawn_point();
+    this.bullets = [];
 
     this.sprite = Enemy.enemies.create(this.spawn.x, this.spawn.y, this.avatar + '1');
     this.sprite.play(this.avatar);
@@ -13,6 +25,8 @@ class Enemy {
     this.sprite.wrapper = this;
 
     this.bullet = 'floppy';
+
+    Enemy.active_enemies[this.id] = this;
   };
 
   static width() {
@@ -51,11 +65,55 @@ class Enemy {
     scene.load.animation('floppy', 'animations/bullets/floppy.json');
   };
 
+  static update() {
+    Object.values(Enemy.active_enemies).forEach(function(enemy) {
+      if (enemy != null) {
+        enemy.fire();
+        enemy.cleanup();
+      }
+    });
+
+    let time_now = scene.sys.time.now;
+    Object.keys(Enemy.dead_enemies).forEach(function(time_of_death) {
+      if (time_of_death != null) {
+        if ((time_now - time_of_death) > 3000) {
+          let dead_enemy_id = Enemy.dead_enemies[time_of_death]
+
+          if (Enemy.active_enemies[dead_enemy_id] == null) {
+            console.log("Reviving dead enemy: " + dead_enemy_id);
+            Enemy.dead_enemies[time_of_death] = null;
+            new Enemy(dead_enemy_id);
+          }
+        }
+      }
+    });
+  };
+
+  cleanup_bullets() {
+    let enemy = this;
+
+    enemy.bullets.forEach(function(bullet) {
+      if ((bullet.x < 0) || (bullet.active == false)) {
+        bullet.destroy();
+        enemy.bullets.remove(bullet);
+      }
+    });
+  };
+
+  cleanup() {
+    this.cleanup_bullets();
+  };
+
   fire() {
+    if (this.bullets.length > 0) {
+      return;
+    }
+
     let bullet = Enemy.bullets.create(this.sprite.x - 30, this.sprite.y, this.bullet + '1');
     scene.physics.add.collider(bullet, players, this.bullet_strike, null, scene);
+    this.bullets.push(bullet);
     bullet.play(this.bullet);
-    bullet.setVelocityX(Enemy.bullets[this.bullet].speed);
+    bullet.setVelocityX(-Enemy.bullet_speed);
   };
 
   bullet_strike(bullet, player) {
@@ -66,6 +124,11 @@ class Enemy {
     let explosion = scene.add.sprite(this.sprite.x, this.sprite.y, 'animations/explosions/server/explosion1');
     explosion.play('server_explosion');
     this.sprite.destroy();
+    Enemy.active_enemies[this.id] = null;
+    Enemy.dead_enemies[scene.sys.time.now] = this.id;
   };
 };
+Enemy.active_enemies = {};
+Enemy.dead_enemies = {};
 Enemy.spawn_offset = { x: (screen.width - 10), y: 10 };
+Enemy.bullet_speed = 500;
