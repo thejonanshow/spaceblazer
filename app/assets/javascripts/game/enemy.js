@@ -77,9 +77,10 @@ class Enemy {
     });
 
     let time_now = scene.time.now;
+    const ENEMY_RESWPAWN_DELAY_MS = 3000;
     Object.keys(Enemy.dead_enemies).forEach(function(time_of_death) {
       if (time_of_death != null) {
-        if ((time_now - time_of_death) > 3000) {
+        if ((time_now - time_of_death) > ENEMY_RESWPAWN_DELAY_MS) {
           let dead_enemy_id = Enemy.dead_enemies[time_of_death]
 
           if (Enemy.active_enemies[dead_enemy_id] == null) {
