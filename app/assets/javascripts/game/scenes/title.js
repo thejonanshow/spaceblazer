@@ -47,16 +47,6 @@ class TitleScene extends Phaser.Scene {
     );
 
     scene.music = this.sound.add('theme');
-
-    scene.title_tween = scene.add.tween({
-      targets: [scene.title_sprite],
-      ease: 'Sine.easeInOut',
-      duration: 1000,
-      delay: 0,
-      x: { getStart: scene.title_sprite.x, getEnd: scene.title_sprite.x },
-      y: { getStart: scene.title_sprite.y, getEnd: scene.title_sprite.y },
-      alpha: { getStart: 1, getEnd: 0 }
-    });
   }
 
   update() {
