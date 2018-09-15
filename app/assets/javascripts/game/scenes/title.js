@@ -40,15 +40,5 @@ class TitleScene extends Phaser.Scene {
       'multipass',
       'start/title'
     );
-
-    scene.music = this.sound.add('theme');
-  }
-
-  update() {
-    if (scene.started && (scene.music.isPlaying == false)) {
-      scene.music.play();
-    };
-
-    Player.update();
   }
 }
