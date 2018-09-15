@@ -10,44 +10,41 @@ function new_game() {
   );
 }
 
-const TitleScene = new Phaser.Class({
-  Extends: Phaser.Scene,
-  active: true,
-  initialize: function TitleScene () {
-    Phaser.Scene.call(this, { key: 'title' });
-  },
+class TitleScene extends Phaser.Scene {
+  constructor() {
+    super('title');
+  }
 
-  preload: function () {
-	scene = this;
+  preload() {
+    scene = this;
 
-	this.started = false;
+    this.started = false;
     this.load.path = game.asset_path;
     this.load.multiatlas('multipass');
     this.load.tilemapTiledJSON('map', 'shapes.json');
-
+  
     Player.load();
     Enemy.load();
-
+  
     TitleScene.start_x = screen.width / 2;
     TitleScene.start_y = screen.height / 3;
-
+  
     this.load.audio('theme', ['audio/neoishiki.mp3']);
 
-	add_keyboard_controls(this);
-
+    add_keyboard_controls(this);
+  
     let graphics = this.add.graphics();
-  },
+  }
 
-  create: function () {
+  create() {
     new_game();
 
-    title = this.add.sprite(
+    scene.title_sprite = this.add.sprite(
       TitleScene.start_x,
       TitleScene.start_y,
       'multipass',
       'start/title'
     );
-    scene.title_sprite = title;
 
     scene.music = this.sound.add('theme');
 
@@ -60,9 +57,9 @@ const TitleScene = new Phaser.Class({
       y: { getStart: scene.title_sprite.y, getEnd: scene.title_sprite.y },
       alpha: { getStart: 1, getEnd: 0 }
     });
-  },
+  }
 
-  update: function () {
+  update() {
     if (scene.started && (scene.music.isPlaying == false)) {
       scene.music.play();
     };
@@ -70,4 +67,4 @@ const TitleScene = new Phaser.Class({
     Player.update();
     Enemy.update();
   }
-});
+}
