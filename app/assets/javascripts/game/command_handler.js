@@ -29,6 +29,7 @@ function handle_command(data) {
 
     if (activePlayerCount === MAX_PLAYERS) {
       game.scene.switch('title', 'main');
+      game.scene.wake('main');
     }
   }
   else if (command == 'u') {
