@@ -12,7 +12,7 @@ const gameConfig = {
       debug: false
     }
   },
-  scene: [TitleScene],
+  scene: [TitleScene, MainScene],
   audio: {
     disableWebAudio: true
   }
