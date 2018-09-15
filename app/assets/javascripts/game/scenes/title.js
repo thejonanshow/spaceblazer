@@ -19,17 +19,16 @@ class TitleScene extends Phaser.Scene {
     this.load.path = game.asset_path;
     this.load.multiatlas('multipass');
     this.load.tilemapTiledJSON('map', 'shapes.json');
-  
+    
     Player.load();
-  
+    Enemy.load();
+
     TitleScene.start_x = screen.width / 2;
     TitleScene.start_y = screen.height / 3;
-  
+
     this.load.audio('theme', ['audio/neoishiki.mp3']);
 
     add_keyboard_controls(this);
-  
-    let graphics = this.add.graphics();
   }
 
   create() {
