@@ -4,14 +4,13 @@ function hit_enemy(player, enemy) {
 
 class Enemy {
   constructor(id) {
-    if (typeof(id) == "undefined") {
-      console.log("Revived " + id);
+    if (typeof(id) === "undefined") {
       this.id = "enemy" + (Object.keys(Enemy.active_enemies).length + 1)
-    } else if (id == null) {
+      console.log("New enemy id is " + this.id);
+    } else if (id === null) {
       return;
-    }
-    else {
-      console.log("New enemy id was " + id);
+    } else {
+      console.log("Revived " + id);
       this.id = id;
     }
 
