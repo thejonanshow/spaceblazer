@@ -1,6 +1,3 @@
-const title_wiggle = 10;
-const title_speed = 3;
-
 function new_game() {
   App.cable.subscriptions.subscriptions[0].perform(
     "new_game",
@@ -24,7 +21,6 @@ class TitleScene extends Phaser.Scene {
     this.load.tilemapTiledJSON('map', 'shapes.json');
   
     Player.load();
-    Enemy.load();
   
     TitleScene.start_x = screen.width / 2;
     TitleScene.start_y = screen.height / 3;
@@ -55,6 +51,5 @@ class TitleScene extends Phaser.Scene {
     };
 
     Player.update();
-    Enemy.update();
   }
 }
