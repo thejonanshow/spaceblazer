@@ -18,21 +18,12 @@ function handle_command(data) {
   if (command == 'online') {
   }
   else if (command == 's') {
+    if (!Player.active_players[id]) {
+      App.cable.subscriptions.subscriptions[0].perform("register_player",  { id: id })
+    }
+
     if (!game.scene.isActive('main')) {
-
-      // TODO: change this to 4 when we have multi-player working
-      const MAX_PLAYERS = 2
-      let activePlayerCount = Object.keys(Player.active_players).length
-
-      if (!Player.active_players[id] && activePlayerCount < MAX_PLAYERS) {
-        App.cable.subscriptions.subscriptions[0].perform("register_player",  { id: id })
-        activePlayerCount++;
-      }
-
-      if (activePlayerCount === MAX_PLAYERS) {
-        game.scene.switch('title', 'main');
-        game.scene.wake('main');
-      }
+      game.scene.switch('title', 'main');
     }
   }
   else if (command == 'u') {
@@ -59,7 +50,7 @@ function handle_command(data) {
 };
 
 function handle_system_command(data) {
-  console.log("System command received: " + JSON.stringify(data));
+  console.log("System command received: " + data);
   let parsed = JSON.parse(data);
 
   if (parsed.notice) {
