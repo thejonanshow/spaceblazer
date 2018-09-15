@@ -18,18 +18,21 @@ function handle_command(data) {
   if (command == 'online') {
   }
   else if (command == 's') {
-    // TODO: change this to 4 when we have multi-player working
-    const MAX_PLAYERS = 1
-    let activePlayerCount = Object.keys(Player.active_players).length
+    if (!game.scene.isActive('main')) {
 
-    if (!Player.active_players[id] && activePlayerCount < MAX_PLAYERS) {
-      App.cable.subscriptions.subscriptions[0].perform("register_player",  { id: id })
-      activePlayerCount++;
-    }
+      // TODO: change this to 4 when we have multi-player working
+      const MAX_PLAYERS = 2
+      let activePlayerCount = Object.keys(Player.active_players).length
 
-    if (activePlayerCount === MAX_PLAYERS) {
-      game.scene.switch('title', 'main');
-      game.scene.wake('main');
+      if (!Player.active_players[id] && activePlayerCount < MAX_PLAYERS) {
+        App.cable.subscriptions.subscriptions[0].perform("register_player",  { id: id })
+        activePlayerCount++;
+      }
+
+      if (activePlayerCount === MAX_PLAYERS) {
+        game.scene.switch('title', 'main');
+        game.scene.wake('main');
+      }
     }
   }
   else if (command == 'u') {
