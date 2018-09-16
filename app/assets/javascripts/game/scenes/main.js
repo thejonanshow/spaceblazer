@@ -17,13 +17,12 @@ class MainScene extends Phaser.Scene {
   }
 
   create() {
-    let music = this.sound.add('theme');
-    music.play();
+    this.music = this.sound.add('theme');
   }
 
   update() {
-    if (scene.started && (scene.music.isPlaying == false)) {
-      scene.music.play();
+    if (scene.started && (this.music.isPlaying == false)) {
+      this.music.play({ loop: true });
     };
 
     Player.update();
