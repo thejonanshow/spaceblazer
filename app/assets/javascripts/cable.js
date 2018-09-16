@@ -20,7 +20,7 @@ function connectCable(uid) {
 
   App.commands = App.cable.subscriptions.create('CommandsChannel', {
     received: function(data) {
-      console.log(data);
+      debugLog(data);
       handleCommand(data);
     }
   });

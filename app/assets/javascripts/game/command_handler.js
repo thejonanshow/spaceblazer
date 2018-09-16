@@ -10,7 +10,7 @@ function handleCommand(data) {
   let command = parsed.command;
 
   if (debug) {
-    console.log(command);
+    Lonsole.log(command);
   };
 
   let player = Player.activePlayers[id]
@@ -50,23 +50,23 @@ function handleCommand(data) {
 };
 
 function handleSystemCommand(data) {
-  console.log("System command received: " + data);
+  debugLog("System command received: " + data);
   let parsed = JSON.parse(data);
 
   if (parsed.notice) {
-    console.log(parsed.notice);
+    (parsed.notice);
   }
   else if (parsed.player_created) {
     Player.create(parsed.player_created, game.scene.scenes[1]);
-    console.log(parsed.player_created);
+    (parsed.player_created);
   }
   else if (parsed.command == "start_game") {
     scene.started = true;
   }
   else if (parsed.commmand == "stop_game") {
-    console.log("STOPPING");
+    debugLog("Received stop_game command.");
   }
   else {
-    console.log("Unrecognized system command: " + parsed.command);
+    debugLog("Unrecognized system command: " + parsed.command);
   }
 };

@@ -11,7 +11,7 @@ class Enemy {
     } else if (id === null) {
       return;
     } else {
-      console.log("Revived " + id);
+      debugLog("Revived " + id);
       this.id = id;
     }
 
@@ -21,7 +21,7 @@ class Enemy {
     this.direction = Enemy.directions[Math.floor(Math.random() * Enemy.directions.length)];
 
     this.sprite = Enemy.enemies.create(this.spawn.x, this.spawn.y, this.avatar + '1');
-    console.log("New enemy in scene " + scene.name + ' with ID ' + this.id);
+    debugLog("New enemy in scene " + scene.name + ' with ID ' + this.id);
 
     this.sprite.play(this.avatar);
     this.sprite.setCollideWorldBounds(true);
@@ -49,7 +49,7 @@ class Enemy {
   static getSpawnPoint() {
     let spawnPoint = { x: Enemy.spawnOffset.x - (Enemy.width() / 2), y: Enemy.spawnOffset.y + (Enemy.height() / 2) };
 
-    console.log('Enemy spawn: ' + JSON.stringify(spawnPoint));
+    debugLog('Enemy spawn: ' + JSON.stringify(spawnPoint));
 
     if (screen.height > (spawn_point.y + (Enemy.height() * 2) + 50)) {
       Enemy.spawnOffset.y += (Enemy.height() + 10);
@@ -80,7 +80,7 @@ class Enemy {
       Object.values(Enemy.activeEnemies).forEach(function(enemy) {
         if (enemy != null) {
           enemy.fire(currentScene);
-          enemy.change_direction();
+          enemy.changeDirection();
           enemy.cleanup();
         }
       });
@@ -94,7 +94,7 @@ class Enemy {
 
             if (Enemy.activeEnemies[deadEnemyId] == null) {
               if (deadEnemyId != null) {
-                console.log("Reviving dead enemy: " + deadEnemyId);
+                debugLog("Reviving dead enemy: " + deadEnemyId);
                 Enemy.deadEnemies[timeOfDeath] = null;
                 new Enemy(deaadEnemyId, currentScene);
               }

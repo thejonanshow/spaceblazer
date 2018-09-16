@@ -17,7 +17,7 @@ class Player {
 
     Player.active_players[this.id] = this;
 
-    console.log("New player in scene " + scene.name + ' with ID ' + this.id);
+    debugLog("New player in scene " + scene.name + ' with ID ' + this.id);
   };
 
   static width() {
@@ -33,7 +33,7 @@ class Player {
     let spawnY = Player.spawnOffset.y + (Player.height() / 2) 
     let spawn_point = { x: spawnX, y: spawnY };
 
-    console.log('Player spawn: ' + JSON.stringify(spawn_point));
+    debugLog('Player spawn: ' + JSON.stringify(spawn_point));
 
     if (screen.height > (spawn_point.y + (Player.height() * 2) + 50)) {
       Player.spawnOffset.y += (Player.height() + 10);
