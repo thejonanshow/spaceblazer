@@ -18,6 +18,12 @@ class MainScene extends Phaser.Scene {
 
   create() {
     this.music = this.sound.add('theme');
+
+    const waitingText_x = this.physics.world.bounds.centerX;
+    const waitingText_y = this.physics.world.bounds.height / 3;
+
+    this.waitingText = this.add.text(waitingText_x, waitingText_y, '', { fontSize: '24px', fill: '#fff' });
+    this.waitingText.originX = 0.5;
   }
 
   update() {

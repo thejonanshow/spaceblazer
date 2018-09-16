@@ -18,7 +18,12 @@ class Player {
 
     // Start the game when NUM_PLAYERS have pressed start
     const NUM_PLAYERS = 2;
-    if (Object.keys(Player.active_players).length === NUM_PLAYERS) {
+    let playerCount = Object.keys(Player.active_players).length;
+
+    scene.waitingText.setText(`Waiting for ${NUM_PLAYERS - playerCount} more player(s). Press start to join.`);
+
+    if (playerCount === NUM_PLAYERS) {
+      scene.waitingText.destroy();
       scene.started = true;
     }
   };
