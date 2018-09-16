@@ -1,5 +1,6 @@
 class Player {
-  constructor(id, avatar, game_id) {
+  constructor(id, avatar, game_id, scene) {
+    this.scene = scene;
     this.id = id;
     this.avatar = avatar;
     this.game_id = game_id;
@@ -15,6 +16,8 @@ class Player {
     this.bullet = 'rainbow_bomb';
 
     Player.active_players[this.id] = this;
+
+    console.log("New player in scene " + scene.name + ' with ID ' + this.id);
   };
 
   static width() {
@@ -26,7 +29,10 @@ class Player {
   };
 
   static get_spawn_point() {
-    let spawn_point = { x: Player.spawn_offset.x + (Player.width() / 2), y: Player.spawn_offset.y + (Player.height() / 2) };
+    let spawnX = Player.spawn_offset.x + (Player.width() / 2);
+    let spawnY = Player.spawn_offset.y + (Player.height() / 2) 
+    let spawn_point = { x: spawnX, y: spawnY };
+
     console.log('Player spawn: ' + JSON.stringify(spawn_point));
 
     if (screen.height > (spawn_point.y + (Player.height() * 2) + 50)) {
@@ -43,21 +49,21 @@ class Player {
     return spawn_point;
   };
 
-  static load() {
-    Player.players = scene.physics.add.group();
-    Player.bullets = scene.physics.add.group();
+  static load(currentScene) {
+    Player.players = currentScene.physics.add.group();
+    Player.bullets = currentScene.physics.add.group();
 
     let names = ['appy', 'blaze', 'cloudy', 'codey', 'earnie', 'einstein', 'hootie', 'koa', 'astro']
 	names.forEach(function(name) {
-	  scene.load.animation(name, './animations/players/' + name + '.json'); 
+	  currentScene.load.animation(name, './animations/players/' + name + '.json'); 
     });
 
-    scene.load.animation('rainbow_bomb', 'animations/bullets/rainbow_bomb.json');
+    currentScene.load.animation('rainbow_bomb', 'animations/bullets/rainbow_bomb.json');
   };
 
-  static create(data) {
-    let player = new Player(data.id, data.avatar, data.game_id);
-    new Enemy();
+  static create(data, currentScene) {
+    let player = new Player(data.id, data.avatar, data.game_id, currentScene);
+    new Enemy(Enemy.generateId(), currentScene);
   };
 
   static update() {
@@ -103,7 +109,7 @@ class Player {
     }
 
     let bullet = Player.bullets.create(this.sprite.x + 50, this.sprite.y + 20, this.bullet + '1');
-    scene.physics.add.collider(bullet, Enemy.enemies, this.bullet_strike, null, scene);
+    this.scene.physics.add.collider(bullet, Enemy.enemies, this.bullet_strike, null, this.scene);
     this.bullets.push(bullet);
     bullet.play(this.bullet);
     bullet.setVelocityX(Player.bullet_speed);

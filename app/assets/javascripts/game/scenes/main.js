@@ -1,18 +1,17 @@
 class MainScene extends Phaser.Scene {
   constructor() {
     super({ key: 'main', active: false });
+    this.name = 'main';
     this.NUM_PLAYERS = 2;
   }
 
   preload() {
-    scene = this;
-
-    this.load.path = game.asset_path
+    this.load.path = assetPath
     this.load.multiatlas('multipass');
     this.load.tilemapTiledJSON('map', 'shapes.json');
 
-    Player.load();
-    Enemy.load();
+    Player.load(this);
+    Enemy.load(this);
 
     add_keyboard_controls(this);
   }
@@ -28,7 +27,7 @@ class MainScene extends Phaser.Scene {
   }
 
   update() {
-    if (scene.started && (this.music.isPlaying == false)) {
+    if (this.started && (this.music.isPlaying == false)) {
       this.music.play({ loop: true });
     };
 
@@ -52,8 +51,8 @@ class MainScene extends Phaser.Scene {
       });
     }
 
-    Player.update();
-    Enemy.update();
+    Player.update(this);
+    Enemy.update(this);
   }
 
   updateCountdown() {
@@ -63,7 +62,7 @@ class MainScene extends Phaser.Scene {
     if (this.COUNTDOWN_TEXT === 0) {
       this.countdownEvent.destroy();
       this.countdownText.destroy();
-      scene.started = true;
+      this.started = true;
     }
   }
 }

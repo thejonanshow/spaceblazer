@@ -3,10 +3,11 @@ function hit_enemy(player, enemy) {
 };
 
 class Enemy {
-  constructor(id) {
+  constructor(id, scene) {
+    this.scene = scene;
+
     if (typeof(id) === "undefined") {
-      this.id = "enemy" + (Object.keys(Enemy.active_enemies).length + 1)
-      console.log("New enemy id is " + this.id);
+      this.id = Enemy.generateId();
     } else if (id === null) {
       return;
     } else {
@@ -20,6 +21,8 @@ class Enemy {
     this.direction = Enemy.directions[Math.floor(Math.random() * Enemy.directions.length)];
 
     this.sprite = Enemy.enemies.create(this.spawn.x, this.spawn.y, this.avatar + '1');
+    console.log("New enemy in scene " + scene.name + ' with ID ' + this.id);
+
     this.sprite.play(this.avatar);
     this.sprite.setCollideWorldBounds(true);
     this.sprite.wrapper = this;
@@ -28,8 +31,12 @@ class Enemy {
 
     Enemy.active_enemies[this.id] = this;
 
-    if (scene.started) this.start_moving();
+    if (this.started) this.start_moving();
   };
+
+  static generateId() {
+    return ("enemy" + (Object.keys(Enemy.active_enemies).length + 1));
+  }
 
   static width() {
     return 105;
@@ -57,27 +64,27 @@ class Enemy {
     return spawn_point;
   };
 
-  static load() {
-    Enemy.bullets = scene.physics.add.group();
-    Enemy.enemies = scene.physics.add.group();
-    scene.physics.add.collider(Player.players, Enemy.enemies, hit_enemy, null, scene);
+  static load(currentScene) {
+    Enemy.bullets = currentScene.physics.add.group();
+    Enemy.enemies = currentScene.physics.add.group();
+    currentScene.physics.add.collider(Player.players, Enemy.enemies, hit_enemy, null, currentScene);
 
-    scene.load.animation('server', 'animations/enemies/server.json');
-    scene.load.animation('server_explosion', 'animations/explosions/server/explosion.json'); 
-    scene.load.animation('floppy', 'animations/bullets/floppy.json');
+    currentScene.load.animation('server', 'animations/enemies/server.json');
+    currentScene.load.animation('server_explosion', 'animations/explosions/server/explosion.json'); 
+    currentScene.load.animation('floppy', 'animations/bullets/floppy.json');
   };
 
-  static update() {
-    if (scene.started) {
+  static update(currentScene) {
+    if (currentScene.started) {
       Object.values(Enemy.active_enemies).forEach(function(enemy) {
         if (enemy != null) {
-          enemy.fire();
+          enemy.fire(currentScene);
           enemy.change_direction();
           enemy.cleanup();
         }
       });
 
-      let time_now = scene.time.now;
+      let time_now = currentScene.time.now;
       const ENEMY_RESWPAWN_DELAY_MS = 3000;
       Object.keys(Enemy.dead_enemies).forEach(function(time_of_death) {
         if (time_of_death != null) {
@@ -88,7 +95,7 @@ class Enemy {
               if (dead_enemy_id != null) {
                 console.log("Reviving dead enemy: " + dead_enemy_id);
                 Enemy.dead_enemies[time_of_death] = null;
-                new Enemy(dead_enemy_id);
+                new Enemy(dead_enemy_id, currentScene);
               }
             }
           }
@@ -182,7 +189,7 @@ class Enemy {
 	// path.lineTo(target.sprite.x, target.sprite.y);
 
     let bullet = Enemy.bullets.create(this.sprite.x - 30, this.sprite.y, this.bullet + '1');
-    scene.physics.add.collider(bullet, Player.players, this.bullet_strike, null, scene);
+    this.scene.physics.add.collider(bullet, Player.players, this.bullet_strike, null, this.scene);
     this.bullets.push(bullet);
     bullet.play(this.bullet);
     bullet.setVelocityX(-Enemy.bullet_speed);
@@ -194,11 +201,11 @@ class Enemy {
   };
 
   die() {
-    let explosion = scene.add.sprite(this.sprite.x, this.sprite.y, 'animations/explosions/server/explosion1');
+    let explosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, 'animations/explosions/server/explosion1');
     explosion.play('server_explosion');
     this.sprite.destroy();
     Enemy.active_enemies[this.id] = null;
-    Enemy.dead_enemies[scene.sys.time.now] = this.id;
+    Enemy.dead_enemies[this.scene.sys.time.now] = this.id;
   };
 };
 Enemy.speed = 100;

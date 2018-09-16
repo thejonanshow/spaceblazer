@@ -2,7 +2,7 @@ function new_game() {
   App.cable.subscriptions.subscriptions[0].perform(
     "new_game",
     {
-      id: fingerprint,
+      id: game.fingerprint,
     }
   );
 }
@@ -10,18 +10,17 @@ function new_game() {
 class TitleScene extends Phaser.Scene {
   constructor() {
     super('title');
+    this.name = 'title';
   }
 
   preload() {
-    scene = this;
-
     this.started = false;
-    this.load.path = game.asset_path;
+    this.load.path = assetPath
     this.load.multiatlas('multipass');
     this.load.tilemapTiledJSON('map', 'shapes.json');
     
-    Player.load();
-    Enemy.load();
+    Player.load(this);
+    Enemy.load(this);
 
     TitleScene.start_x = screen.width / 2;
     TitleScene.start_y = screen.height / 3;
@@ -34,7 +33,7 @@ class TitleScene extends Phaser.Scene {
   create() {
     new_game();
 
-    scene.title_sprite = this.add.sprite(
+    this.title_sprite = this.add.sprite(
       TitleScene.start_x,
       TitleScene.start_y,
       'multipass',
