@@ -70,7 +70,7 @@ function echo_command(id, command) {
   );
 };
 
-function add_keyboard_controls(scene) {
+function addKeyboardControls(scene) {
   [KEYDOWN1, KEYDOWN2].forEach(function(keyMap, index) {
     Object.keys(keyMap).forEach(function(keyname) {
       scene.input.keyboard.on('keydown_' + keyname, function (event) {

@@ -13,7 +13,7 @@ class MainScene extends Phaser.Scene {
     Player.load(this);
     Enemy.load(this);
 
-    add_keyboard_controls(this);
+    addKeyboardControls(this);
   }
 
   create() {

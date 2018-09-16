@@ -27,7 +27,7 @@ class TitleScene extends Phaser.Scene {
 
     this.load.audio('theme', ['audio/neoishiki.mp3']);
 
-    add_keyboard_controls(this);
+    addKeyboardControls(this);
   }
 
   create() {
