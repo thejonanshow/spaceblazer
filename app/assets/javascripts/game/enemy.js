@@ -28,7 +28,7 @@ class Enemy {
 
     Enemy.active_enemies[this.id] = this;
 
-    this.start_moving();
+    if (scene.started) this.start_moving();
   };
 
   static width() {
@@ -68,31 +68,33 @@ class Enemy {
   };
 
   static update() {
-    Object.values(Enemy.active_enemies).forEach(function(enemy) {
-      if (enemy != null) {
-        enemy.fire();
-        enemy.change_direction();
-        enemy.cleanup();
-      }
-    });
+    if (scene.started) {
+      Object.values(Enemy.active_enemies).forEach(function(enemy) {
+        if (enemy != null) {
+          enemy.fire();
+          enemy.change_direction();
+          enemy.cleanup();
+        }
+      });
 
-    let time_now = scene.time.now;
-    const ENEMY_RESWPAWN_DELAY_MS = 3000;
-    Object.keys(Enemy.dead_enemies).forEach(function(time_of_death) {
-      if (time_of_death != null) {
-        if ((time_now - time_of_death) > ENEMY_RESWPAWN_DELAY_MS) {
-          let dead_enemy_id = Enemy.dead_enemies[time_of_death]
+      let time_now = scene.time.now;
+      const ENEMY_RESWPAWN_DELAY_MS = 3000;
+      Object.keys(Enemy.dead_enemies).forEach(function(time_of_death) {
+        if (time_of_death != null) {
+          if ((time_now - time_of_death) > ENEMY_RESWPAWN_DELAY_MS) {
+            let dead_enemy_id = Enemy.dead_enemies[time_of_death]
 
-          if (Enemy.active_enemies[dead_enemy_id] == null) {
-            if (dead_enemy_id != null) {
-              console.log("Reviving dead enemy: " + dead_enemy_id);
-              Enemy.dead_enemies[time_of_death] = null;
-              new Enemy(dead_enemy_id);
+            if (Enemy.active_enemies[dead_enemy_id] == null) {
+              if (dead_enemy_id != null) {
+                console.log("Reviving dead enemy: " + dead_enemy_id);
+                Enemy.dead_enemies[time_of_death] = null;
+                new Enemy(dead_enemy_id);
+              }
             }
           }
         }
-      }
-    });
+      });
+    }
   };
 
   start_moving() {
