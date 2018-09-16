@@ -29,8 +29,6 @@ let bullets = {};
 new Fingerprint2().get(
   function(result, components) {
     game.fingerprint = result;
-    console.log("Fingerprint: " + result);
+    connectCable(game.fingerprint);
   }
 );
-
-connectCable(game.fingerprint);

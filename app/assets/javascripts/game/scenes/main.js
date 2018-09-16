@@ -32,7 +32,7 @@ class MainScene extends Phaser.Scene {
     };
 
     // Start the game when NUM_PLAYERS have pressed start
-    let playerCount = Object.keys(Player.active_players).length;
+    let playerCount = Object.keys(Player.activePlayers).length;
     this.waitingText.setText(`Waiting for ${this.NUM_PLAYERS - playerCount} more player(s). Press start to join.`);
 
     if (playerCount === this.NUM_PLAYERS && !this.countdownStarted) {

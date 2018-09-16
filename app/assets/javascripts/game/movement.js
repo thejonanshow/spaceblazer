@@ -1,16 +1,16 @@
-function move_up(entity) {
+function moveUp(entity) {
   entity.sprite.setVelocityY(-Player.speed);
 };
 
-function move_down(entity) {
+function moveDown(entity) {
   entity.sprite.setVelocityY(Player.speed);
 };
 
-function move_left(entity) {
+function moveLeft(entity) {
   entity.sprite.setVelocityX(-Player.speed);
 };
 
-function move_right(entity) {
+function moveRight(entity) {
   entity.sprite.setVelocityX(Player.speed);
 };
 
@@ -19,10 +19,10 @@ function stop(entity) {
   entity.sprite.setVelocityY(0);
 };
 
-function stop_x(entity) {
+function stopX(entity) {
   entity.sprite.setVelocityX(0);
 };
 
-function stop_y(entity) {
+function stopY(entity) {
   entity.sprite.setVelocityY(0);
 };

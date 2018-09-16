@@ -1,9 +1,9 @@
-function handle_command(data) {
+function handleCommand(data) {
   let parsed = JSON.parse(data);
   let id = parsed.id;
 
   if (id == "system") {
-    handle_system_command(data);
+    handleSystemCommand(data);
     return;
   };
 
@@ -13,7 +13,7 @@ function handle_command(data) {
     console.log(command);
   };
 
-  let player = Player.active_players[id]
+  let player = Player.activePlayers[id]
 
   if (command == 'online') {
   }
@@ -27,29 +27,29 @@ function handle_command(data) {
     }
   }
   else if (command == 'u') {
-    move_up(Player.active_players[id]);
+    moveUp(Player.activePlayers[id]);
   }
   else if (command == 'd') {
-    move_down(Player.active_players[id]);
+    moveDown(Player.activePlayers[id]);
   }
   else if (command == 'l') {
-    move_left(Player.active_players[id]);
+    moveLeft(Player.activePlayers[id]);
   }
   else if (command == 'r') {
-    move_right(Player.active_players[id]);
+    moveRight(Player.activePlayers[id]);
   }
   else if (command == '9' || command == '0') {
-    stop_y(Player.active_players[id]);
+    stopY(Player.activePlayers[id]);
   }
   else if (command == '-' || command == '=') {
-    stop_x(Player.active_players[id]);
+    stop_x(Player.activePlayers[id]);
   }
   else if (command == 'b') {
-    Player.active_players[id].fire();
+    Player.activePlayers[id].fire();
   }
 };
 
-function handle_system_command(data) {
+function handleSystemCommand(data) {
   console.log("System command received: " + data);
   let parsed = JSON.parse(data);
 

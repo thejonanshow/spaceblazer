@@ -76,7 +76,7 @@ function add_keyboard_controls(scene) {
       scene.input.keyboard.on('keydown_' + keyname, function (event) {
         let id = game.fingerprint + 'player' + (index + 1);
 
-        if ((keyname == 'ENTER') || (keyname == 'V') || (Player.active_players[id])) {
+        if ((keyname == 'ENTER') || (keyname == 'V') || (Player.activePlayers[id])) {
           command = keyMap[keyname]
           echo_command(id, command);
         }
@@ -88,7 +88,7 @@ function add_keyboard_controls(scene) {
       scene.input.keyboard.on('keyup_' + keyname, function (event) {
         let id = game.fingerprint + 'player' + (index + 1);
 
-        if (Player.active_players[id]) {
+        if (Player.activePlayers[id]) {
           command = keyMap[keyname]
           echo_command(id, command);
         }

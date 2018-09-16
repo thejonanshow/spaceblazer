@@ -17,7 +17,7 @@ class ActionCableClient
     ActionCableClient.all.uniq.count
   end
 
-  def self.clear_all
+  def self.clearAll
     redis.del(REDIS_KEY)
   end
 

@@ -4,7 +4,7 @@ class Player {
     this.id = id;
     this.avatar = avatar;
     this.game_id = game_id;
-    this.spawn = Player.get_spawn_point();
+    this.spawn = Player.getSpawnPoint();
     this.bullets = [];
     this.rotation = 0;
 
@@ -28,22 +28,22 @@ class Player {
     return 125;
   };
 
-  static get_spawn_point() {
-    let spawnX = Player.spawn_offset.x + (Player.width() / 2);
-    let spawnY = Player.spawn_offset.y + (Player.height() / 2) 
+  static getSpawnPoint() {
+    let spawnX = Player.spawnOffset.x + (Player.width() / 2);
+    let spawnY = Player.spawnOffset.y + (Player.height() / 2) 
     let spawn_point = { x: spawnX, y: spawnY };
 
     console.log('Player spawn: ' + JSON.stringify(spawn_point));
 
     if (screen.height > (spawn_point.y + (Player.height() * 2) + 50)) {
-      Player.spawn_offset.y += (Player.height() + 10);
+      Player.spawnOffset.y += (Player.height() + 10);
     }
     else if (screen.availWidth > (spawn_point.x + Player.width() + 10)) {
-      Player.spawn_offset.x += (Player.width() + 10);
-      Player.spawn_offset.y = 10;
+      Player.spawnOffset.x += (Player.width() + 10);
+      Player.spawnOffset.y = 10;
     }
     else {
-      Player.spawn_offset = { x: 10, y: 10 };
+      Player.spawnOffset = { x: 10, y: 10 };
     }
 
     return spawn_point;
@@ -67,7 +67,7 @@ class Player {
   };
 
   static update() {
-    Object.values(Player.active_players).forEach(function(player) {
+    Object.values(Player.activePlayers).forEach(function(player) {
       player.cleanup();
     });
   };
@@ -76,7 +76,7 @@ class Player {
     this.rotation = 1;
   }
 
-  check_mayday() {
+  checkMayday() {
     if (this.rotation >= 6) {
       this.rotation = 0;
       this.sprite.setRotation(this.rotation);
@@ -87,7 +87,7 @@ class Player {
     }
   }
 
-  cleanup_bullets() {
+  cleanupBullets() {
     let player = this;
 
     player.bullets.forEach(function(bullet) {
@@ -99,8 +99,8 @@ class Player {
   };
 
   cleanup() {
-    this.cleanup_bullets();
-    this.check_mayday();
+    this.cleanupBullets();
+    this.checkMayday();
   };
 
   fire() {
@@ -109,13 +109,13 @@ class Player {
     }
 
     let bullet = Player.bullets.create(this.sprite.x + 50, this.sprite.y + 20, this.bullet + '1');
-    this.scene.physics.add.collider(bullet, Enemy.enemies, this.bullet_strike, null, this.scene);
+    this.scene.physics.add.collider(bullet, Enemy.enemies, this.bulletStrike, null, this.scene);
     this.bullets.push(bullet);
     bullet.play(this.bullet);
-    bullet.setVelocityX(Player.bullet_speed);
+    bullet.setVelocityX(Player.bulletSpeed);
   };
 
-  bullet_strike(bullet, enemy) {
+  bulletStrike(bullet, enemy) {
     enemy.wrapper.die();
     bullet.destroy();
   };
@@ -123,5 +123,5 @@ class Player {
 
 Player.active_players = {};
 Player.speed = 200;
-Player.bullet_speed = 500;
-Player.spawn_offset = { x: 10, y: 10 };
+Player.bulletSpeed = 500;
+Player.spawnOffset = { x: 10, y: 10 };
