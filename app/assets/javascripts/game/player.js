@@ -15,17 +15,6 @@ class Player {
     this.bullet = 'rainbow_bomb';
 
     Player.active_players[this.id] = this;
-
-    // Start the game when NUM_PLAYERS have pressed start
-    const NUM_PLAYERS = 2;
-    let playerCount = Object.keys(Player.active_players).length;
-
-    scene.waitingText.setText(`Waiting for ${NUM_PLAYERS - playerCount} more player(s). Press start to join.`);
-
-    if (playerCount === NUM_PLAYERS) {
-      scene.waitingText.destroy();
-      scene.started = true;
-    }
   };
 
   static width() {

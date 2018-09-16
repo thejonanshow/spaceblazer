@@ -1,6 +1,7 @@
 class MainScene extends Phaser.Scene {
   constructor() {
     super({ key: 'main', active: false });
+    this.NUM_PLAYERS = 2;
   }
 
   preload() {
@@ -30,6 +31,15 @@ class MainScene extends Phaser.Scene {
     if (scene.started && (this.music.isPlaying == false)) {
       this.music.play({ loop: true });
     };
+
+    // Start the game when NUM_PLAYERS have pressed start
+    let playerCount = Object.keys(Player.active_players).length;
+    scene.waitingText.setText(`Waiting for ${this.NUM_PLAYERS - playerCount} more player(s). Press start to join.`);
+
+    if (playerCount === this.NUM_PLAYERS) {
+      scene.waitingText.destroy();
+      scene.started = true;
+    }
 
     Player.update();
     Enemy.update();
