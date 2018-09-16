@@ -1,6 +1,6 @@
 //= require ./fingerprint
 
-KEYDOWN_EVENTS_PLAYER_1 = {
+KEYDOWN1 = {
   K: "a",
   L: "b",
   COMMA: "x",
@@ -16,7 +16,7 @@ KEYDOWN_EVENTS_PLAYER_1 = {
   SPACE: "b"
 };
 
-KEYUP_EVENTS_PLAYER_1 = {
+KEYUP1 = {
   K: "1",
   L: "2",
   COMMA: "3",
@@ -32,7 +32,7 @@ KEYUP_EVENTS_PLAYER_1 = {
   SPACE: "2"
 };
 
-KEYDOWN_EVENTS_PLAYER_2 = {
+KEYDOWN2 = {
   R: "a",
   T: "b",
   F: "x",
@@ -48,7 +48,7 @@ KEYDOWN_EVENTS_PLAYER_2 = {
   X: "b"
 };
 
-KEYUP_EVENTS_PLAYER_2 = {
+KEYUP2 = {
   R: "1",
   T: "2",
   F: "3",
@@ -64,59 +64,35 @@ KEYUP_EVENTS_PLAYER_2 = {
   X: "2"
 };
 
+function echo_command(id, command) {
+  App.cable.subscriptions.subscriptions[0].perform(
+    "echo_command", { id: id, command: command }
+  );
+};
+
 function add_keyboard_controls(scene) {
-  Object.keys(KEYDOWN_EVENTS_PLAYER_1).forEach(function(keyname) {
-    scene.input.keyboard.on('keydown_' + keyname, function (event) {
-      console.log(keyname);
-      if ((keyname == 'ENTER') || (Player.active_players[game.fingerprint + "player1"])) {
-        App.cable.subscriptions.subscriptions[0].perform(
-          "echo_command",
-          {
-            id: game.fingerprint + "player1",
-            command: KEYDOWN_EVENTS_PLAYER_1[keyname]
-          }
-        );
-      }
+  [KEYDOWN1, KEYDOWN2].forEach(function(keyMap, index) {
+    Object.keys(keyMap).forEach(function(keyname) {
+      scene.input.keyboard.on('keydown_' + keyname, function (event) {
+        let id = game.fingerprint + 'player' + (index + 1);
+
+        if ((keyname == 'ENTER') || (keyname == 'V') || (Player.active_players[id])) {
+          command = keyMap[keyname]
+          echo_command(id, command);
+        }
+      });
     });
   });
-  Object.keys(KEYUP_EVENTS_PLAYER_1).forEach(function(keyname) {
-    scene.input.keyboard.on('keyup_' + keyname, function (event) {
-      if (Player.active_players[game.fingerprint + "player1"]) {
-        App.cable.subscriptions.subscriptions[0].perform(
-          "echo_command",
-          {
-            id: game.fingerprint + "player1",
-            command: KEYUP_EVENTS_PLAYER_1[keyname]
-          }
-        );
-      }
-    });
-  });
-  Object.keys(KEYDOWN_EVENTS_PLAYER_2).forEach(function(keyname) {
-    scene.input.keyboard.on('keydown_' + keyname, function (event) {
-      console.log(keyname);
-      if ((keyname == 'V') || (Player.active_players[game.fingerprint + "player2"])) {
-        App.cable.subscriptions.subscriptions[0].perform(
-          "echo_command",
-          {
-            id: game.fingerprint + "player2",
-            command: KEYDOWN_EVENTS_PLAYER_2[keyname]
-          }
-        );
-      }
-    });
-  });
-  Object.keys(KEYUP_EVENTS_PLAYER_2).forEach(function(keyname) {
-    scene.input.keyboard.on('keyup_' + keyname, function (event) {
-      if (Player.active_players[game.fingerprint + "player2"]) {
-        App.cable.subscriptions.subscriptions[0].perform(
-          "echo_command",
-          {
-            id: game.fingerprint + "player2",
-            command: KEYUP_EVENTS_PLAYER_2[keyname]
-          }
-        );
-      }
+  [KEYUP1, KEYUP2].forEach(function(keyMap, index) {
+    Object.keys(keyMap).forEach(function(keyname) {
+      scene.input.keyboard.on('keyup_' + keyname, function (event) {
+        let id = game.fingerprint + 'player' + (index + 1);
+
+        if (Player.active_players[id]) {
+          command = keyMap[keyname]
+          echo_command(id, command);
+        }
+      });
     });
   });
 };
