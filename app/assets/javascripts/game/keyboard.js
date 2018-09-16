@@ -38,7 +38,7 @@ KEYDOWN_EVENTS_PLAYER_2 = {
   F: "x",
   G: "y",
   BACKTICK: "t",
-  TAB: "s",
+  V: "s",
   NUMBER_ONE: "o",
   NUMBER_TWO: "w",
   W: "u",
@@ -54,7 +54,7 @@ KEYUP_EVENTS_PLAYER_2 = {
   F: "3",
   G: "4",
   BACKTICK: "5",
-  TAB: "6",
+  V: "6",
   NUMBER_ONE: "7",
   NUMBER_TWO: "8",
   W: "9",
@@ -68,11 +68,11 @@ function add_keyboard_controls(scene) {
   Object.keys(KEYDOWN_EVENTS_PLAYER_1).forEach(function(keyname) {
     scene.input.keyboard.on('keydown_' + keyname, function (event) {
       console.log(keyname);
-      if ((keyname == 'ENTER') || (Player.active_players[fingerprint + "player1"])) {
+      if ((keyname == 'ENTER') || (Player.active_players[game.fingerprint + "player1"])) {
         App.cable.subscriptions.subscriptions[0].perform(
           "echo_command",
           {
-            id: fingerprint + "player1",
+            id: game.fingerprint + "player1",
             command: KEYDOWN_EVENTS_PLAYER_1[keyname]
           }
         );
@@ -81,11 +81,11 @@ function add_keyboard_controls(scene) {
   });
   Object.keys(KEYUP_EVENTS_PLAYER_1).forEach(function(keyname) {
     scene.input.keyboard.on('keyup_' + keyname, function (event) {
-      if (Player.active_players[fingerprint + "player1"]) {
+      if (Player.active_players[game.fingerprint + "player1"]) {
         App.cable.subscriptions.subscriptions[0].perform(
           "echo_command",
           {
-            id: fingerprint + "player1",
+            id: game.fingerprint + "player1",
             command: KEYUP_EVENTS_PLAYER_1[keyname]
           }
         );
@@ -95,11 +95,11 @@ function add_keyboard_controls(scene) {
   Object.keys(KEYDOWN_EVENTS_PLAYER_2).forEach(function(keyname) {
     scene.input.keyboard.on('keydown_' + keyname, function (event) {
       console.log(keyname);
-      if ((keyname == 'TAB') || (Player.active_players[fingerprint + "player2"])) {
+      if ((keyname == 'V') || (Player.active_players[game.fingerprint + "player2"])) {
         App.cable.subscriptions.subscriptions[0].perform(
           "echo_command",
           {
-            id: fingerprint + "player2",
+            id: game.fingerprint + "player2",
             command: KEYDOWN_EVENTS_PLAYER_2[keyname]
           }
         );
@@ -108,11 +108,11 @@ function add_keyboard_controls(scene) {
   });
   Object.keys(KEYUP_EVENTS_PLAYER_2).forEach(function(keyname) {
     scene.input.keyboard.on('keyup_' + keyname, function (event) {
-      if (Player.active_players[fingerprint + "player2"]) {
+      if (Player.active_players[game.fingerprint + "player2"]) {
         App.cable.subscriptions.subscriptions[0].perform(
           "echo_command",
           {
-            id: fingerprint + "player2",
+            id: game.fingerprint + "player2",
             command: KEYUP_EVENTS_PLAYER_2[keyname]
           }
         );
