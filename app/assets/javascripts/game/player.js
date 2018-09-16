@@ -15,6 +15,12 @@ class Player {
     this.bullet = 'rainbow_bomb';
 
     Player.active_players[this.id] = this;
+
+    // Start the game when NUM_PLAYERS have pressed start
+    const NUM_PLAYERS = 2;
+    if (Object.keys(Player.active_players).length === NUM_PLAYERS) {
+      scene.started = true;
+    }
   };
 
   static width() {
