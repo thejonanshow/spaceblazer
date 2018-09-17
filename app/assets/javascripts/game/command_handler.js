@@ -18,7 +18,7 @@ function handleCommand(data) {
   if (command == 'online') {
   }
   else if (command == 's') {
-    if (!Player.active_players[id]) {
+    if (!Player.activePlayers[id]) {
       App.cable.subscriptions.subscriptions[0].perform("register_player",  { id: id })
     }
 
@@ -42,7 +42,7 @@ function handleCommand(data) {
     stopY(Player.activePlayers[id]);
   }
   else if (command == '-' || command == '=') {
-    stop_x(Player.activePlayers[id]);
+    stopX(Player.activePlayers[id]);
   }
   else if (command == 'b') {
     Player.activePlayers[id].fire();

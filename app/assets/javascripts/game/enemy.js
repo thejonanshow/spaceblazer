@@ -51,10 +51,10 @@ class Enemy {
 
     debugLog('Enemy spawn: ' + JSON.stringify(spawnPoint));
 
-    if (screen.height > (spawn_point.y + (Enemy.height() * 2) + 50)) {
+    if (screen.height > (spawnPoint.y + (Enemy.height() * 2) + 50)) {
       Enemy.spawnOffset.y += (Enemy.height() + 10);
     }
-    else if (screen.availWidth > (spawn_point.x - (Enemy.width() + 10))) {
+    else if (screen.availWidth > (spawnPoint.x - (Enemy.width() + 10))) {
       Enemy.spawnOffset.x -= (Enemy.width() + 10);
       Enemy.spawnOffset.y = 10;
     }
@@ -96,7 +96,7 @@ class Enemy {
               if (deadEnemyId != null) {
                 debugLog("Reviving dead enemy: " + deadEnemyId);
                 Enemy.deadEnemies[timeOfDeath] = null;
-                new Enemy(deaadEnemyId, currentScene);
+                new Enemy(deadEnemyId, currentScene);
               }
             }
           }

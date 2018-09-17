@@ -15,7 +15,7 @@ class Player {
 
     this.bullet = 'rainbow_bomb';
 
-    Player.active_players[this.id] = this;
+    Player.activePlayers[this.id] = this;
 
     debugLog("New player in scene " + scene.name + ' with ID ' + this.id);
   };
@@ -31,14 +31,14 @@ class Player {
   static getSpawnPoint() {
     let spawnX = Player.spawnOffset.x + (Player.width() / 2);
     let spawnY = Player.spawnOffset.y + (Player.height() / 2) 
-    let spawn_point = { x: spawnX, y: spawnY };
+    let spawnPoint = { x: spawnX, y: spawnY };
 
-    debugLog('Player spawn: ' + JSON.stringify(spawn_point));
+    debugLog('Player spawn: ' + JSON.stringify(spawnPoint));
 
-    if (screen.height > (spawn_point.y + (Player.height() * 2) + 50)) {
+    if (screen.height > (spawnPoint.y + (Player.height() * 2) + 50)) {
       Player.spawnOffset.y += (Player.height() + 10);
     }
-    else if (screen.availWidth > (spawn_point.x + Player.width() + 10)) {
+    else if (screen.availWidth > (spawnPoint.x + Player.width() + 10)) {
       Player.spawnOffset.x += (Player.width() + 10);
       Player.spawnOffset.y = 10;
     }
@@ -46,7 +46,7 @@ class Player {
       Player.spawnOffset = { x: 10, y: 10 };
     }
 
-    return spawn_point;
+    return spawnPoint;
   };
 
   static load(currentScene) {
@@ -121,7 +121,7 @@ class Player {
   };
 };
 
-Player.active_players = {};
+Player.activePlayers = {};
 Player.speed = 200;
 Player.bulletSpeed = 500;
 Player.spawnOffset = { x: 10, y: 10 };

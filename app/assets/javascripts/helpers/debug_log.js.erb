@@ -1,5 +1,5 @@
 function debugLog(message) {
-  if (<%= ENV['DEBUG'] %> || game.DEBUG %>) {
+  if (<%= ENV['DEBUG'] ? true : false %> || game.DEBUG) {
     console.log(message);
   };
 }

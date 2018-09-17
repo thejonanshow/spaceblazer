@@ -1,5 +1,3 @@
-//= require ./fingerprint
-
 KEYDOWN1 = {
   K: "a",
   L: "b",
