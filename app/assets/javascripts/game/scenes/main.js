@@ -1,11 +1,21 @@
+function new_game() {
+  App.cable.subscriptions.subscriptions[0].perform(
+    "new_game",
+    {
+      id: game.fingerprint,
+    }
+  );
+}
+
 class MainScene extends Phaser.Scene {
   constructor() {
-    super({ key: 'main', active: false });
+    super({ key: 'main', active: true });
     this.name = 'main';
     this.NUM_PLAYERS = 2;
   }
 
   preload() {
+    this.started = false;
     this.load.path = assetPath
     this.load.multiatlas('multipass');
     this.load.tilemapTiledJSON('map', 'shapes.json');
@@ -13,16 +23,30 @@ class MainScene extends Phaser.Scene {
     Player.load(this);
     Enemy.load(this);
 
+    this.startX = screen.width / 2;
+    this.startY = screen.height / 3;
+
+    this.load.audio('theme', ['audio/neoishiki.mp3']);
+
     addKeyboardControls(this);
   }
 
   create() {
+    new_game();
+
+    this.titleSprite = this.add.sprite(
+      this.startX,
+      this.startY,
+      'multipass',
+      'start/title'
+    );
+
     this.music = this.sound.add('theme');
 
-    this.center_x = this.physics.world.bounds.centerX;
-    this.topThird_y = this.physics.world.bounds.height / 3;
+    this.centerX = this.physics.world.bounds.centerX;
+    this.textY = this.physics.world.bounds.height * 0.75;
 
-    this.waitingText = this.add.text(this.center_x, this.topThird_y, '', { fontSize: '24px', fill: '#fff' });
+    this.waitingText = this.add.text(this.centerX, this.textY, '', { fontSize: '24px', fill: '#fff' });
     this.waitingText.originX = 0.5;
   }
 
