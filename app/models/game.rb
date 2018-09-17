@@ -66,15 +66,7 @@ class Game < ApplicationRecord
       break if players.length >=(AVATARS.length * COLORS.length)
     end
 
-    created_player = players.create(avatar: avatar, color: color, client_side_id: player_id)
-
-    message = {
-      id: "system",
-      player_created: { id: created_player.client_side_id, avatar: "#{avatar}_#{color}", game_id: self.id }
-    }
-    ActionCable.server.broadcast("commands", message.to_json)
-
-    self.save
+    players.create(avatar: avatar, color: color, client_side_id: player_id)
 
     if self.players.length > 4
       start
