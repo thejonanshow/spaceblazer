@@ -1,4 +1,6 @@
 function handleCommand(data) {
+  debugLog("Command received: " + data);
+
   let parsed = JSON.parse(data);
   let id = parsed.id;
 
@@ -51,6 +53,7 @@ function handleCommand(data) {
 
 function handleSystemCommand(data) {
   debugLog("System command received: " + data);
+
   let parsed = JSON.parse(data);
 
   if (parsed.notice) {
