@@ -1,5 +1,6 @@
 class Game < ApplicationRecord
   after_create :set_data
+  has_many :players
 
   PLAYER_ANIMATION_FILES = Dir.glob("./app/assets/javascripts/game/animations/players/*.json")
   AVATARS = PLAYER_ANIMATION_FILES.map { |f| f.scan(/\/(\w+)\.json/) }.flatten
@@ -22,15 +23,11 @@ class Game < ApplicationRecord
   end
 
   def random_avatar
-    available = (AVATARS - self.assigned_avatars)
-    self.assigned_avatars = [] if available.empty?
-    (AVATARS - self.assigned_avatars).sample
+    AVATARS.sample
   end
 
   def random_color
-    available = (COLORS - self.assigned_colors)
-    self.assigned_colors = [] if available.empty?
-    (COLORS - self.assigned_colors).sample
+    COLORS.sample
   end
 
   def self.new_game
@@ -45,23 +42,35 @@ class Game < ApplicationRecord
     self.current.add_player(player_id)
   end
 
+  def new_player?(player_id)
+    existing_ids = players.reload.map(&:client_side_id)
+
+    if existing_ids.include? player_id
+      Rails.logger.debug("Player ID already exists: #{player_id} (existing: #{existing_ids})")
+      return false
+    else
+      Rails.logger.debug("Player ID is new: #{player_id} (existing: #{existing_ids})")
+      return true
+    end
+  end
+
   def add_player(player_id)
+    return unless new_player?(player_id)
+
     avatar = random_avatar
     color = random_color
 
-    while self.players.keys.include? "#{avatar}_#{color}"
+    while Player.where(avatar: avatar, color: color).any?
       avatar = random_avatar
       color = random_color
       break if players.length >=(AVATARS.length * COLORS.length)
     end
 
-    self.assigned_avatars.push avatar
-    self.assigned_colors.push color
-    self.players["#{avatar}_#{color}"] = player_id
+    created_player = players.create(avatar: avatar, color: color, client_side_id: player_id)
 
     message = {
       id: "system",
-      player_created: { id: player_id, avatar: "#{avatar}_#{color}", game_id: self.id }
+      player_created: { id: created_player.client_side_id, avatar: "#{avatar}_#{color}", game_id: self.id }
     }
     ActionCable.server.broadcast("commands", message.to_json)
 
@@ -72,41 +81,12 @@ class Game < ApplicationRecord
     end
   end
 
-  def players
-    if data["players"].nil?
-      data["players"] = {}
-      self.save
-    end
-
-    data["players"]
-  end
-
   def assigned_avatars
-    if data["assigned_avatars"].nil?
-      data["assigned_avatars"] = []
-      self.save
-    end
-
-    data["assigned_avatars"]
-  end
-
-  def assigned_avatars=(new_avatars)
-    data["assigned_avatars"] = new_avatars
-    self.save
+    players.map { |p| p.avatar }
   end
 
   def assigned_colors
-    if data["assigned_colors"].nil?
-      data["assigned_colors"] = []
-      self.save
-    end
-
-    data["assigned_colors"]
-  end
-
-  def assigned_colors=(new_colors)
-    data["assigned_colors"] = new_colors
-    self.save
+    players.map { |p| p.color }
   end
 
   def self.get_colors
