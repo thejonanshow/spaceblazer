@@ -11,9 +11,7 @@ function handleCommand(data) {
 
   let command = parsed.command;
 
-  if (debug) {
-    Lonsole.log(command);
-  };
+  debugLog(command);
 
   let player = Player.activePlayers[id]
 
