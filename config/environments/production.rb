@@ -2,7 +2,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.web_socket_server_url = "wss://spaceblazer-production.herokuapp.com/cable" 
-  config.action_cable.url = "wss://localhost:#{ENV['PORT'] || 3000}/cable"
+  config.action_cable.url = "wss://spaceblazer-production.herokuapp.com/cable" 
 
   config.action_cable.allowed_request_origins = [
     'https://spaceblazer.cloud',
