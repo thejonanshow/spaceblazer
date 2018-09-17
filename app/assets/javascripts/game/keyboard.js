@@ -69,6 +69,10 @@ function echo_command(id, command) {
 };
 
 function addKeyboardControls(scene) {
+  scene.input.keyboard.on('keydown', function(event) {
+    debugLog(event);
+  });
+
   [KEYDOWN1, KEYDOWN2].forEach(function(keyMap, index) {
     Object.keys(keyMap).forEach(function(keyname) {
       scene.input.keyboard.on('keydown_' + keyname, function (event) {

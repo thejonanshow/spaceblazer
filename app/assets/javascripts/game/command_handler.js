@@ -57,7 +57,7 @@ function handleSystemCommand(data) {
     (parsed.notice);
   }
   else if (parsed.player_created) {
-    Player.create(parsed.player_created, game.scene.scenes[1]);
+    Player.create(parsed.player_created, game.scene.scenes[0]);
     (parsed.player_created);
   }
   else if (parsed.command == "start_game") {

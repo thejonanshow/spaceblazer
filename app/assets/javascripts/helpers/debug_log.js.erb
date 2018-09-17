@@ -1,5 +1,16 @@
 function debugLog(message) {
-  if (<%= ENV['DEBUG'] ? true : false %> || game.DEBUG) {
+  if (debugging()) {
     console.log(message);
   };
 }
+
+function debugging() {
+  let env_debug = <%= ENV['DEBUG'] ? true : false %>;
+
+  if (env_debug || game.DEBUG || game.debug) {
+    return true;
+  }
+  else {
+    return false;
+  }
+};
