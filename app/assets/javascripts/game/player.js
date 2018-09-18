@@ -17,6 +17,8 @@ class Player {
 
     Player.activePlayers[this.id] = this;
 
+    scene.sfx.play('newplayer');
+
     debugLog("New player in scene " + scene.name + ' with ID ' + this.id);
   };
 

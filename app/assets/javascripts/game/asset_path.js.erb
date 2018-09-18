@@ -1,4 +1,1 @@
-let assetPath = 'https://s3-us-west-1.amazonaws.com/spaceblazer/';
-if (<%= ENV["OFFLINE"] ? true : false %>) {
-  assetPath = '/offline/';
-};
+let useOfflineAssets = <%= ENV["OFFLINE"] ? true : false %>;
