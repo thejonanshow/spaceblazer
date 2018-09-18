@@ -139,6 +139,21 @@ class Player {
     enemy.wrapper.die();
     bullet.destroy();
   };
+
+  // Increment score by amount or by 1 if amount not specified
+  incrementScore(amount) {
+    this.updateScore(amount || 1);
+  }
+
+  // Decrement score by amount or by 1 if amount not specified
+  decrementScore(amount) {
+    this.updateScore(amount || -1);
+  }
+
+  updateScore(amount) {
+    this.score = this.score + amount
+    this.scoreText.setText(this.score);
+  }
 };
 
 Player.activePlayers = {};
