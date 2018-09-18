@@ -139,7 +139,7 @@ class Player {
   bulletStrike(bullet, enemy) {
     enemy.wrapper.die();
     bullet.destroy();
-    this.incrementScore();
+    this.incrementScore(10);
   };
 
   // Increment score by amount or by 1 if amount not specified
