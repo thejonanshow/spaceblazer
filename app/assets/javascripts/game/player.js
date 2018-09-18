@@ -89,6 +89,7 @@ class Player {
 
   mayday() {
     this.rotation = 1;
+    this.decrementScore();
   }
 
   checkMayday() {
