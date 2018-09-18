@@ -102,7 +102,8 @@ class MainScene extends Phaser.Scene {
 
       const COUNTDOWN_MS = 3000;
       this.COUNTDOWN_TEXT = COUNTDOWN_MS / 1000;
-      this.countdownText = this.add.text(this.center_x, this.topThird_y, this.COUNTDOWN_TEXT, { fontSize: '256px', fill: '#fff' });
+      this.countdownText = this.add.text(this.centerX, this.textY, this.COUNTDOWN_TEXT, { fontSize: '256px', fill: '#fff' })
+        .setOrigin(0.5, 0.5);
 
       this.countdownEvent = this.time.addEvent({
         delay: 1000,
