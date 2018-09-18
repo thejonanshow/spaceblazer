@@ -149,7 +149,7 @@ class Player {
 
   // Decrement score by amount or by 1 if amount not specified
   decrementScore(amount) {
-    this.updateScore(-1 * (amount || 1));
+    this.updateScore(amount || -1);
   }
 
   updateScore(amount) {

@@ -76,8 +76,7 @@ class MainScene extends Phaser.Scene {
     this.waitingText = this.add.text(this.centerX, this.textY, '', { fontSize: '24px', fill: '#fff' });
     this.waitingText.originX = 0.5;
 
-    // this.NUM_PLAYERS = spaceblazerConfig("minimum_players");
-    this.NUM_PLAYERS = 1;
+    this.NUM_PLAYERS = spaceblazerConfig("minimum_players");
   }
 
   update() {
