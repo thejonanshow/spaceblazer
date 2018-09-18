@@ -2,7 +2,7 @@ class StarScene extends Phaser.Scene {
   constructor() {
     super({ key: 'stars', active: true });
     this.name = 'stars';
-    this.starCount = 300;
+    this.starCount = 100;
     this.stars = [];
   }
 
