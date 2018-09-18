@@ -13,6 +13,9 @@ class Player {
     this.sprite.setCollideWorldBounds(true);
     this.sprite.wrapper = this;
 
+    this.score = 0;
+    this.scoreText = scene.add.text(this.scoreX(), this.scoreY(), this.score, { fontSize: '18px', fill: '#fff' });
+
     this.bullet = 'rainbow_bomb';
 
     Player.activePlayers[this.id] = this;
@@ -29,6 +32,16 @@ class Player {
   static height() {
     return 125;
   };
+
+  scoreX() {
+    //left side of sprite
+    return this.sprite.x - (this.sprite.width * this.sprite.originX);
+  }
+
+  scoreY() {
+    // just above center vertically
+    return this.sprite.y - (this.sprite.height * .1);
+  }
 
   static getSpawnPoint() {
     let spawnX = Player.spawnOffset.x + (Player.width() / 2);
@@ -100,9 +113,14 @@ class Player {
     });
   };
 
+  moveScore() {
+    this.scoreText.setPosition(this.scoreX(), this.scoreY());
+  }
+
   cleanup() {
     this.cleanupBullets();
     this.checkMayday();
+    this.moveScore();
   };
 
   fire() {
