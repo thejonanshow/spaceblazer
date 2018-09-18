@@ -130,7 +130,7 @@ class Player {
     }
 
     let bullet = Player.bullets.create(this.sprite.x + 50, this.sprite.y + 20, this.bullet + '1');
-    this.scene.physics.add.collider(bullet, Enemy.enemies, this.bulletStrike, null, this.scene);
+    this.scene.physics.add.collider(bullet, Enemy.enemies, this.bulletStrike, null, this);
     this.bullets.push(bullet);
     bullet.play(this.bullet);
     bullet.setVelocityX(Player.bulletSpeed);
@@ -139,6 +139,7 @@ class Player {
   bulletStrike(bullet, enemy) {
     enemy.wrapper.die();
     bullet.destroy();
+    this.incrementScore();
   };
 
   // Increment score by amount or by 1 if amount not specified
