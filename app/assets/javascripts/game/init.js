@@ -5,21 +5,23 @@
 
 const gameConfig = {
   type: Phaser.AUTO,
-  width: screen.width,
-  height: screen.height,
+  width: window.innerWidth,
+  height: window.innerHeight,
   physics: {
     default: 'arcade',
     arcade: {
       debug: false
     }
   },
-  scene: [MainScene],
+  scene: [StarScene, MainScene],
   audio: {
     disableWebAudio: true
   }
 };
 
 let game = new Phaser.Game(gameConfig);
+game.width = window.innerWidth;
+game.height = window.innerHeight;
 
 let debug = false;
 let enemies = {};

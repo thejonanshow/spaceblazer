@@ -15,29 +15,23 @@ class MainScene extends Phaser.Scene {
 
   preload() {
     game.mainScene = this;
+    this.started = false;
 
     this.load.path = '/offline/';
     this.load.json('spaceblazerConfig', '../spaceblazer_config.json');
 
-    let assetPath = 'https://s3-us-west-1.amazonaws.com/spaceblazer/';
-    if (useOfflineAssets) {
-      assetPath = '/offline/';
-    }
+    this.load.path = getAssetPath();
 
-    this.started = false;
-    this.load.path = assetPath;
-    this.load.multiatlas('multipass');
+    this.load.multiatlas('multipass', 'multipass.json');
     this.load.tilemapTiledJSON('map', 'shapes.json');
-
     this.load.audio('sfx', 'audio/playerstart.wav');
+    this.load.audio('theme', 'audio/neoishiki.mp3');
 
     Player.load(this);
     Enemy.load(this);
 
     this.startX = screen.width / 2;
     this.startY = screen.height / 3;
-
-    this.load.audio('theme', ['audio/neoishiki.mp3']);
 
     addKeyboardControls(this);
   }
