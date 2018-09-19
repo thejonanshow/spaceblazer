@@ -6,7 +6,14 @@ class Game < ApplicationRecord
   AVATARS = PLAYER_ANIMATION_FILES.map { |f| f.scan(/\/(\w+)\.json/) }.flatten
 
   def self.current
-    Game.where(active: true).first || Game.create(active: true)
+    active_game = Game.where(active: true).first || Game.create(active: true)
+
+    if active_game.players.count > 50
+      Game.where(active: true).update_all(active: false)
+      active_game = Game.create(active: true)
+    end
+
+    active_game
   end
 
   def set_data
