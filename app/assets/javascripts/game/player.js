@@ -96,7 +96,7 @@ class Player {
   displayName() {
     let split = this.avatarName.split('_');
     let character = split[0].charAt(0).toUpperCase() + split[0].slice(1);
-    let color = split[1].charAt(0).toUpperCase() + split[0].slice(1);
+    let color = split[1].charAt(0).toUpperCase() + split[1].slice(1);
     return (color + " " + character);
   }
 
