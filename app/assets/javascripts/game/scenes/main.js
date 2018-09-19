@@ -17,6 +17,15 @@ class MainScene extends Phaser.Scene {
     game.mainScene = this;
     this.started = false;
     this.worldCollisionOffset = 0;
+    this.GAMETIMER_SEC = "";
+
+    this.gameTimerText = this.add.text(
+      (game.width / 2),
+      (game.height / 8),
+      this.COUNTDOWN_TEXT,
+      { fontSize: '72px', fill: '#fff' }
+    ).setOrigin(0.5, 0.5);
+
 
     this.load.path = '/';
     this.load.json('spaceblazerConfig', '../spaceblazer_config.json');
@@ -40,8 +49,6 @@ class MainScene extends Phaser.Scene {
 
     this.matter.world.on('collisionstart', function(event, bodyA, bodyB) {
       if (bodyA.parent && bodyA.parent.gameObject && bodyA.parent.gameObject.wrapper) {
-        console.log(bodyA);
-        console.log(bodyB);
         bodyA.parent.gameObject.wrapper.collision(bodyA, bodyB);
       }
       else if (bodyB.parent && bodyB.parent.gameObject && bodyB.parent.gameObject.wrapper) {
@@ -102,11 +109,11 @@ class MainScene extends Phaser.Scene {
   }
 
   update() {
-    // if (this.started) {
-    //   if (this.music.isPlaying == false) {
-    //     this.music.play({ loop: true });
-    //   }
-    // }
+    if (this.started) {
+      if (this.music.isPlaying == false) {
+        this.music.play({ loop: true });
+      }
+    }
 
     if (this.countdownStarted) {
       if (this.logoVisible) {
@@ -124,6 +131,7 @@ class MainScene extends Phaser.Scene {
 
       const COUNTDOWN_MS = 3000;
       this.COUNTDOWN_TEXT = COUNTDOWN_MS / 1000;
+
       this.countdownText = this.add.text(this.centerX, this.textY, this.COUNTDOWN_TEXT, { fontSize: '256px', fill: '#fff' })
         .setOrigin(0.5, 0.5);
 
@@ -147,6 +155,62 @@ class MainScene extends Phaser.Scene {
     });
   }
 
+  finish() {
+    game.scene.pause('main');
+    let playerIds = Object.keys(Player.activePlayers);
+    let winner = Player.activePlayers[playerIds[0]];;
+
+    playerIds.forEach(function(playerId) {
+      let currentPlayer = Player.activePlayers[playerId];
+
+      if (currentPlayer.score > winner.score) {
+        winner = currentPlayer;
+      }
+    });
+    
+    winner.sprite.winner = true;
+    let overlay = this.add.graphics();
+    overlay.fillStyle(0x000000, 1.0);
+    overlay.fillRect(0, 0, game.width, game.height);
+    overlay.alpha = 0.5;
+
+    winner.scoreText.setAlpha(0);
+    winner.sprite.setPosition((game.width / 2), (game.height / 2));
+    winner.sprite.setScale(2);
+    winner.sprite.setDepth(Infinity);
+
+    this.gameTimerText.setDepth(Infinity);
+    this.gameTimerText.setText(winner.displayName() + " wins!");
+    this.add.text(
+      (game.width / 2),
+      (game.height * 0.8),
+      "CONGRATULATIONS!",
+      { fontSize: '72px', fill: '#fff' }
+    ).setOrigin(0.5, 0.5);
+    this.gameTimerText.originX = 0.5;
+  }
+
+  updateGameTimer() {
+    this.GAMETIMER_SEC--;
+    this.gameTimerText.setText(this.GAMETIMER_SEC);
+
+    if (this.GAMETIMER_SEC === 0) {
+      this.gameTimer.destroy();
+      this.gameTimerText.setText("");
+      this.finish();
+    }
+  };
+
+  startGameTimer() {
+    this.GAMETIMER_SEC = 60;
+    this.gameTimer = this.time.addEvent({
+      delay: 1000,
+      loop: true,
+      callback: this.updateGameTimer,
+      callbackScope: this
+    });
+  };
+
   updateCountdown() {
     this.COUNTDOWN_TEXT--;
     this.countdownText.setText(this.COUNTDOWN_TEXT);
@@ -155,6 +219,7 @@ class MainScene extends Phaser.Scene {
       this.countdownEvent.destroy();
       this.countdownText.destroy();
       this.start();
+      this.startGameTimer();
     }
   }
 }

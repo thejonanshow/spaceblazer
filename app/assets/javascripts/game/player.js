@@ -93,6 +93,13 @@ class Player {
     return ("players/" + avatarName.replace("_", "/") + "/" + avatarName + "1");
   }
 
+  displayName() {
+    let split = this.avatarName.split('_');
+    let character = split[0].charAt(0).toUpperCase() + split[0].slice(1);
+    let color = split[1].charAt(0).toUpperCase() + split[0].slice(1);
+    return (color + " " + character);
+  }
+
   levelUp() {
     if (this.level < 5) {
       this.scoreEvent("level_up");

@@ -2,6 +2,7 @@
   "name": "spaceblazer",
   "private": true,
   "dependencies": {
-    "phaser": "^3.12.0"
+    "phaser": "^3.12.0",
+    "screenfull": "^3.3.3"
   }
 }

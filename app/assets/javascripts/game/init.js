@@ -34,3 +34,11 @@ new Fingerprint2().get(
     connectCable(game.fingerprint);
   }
 );
+
+window.addEventListener("load", function() {
+  let gameCanvas = document.getElementsByTagName('canvas')[0];
+
+  gameCanvas.addEventListener("click", function( event ) {
+    screenfull.toggle(this);
+  }, false);
+});
