@@ -98,6 +98,10 @@ class Bullet {
         bodyB.parent.gameObject.wrapper.destroy();
         bullet.explode();
       }
+      else if (bodyB.parent.gameObject.wrapper instanceof Player) {
+        let player = bodyB.parent.gameObject.wrapper;
+        player.damage();
+      }
     }
   }
 

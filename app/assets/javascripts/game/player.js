@@ -142,7 +142,20 @@ class Player {
   };
 
   collision(bodyA, bodyB) {
-    if (bodyA.gameObject && bodyB.gameObject) {
+    if (bodyA.parent.gameObject && bodyB.parent.gameObject) {
+      if (this.flickering) {
+        return;
+      }
+
+      if (bodyB.parent.gameObject.wrapper instanceof Bullet) {
+        bodyB.parent.gameObject.wrapper.explode();
+        this.scoreEvent("touch_bullet");
+        this.flicker();
+      }
+      else if (bodyB.parent.gameObject.wrapper instanceof Enemy) {
+        this.scoreEvent("touch_enemy");
+        this.flicker();
+      }
     }
     else {
       if (bodyA.gameObject) {
@@ -152,6 +165,33 @@ class Player {
       else if (bodyB.gameObject) {
       }
     }
+  }
+
+  flicker() {
+    let flickerDuration = 1000;
+    let flickerCount = 10;
+
+    this.flickerTimer = this.scene.time.addEvent({
+      delay: (flickerDuration / flickerCount),
+      repeat: flickerCount,
+      callback: function() {
+        this.flickering = true;
+
+        if (this.flickerTimer.getOverallProgress() < 1) {
+          if (this.sprite.alpha >= 1) {
+            this.sprite.setAlpha(0.5);
+          }
+          else {
+            this.sprite.setAlpha(1);
+          }
+        }
+        else {
+          this.sprite.setAlpha(1);
+          this.flickering = false;
+        }
+      },
+      callbackScope: this
+    });
   }
 
   scoreEvent(eventType) {
