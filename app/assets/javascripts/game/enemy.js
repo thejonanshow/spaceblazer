@@ -211,8 +211,7 @@ class Enemy {
 
   destroy() {
     let deadId = this.id;
-    let explosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, 'animations/explosions/server/explosion1');
-    explosion.play('server_explosion');
+    new Explosion(this);
 
     this.sprite.destroy();
     delete Enemy.activeEnemies[deadId];

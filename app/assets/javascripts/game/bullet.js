@@ -102,10 +102,7 @@ class Bullet {
   }
 
   explode() {
-    let explosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, 'animations/explosions/server/explosion1');
-    explosion.setScale(0.5);
-    explosion.play('server_explosion');
-
+    new Explosion(this, { scale: 0.5 });
     this.destroy();
   }
 
