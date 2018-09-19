@@ -31,7 +31,18 @@ class Bullet {
     this.sprite.originX = 0.5;
     this.sprite.originY = 0.5;
 
-    this.sprite.setCollidesWith([this.config.collides_with, this.worldCollisionCategory]);
+    let collisionCategories = [this.config.collides_with, this.worldCollisionCategory];
+
+    let thisBullet = this;
+    Object.keys(Bullet.config).forEach(function(bulletType) {
+      let bulletConfig = Bullet.config[bulletType];
+
+      if (bulletConfig != thisBullet.config) {
+        collisionCategories.push(bulletConfig.collision_category);
+      }
+    });
+
+    this.sprite.setCollidesWith(collisionCategories);
 
     this.sprite.setFriction(0, false, false);
     this.sprite.setCollisionCategory(this.config.collision_category);
@@ -83,7 +94,19 @@ class Bullet {
       if (bodyB.parent.gameObject === null) {
         bullet.destroy();
       }
+      else if (bodyB.parent.gameObject.wrapper instanceof Bullet) {
+        bodyB.parent.gameObject.wrapper.destroy();
+        bullet.explode();
+      }
     }
+  }
+
+  explode() {
+    let explosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, 'animations/explosions/server/explosion1');
+    explosion.setScale(0.5);
+    explosion.play('server_explosion');
+
+    this.destroy();
   }
 
   destroy() {
