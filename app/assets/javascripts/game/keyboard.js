@@ -44,7 +44,7 @@ function addKeyboardControls(scene) {
     debugLog(event);
   });
 
-  Object.keys(KEYUP).forEach(function(keyname) {
+  Object.keys(KEYDOWN).forEach(function(keyname) {
     scene.input.keyboard.on('keydown_' + keyname, function (event) {
       let id = game.fingerprint;
 
@@ -54,7 +54,7 @@ function addKeyboardControls(scene) {
       }
     });
   });
-  Object.keys(KEYDOWN).forEach(function(keyname) {
+  Object.keys(KEYUP).forEach(function(keyname) {
     scene.input.keyboard.on('keyup_' + keyname, function (event) {
       let id = game.fingerprint;
 

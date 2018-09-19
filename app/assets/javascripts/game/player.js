@@ -2,21 +2,35 @@ class Player {
   constructor(id, avatar, game_id, scene) {
     this.scene = scene;
     this.id = id;
-    this.avatar = avatar;
+    this.avatarName = avatar;
     this.game_id = game_id;
     this.spawn = Player.getSpawnPoint();
     this.bullets = [];
     this.rotation = 0;
+    this.speed = spaceblazerConfig("default_player_speed");
+    this.shape = this.scene.shapes['astro_blue1'];
+    this.firstFrame = Player.firstFrameName(this.avatarName);
 
-    this.sprite = Player.players.create(this.spawn.x, this.spawn.y, this.avatar + '1');
-    this.sprite.play(this.avatar);
-    this.sprite.setCollideWorldBounds(true);
+    this.sprite = this.scene.matter.add.sprite(
+      this.spawn.x,
+      this.spawn.y,
+      'multipass',
+      this.firstFrame,
+      { shape: this.shape }
+    );
+
+    this.sprite.play(this.avatarName);
     this.sprite.wrapper = this;
+    this.sprite.setIgnoreGravity(true);
+    this.sprite.setFriction(0, 0, 0);
+    this.sprite.setCollisionCategory(Player.collisionCategory);
+    this.sprite.setFixedRotation(0);
+
+    this.bulletType = 'rainbow_bomb';
+    this.bulletOffset = { x: 50, y: 20 };
 
     this.score = 0;
     this.scoreText = scene.add.text(this.scoreX(), this.scoreY(), this.score, { fontSize: '18px', fill: '#fff' });
-
-    this.bullet = 'rainbow_bomb';
 
     Player.activePlayers[this.id] = this;
 
@@ -32,16 +46,6 @@ class Player {
   static height() {
     return 125;
   };
-
-  scoreX() {
-    //left side of sprite
-    return this.sprite.x - (this.sprite.width * this.sprite.originX);
-  }
-
-  scoreY() {
-    // just above center vertically
-    return this.sprite.y - (this.sprite.height * .1);
-  }
 
   static getSpawnPoint() {
     let spawnX = Player.spawnOffset.x + (Player.width() / 2);
@@ -65,15 +69,12 @@ class Player {
   };
 
   static load(currentScene) {
-    Player.players = currentScene.physics.add.group();
-    Player.bullets = currentScene.physics.add.group();
+    Player.collisionCategory = currentScene.matter.world.nextCategory();
 
     let names = ['appy', 'blaze', 'cloudy', 'codey', 'earnie', 'einstein', 'hootie', 'koa', 'astro']
 	names.forEach(function(name) {
 	  currentScene.load.animation(name, './animations/players/' + name + '.json'); 
     });
-
-    currentScene.load.animation('rainbow_bomb', 'animations/bullets/rainbow_bomb.json');
   };
 
   static create(data, currentScene) {
@@ -83,9 +84,23 @@ class Player {
 
   static update() {
     Object.values(Player.activePlayers).forEach(function(player) {
-      player.cleanup();
+      player.update();
     });
   };
+
+  static firstFrameName(avatarName) {
+    return ("players/" + avatarName.replace("_", "/") + "/" + avatarName + "1");
+  }
+
+  scoreX() {
+    //left side of sprite
+    return this.sprite.x - (this.sprite.width * this.sprite.originX);
+  }
+
+  scoreY() {
+    // just above center vertically
+    return this.sprite.y - (this.sprite.height * .1);
+  }
 
   mayday() {
     this.rotation = 1;
@@ -103,62 +118,65 @@ class Player {
     }
   }
 
-  cleanupBullets() {
-    let player = this;
-
-    player.bullets.forEach(function(bullet) {
-      if ((bullet.x > screen.width) || (bullet.active == false)) {
-        bullet.destroy();
-        player.bullets.remove(bullet);
-      }
-    });
-  };
-
   moveScore() {
     this.scoreText.setPosition(this.scoreX(), this.scoreY());
   }
 
-  cleanup() {
-    this.cleanupBullets();
+  update() {
     this.checkMayday();
     this.moveScore();
-  };
+  }
+
+  bounce() {
+  }
 
   fire() {
     if (this.bullets.length > 0) {
       return;
     }
 
-    let bullet = Player.bullets.create(this.sprite.x + 50, this.sprite.y + 20, this.bullet + '1');
-    this.scene.physics.add.collider(bullet, Enemy.enemies, this.bulletStrike, null, this);
+    let bullet = new Bullet(this);
+
+    Player.allBullets.push(bullet);
     this.bullets.push(bullet);
-    bullet.play(this.bullet);
-    bullet.setVelocityX(Player.bulletSpeed);
   };
 
-  bulletStrike(bullet, enemy) {
-    enemy.wrapper.die();
-    bullet.destroy();
-    this.incrementScore();
-  };
-
-  // Increment score by amount or by 1 if amount not specified
-  incrementScore(amount) {
-    this.updateScore(amount || 1);
+  collision(bodyA, bodyB) {
+    if (bodyA.gameObject && bodyB.gameObject) {
+    }
+    else {
+      if (bodyA.gameObject) {
+        let player = bodyA.gameObject.wrapper;
+        player.bounce();
+      }
+      else if (bodyB.gameObject) {
+      }
+    }
   }
 
-  // Decrement score by amount or by 1 if amount not specified
-  decrementScore(amount) {
-    this.updateScore(amount || -1);
+  scoreEvent(eventType) {
+    this.updateScore(Player.scores[eventType]);
   }
 
   updateScore(amount) {
     this.score = this.score + amount
+
+    if (this.score < 0) {
+      this.score = 0;
+    }
+
     this.scoreText.setText(this.score);
   }
 };
 
 Player.activePlayers = {};
-Player.speed = 200;
-Player.bulletSpeed = 500;
+Player.allPlayers = [];
+Player.allBullets = [];
 Player.spawnOffset = { x: 10, y: 10 };
+
+Player.scores = {
+  destroy_enemy: 50,
+  destroy_bullet: 20,
+  touch_enemy: -40,
+  touch_bullet: -50
+}

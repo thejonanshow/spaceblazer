@@ -1,7 +1,3 @@
-function hitEnemy(player, enemy) {
-  player.wrapper.mayday();
-};
-
 class Enemy {
   constructor(id, scene) {
     this.scene = scene;
@@ -15,23 +11,36 @@ class Enemy {
       this.id = id;
     }
 
-    this.avatar = 'server';
+    this.avatarName = 'server';
+    this.shape = this.scene.shapes['server1'];
     this.spawn = Enemy.getSpawnPoint();
     this.bullets = [];
     this.direction = Enemy.directions[Math.floor(Math.random() * Enemy.directions.length)];
+    this.speed = spaceblazerConfig("default_enemy_speed");
 
-    this.sprite = Enemy.enemies.create(this.spawn.x, this.spawn.y, this.avatar + '1');
+    this.sprite = this.scene.matter.add.sprite(
+      this.spawn.x,
+      this.spawn.y,
+      'multipass',
+      this.firstFrame,
+      { shape: this.shape }
+    );
+
+    this.sprite.originX = 0.5;
+    this.sprite.originY = 0.5;
+
     debugLog("New enemy in scene " + scene.name + ' with ID ' + this.id);
 
-    this.sprite.play(this.avatar);
-    this.sprite.setCollideWorldBounds(true);
+    this.sprite.play(this.avatarName);
     this.sprite.wrapper = this;
+    this.sprite.setCollisionCategory(Enemy.collisionCategory);
+    this.sprite.setFriction(0, 0, 0);
+    this.sprite.setFixedRotation(0);
 
-    this.bullet = 'floppy';
+    this.bulletType = 'floppy';
+    this.bulletOffset = { x: -30, y: 0 };
 
     Enemy.activeEnemies[this.id] = this;
-
-    if (this.started) this.startMoving();
   };
 
   static generateId() {
@@ -47,7 +56,9 @@ class Enemy {
   };
 
   static getSpawnPoint() {
-    let spawnPoint = { x: Enemy.spawnOffset.x - (Enemy.width() / 2), y: Enemy.spawnOffset.y + (Enemy.height() / 2) };
+    let spawnX = Enemy.spawnOffset.x - (Enemy.width() / 2);
+    let spawnY = Enemy.spawnOffset.y + (Enemy.height() / 2);
+    let spawnPoint = { x: spawnX, y: spawnY };
 
     debugLog('Enemy spawn: ' + JSON.stringify(spawnPoint));
 
@@ -66,13 +77,10 @@ class Enemy {
   };
 
   static load(currentScene) {
-    Enemy.bullets = currentScene.physics.add.group();
-    Enemy.enemies = currentScene.physics.add.group();
-    currentScene.physics.add.collider(Player.players, Enemy.enemies, hitEnemy, null, currentScene);
+    Enemy.collisionCategory = currentScene.matter.world.nextCategory();
 
     currentScene.load.animation('server', 'animations/enemies/server.json');
     currentScene.load.animation('server_explosion', 'animations/explosions/server/explosion.json'); 
-    currentScene.load.animation('floppy', 'animations/bullets/floppy.json');
   };
 
   static update(currentScene) {
@@ -80,8 +88,6 @@ class Enemy {
       Object.values(Enemy.activeEnemies).forEach(function(enemy) {
         if (enemy != null) {
           enemy.fire(currentScene);
-          enemy.changeDirection();
-          enemy.cleanup();
         }
       });
 
@@ -105,6 +111,13 @@ class Enemy {
     }
   };
 
+  update() {
+  }
+
+  static firstFrameName(avatarName) {
+    return ("enemies/" + avatarName + "1");
+  }
+
   startMoving() {
     if (this.direction == "NE") {
       moveUp(this);
@@ -124,37 +137,54 @@ class Enemy {
     }
   };
 
-  changeDirection() {
-    if (this.sprite.x < (this.sprite.width / 2)) {
+  bounce() {
+    let topEdge = this.sprite.y <= this.sprite.height;
+    let rightEdge = this.sprite.x >= (game.width - this.sprite.width);
+    let bottomEdge = this.sprite.y >= (game.height - this.sprite.height);
+    let leftEdge = this.sprite.x <= this.sprite.width;
+
+    if (topEdge && leftEdge) {
+      this.direction = "SE";
+    }
+    else if (topEdge && rightEdge) {
+      this.direction = "SW";
+    }
+    else if (bottomEdge && leftEdge) {
+      this.direction = "NE";
+    }
+    else if (bottomEdge && rightEdge) {
+      this.direction = "NW";
+    }
+    else if (bottomEdge) {
+      if (this.direction == "SW") {
+        this.direction = "NW";
+      }
+      else {
+        this.direction = "NE";
+      }
+    }
+    else if (topEdge) {
+      if (this.direction == "NW") {
+        this.direction = "SW";
+      }
+      else {
+        this.direction = "SE";
+      }
+    }
+    else if (rightEdge) {
+      if (this.direction == "NE") {
+        this.direction = "NW";
+      }
+      else {
+        this.direction = "SW";
+      }
+    }
+    else if (leftEdge) {
       if (this.direction == "NW") {
         this.direction = "NE";
       }
-      else {
+      else  {
         this.direction = "SE";
-      }
-    }
-    else if (this.sprite.y < (this.sprite.height / 2)) {
-      if (this.direction == "NE") {
-        this.direction = "SE";
-      }
-      else {
-        this.direction = "SW";
-      }
-    }
-    else if (this.sprite.x > (screen.availWidth - (this.sprite.width / 2))) {
-      if (this.direction == "NE") {
-        this.direction = "NW";
-      }
-      else {
-        this.direction = "SW";
-      }
-    }
-    else if (this.sprite.y > (screen.height - (this.sprite.height))) {
-      if (this.direction == "SE") {
-        this.direction = "NE";
-      }
-      else {
-        this.direction = "NW";
       }
     }
 
@@ -162,49 +192,70 @@ class Enemy {
     this.startMoving();
   };
 
-  cleanupBullets() {
-    let enemy = this;
-
-    enemy.bullets.forEach(function(bullet) {
-      if ((bullet.x < 0) || (bullet.active == false)) {
-        bullet.destroy();
-        enemy.bullets.remove(bullet);
-      }
-    });
-  };
-
-  cleanup() {
-    this.cleanupBullets();
-  };
-
   fire() {
     if (this.bullets.length > 0) {
       return;
     }
 
-    let bullet = Enemy.bullets.create(this.sprite.x - 30, this.sprite.y, this.bullet + '1');
-    this.scene.physics.add.collider(bullet, Player.players, this.bulletStrike, null, this.scene);
+    let options = {};
+
+    if (this.sprite.x < (this.sprite.width * [5,6,7,8].sample())) {
+      options.reverse_direction = true;
+    }
+
+    let bullet = new Bullet(this, options);
+
+    Enemy.allBullets.push(bullet);
     this.bullets.push(bullet);
-    bullet.play(this.bullet);
-    bullet.setVelocityX(-Enemy.bulletSpeed);
   };
 
-  bulletStrike(bullet, player) {
-    player.wrapper.mayday();
-    bullet.destroy();
-  };
-
-  die() {
+  destroy() {
+    let deadId = this.id;
     let explosion = this.scene.add.sprite(this.sprite.x, this.sprite.y, 'animations/explosions/server/explosion1');
     explosion.play('server_explosion');
+
     this.sprite.destroy();
-    Enemy.activeEnemies[this.id] = null;
-    Enemy.deadEnemies[this.scene.sys.time.now] = this.id;
+    delete Enemy.activeEnemies[deadId];
+
+    this.scene.time.addEvent({
+      delay: 3000,
+      callback: function() {
+        let newEnemy = new Enemy(deadId, this);
+        newEnemy.startMoving();
+      },
+      callbackScope: this.scene
+    });
   };
+
+  collision(bodyA, bodyB) {
+    if (bodyA.parent.gameObject && bodyB.parent.gameObject) {
+      if (bodyA.parent.gameObject.wrapper && bodyB.parent.gameObject.wrapper) {
+        let enemy = bodyA.parent.gameObject.wrapper;
+        let bullet = bodyB.parent.gameObject.wrapper;
+
+        bullet.owner.scoreEvent('destroy_enemy');
+        bullet.destroy();
+        enemy.destroy();
+      }
+      else {
+      }
+    }
+    else if (bodyA.parent.gameObject) {
+      if (bodyA.parent.gameObject.wrapper) {
+        let enemy = bodyA.parent.gameObject.wrapper;
+        enemy.bounce()
+      }
+      else {
+      }
+    }
+    else {
+    }
+  }
 };
-Enemy.speed = 100;
+Enemy.speed = 10;
 Enemy.activeEnemies = {};
+Enemy.allBullets = [];
+Enemy.allEnemies = [];
 Enemy.deadEnemies = {};
 Enemy.spawnOffset = { x: (screen.width - 10), y: 10 };
-Enemy.bulletSpeed = 500;
 Enemy.directions = ["NE", "SE", "SW", "NW"]

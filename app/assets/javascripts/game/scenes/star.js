@@ -14,7 +14,7 @@ class StarScene extends Phaser.Scene {
   }
 
   create() {
-    let speeds = [25, 50, 75, 100, 125, 150, 175, 200];
+    let speeds = [6, 8, 10, 12, 14];
 
     let layers = {};
     speeds.forEach(function(speed) {
@@ -39,7 +39,22 @@ class StarScene extends Phaser.Scene {
     Object.keys(layers).forEach(function(layerSpeed) {
       layers[layerSpeed].forEach(function(currentStar) {
         let texture = 'stars/' + currentStar.color + '/' + currentStar.contrast;
-        let current = game.starScene.physics.add.sprite(currentStar.x, currentStar.y, 'stars', texture);
+        let current = game.starScene.matter.add.sprite(currentStar.x, currentStar.y, 'stars', texture);
+
+        current.body.plugin.wrap = {
+          min: {
+            x: 0,
+            y: 0
+          },
+          max: {
+            x: game.width,
+            y: game.height
+          }
+        }
+
+        current.setIgnoreGravity(true);
+        current.setFriction(0, false, false);
+        current.setCollidesWith(false);
 
         if (currentStar.scaleDirection == 'x' && currentStar.rotation == 0) {
           current.scaleX = currentStar.scale;
@@ -69,9 +84,5 @@ class StarScene extends Phaser.Scene {
   }
 
   update() {
-    let scene = this;
-    this.stars.forEach(function(star) {
-      scene.physics.world.wrap(star, star.width);
-    });
   }
 }

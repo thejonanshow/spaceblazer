@@ -60,7 +60,7 @@ class Game < ApplicationRecord
     avatar = random_avatar
     color = random_color
 
-    while Player.where(avatar: avatar, color: color).any?
+    while self.players.where(avatar: avatar, color: color).any?
       avatar = random_avatar
       color = random_color
       break if players.length >=(AVATARS.length * COLORS.length)

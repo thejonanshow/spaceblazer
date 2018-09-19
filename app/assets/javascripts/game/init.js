@@ -8,8 +8,8 @@ const gameConfig = {
   width: window.innerWidth,
   height: window.innerHeight,
   physics: {
-    default: 'arcade',
-    arcade: {
+    default: 'matter',
+    matter: {
       debug: false
     }
   },

@@ -1,17 +1,17 @@
 function moveUp(entity) {
-  entity.sprite.setVelocityY(-Player.speed);
+  entity.sprite.setVelocityY(-entity.speed);
 };
 
 function moveDown(entity) {
-  entity.sprite.setVelocityY(Player.speed);
+  entity.sprite.setVelocityY(entity.speed);
 };
 
 function moveLeft(entity) {
-  entity.sprite.setVelocityX(-Player.speed);
+  entity.sprite.setVelocityX(-entity.speed);
 };
 
 function moveRight(entity) {
-  entity.sprite.setVelocityX(Player.speed);
+  entity.sprite.setVelocityX(entity.speed);
 };
 
 function stop(entity) {

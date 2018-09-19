@@ -16,30 +16,55 @@ class MainScene extends Phaser.Scene {
   preload() {
     game.mainScene = this;
     this.started = false;
+    this.worldCollisionOffset = 0;
 
-    this.load.path = '/offline/';
+    this.load.path = '/';
     this.load.json('spaceblazerConfig', '../spaceblazer_config.json');
 
     this.load.path = getAssetPath();
 
     this.load.multiatlas('multipass', 'multipass.json');
-    this.load.tilemapTiledJSON('map', 'shapes.json');
+    this.load.json('shapes');
     this.load.audio('sfx', 'audio/playerstart.wav');
     this.load.audio('theme', 'audio/neoishiki.mp3');
 
     Player.load(this);
     Enemy.load(this);
+    Bullet.load(this);
 
     this.startX = screen.width / 2;
     this.startY = screen.height / 3;
 
     addKeyboardControls(this);
+
+    this.matter.world.on('collisionstart', function(event, bodyA, bodyB) {
+      if (bodyA.parent && bodyA.parent.gameObject) {
+        bodyA.parent.gameObject.wrapper.collision(bodyA, bodyB);
+      }
+      else if (bodyB.parent && bodyB.parent.gameObject) {
+        bodyB.parent.gameObject.wrapper.collision(bodyB, bodyA);
+      }
+      else {
+      }
+    });
+
+    this.matter.world.setBounds(
+      -this.worldCollisionOffset,
+      -this.worldCollisionOffset,
+      game.width + (2 * this.worldCollisionOffset),
+      game.height + (2 * this.worldCollisionOffset)
+    );
+
+    this.matter.world.disableGravity();
+    this.matter.enableWrapPlugin();
   }
 
   create() {
     new_game();
 
     this.logoVisible = true;
+
+    this.shapes = this.cache.json.get('shapes');
 
     this.titleSprite = this.add.sprite(
       this.startX,
@@ -64,8 +89,8 @@ class MainScene extends Phaser.Scene {
 
     this.music = this.sound.add('theme');
 
-    this.centerX = this.physics.world.bounds.centerX;
-    this.textY = this.physics.world.bounds.height * 0.75;
+    this.centerX = game.width / 2;
+    this.textY = game.height * 0.75;
 
     this.waitingText = this.add.text(this.centerX, this.textY, '', { fontSize: '24px', fill: '#fff' });
     this.waitingText.originX = 0.5;
@@ -74,11 +99,11 @@ class MainScene extends Phaser.Scene {
   }
 
   update() {
-    if (this.started) {
-      if (this.music.isPlaying == false) {
-        this.music.play({ loop: true });
-      }
-    }
+    // if (this.started) {
+    //   if (this.music.isPlaying == false) {
+    //     this.music.play({ loop: true });
+    //   }
+    // }
 
     if (this.countdownStarted) {
       if (this.logoVisible) {
@@ -109,6 +134,14 @@ class MainScene extends Phaser.Scene {
 
     Player.update(this);
     Enemy.update(this);
+    Bullet.update(this);
+  }
+
+  start() {
+    this.started = true;
+    Object.keys(Enemy.activeEnemies).forEach(function(key) {
+      Enemy.activeEnemies[key].startMoving();
+    });
   }
 
   updateCountdown() {
@@ -118,7 +151,7 @@ class MainScene extends Phaser.Scene {
     if (this.COUNTDOWN_TEXT === 0) {
       this.countdownEvent.destroy();
       this.countdownText.destroy();
-      this.started = true;
+      this.start();
     }
   }
 }

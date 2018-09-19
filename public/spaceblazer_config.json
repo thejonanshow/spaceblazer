@@ -1,3 +1,7 @@
 {
-  "minimum_players" : 4
+  "minimum_players" : 1,
+  "default_player_speed" : 5,
+  "default_player_bullet_speed" : 10,
+  "default_enemy_speed" : 3,
+  "default_enemy_bullet_speed" : 10
 }
