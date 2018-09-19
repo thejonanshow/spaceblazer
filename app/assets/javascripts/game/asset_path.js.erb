@@ -1,5 +1,4 @@
-let useOfflineAssets = true;
-<%= ENV["OFFLINE"] ? true : false %>;
+useOfflineAssets = <%= ENV["OFFLINE"] ? true : false %>;
 
 function getAssetPath(scene) {
   let assetPath = 'https://s3-us-west-1.amazonaws.com/spaceblazer/';
