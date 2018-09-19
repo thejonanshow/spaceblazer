@@ -46,7 +46,6 @@ class Bullet {
 
     this.sprite.setFriction(0, false, false);
     this.sprite.setCollisionCategory(this.config.collision_category);
-    this.sprite.player = this;
     this.sprite.wrapper = this;
 
     this.sprite.play(this.type);
@@ -58,14 +57,14 @@ class Bullet {
   static load(currentScene) {
     Bullet.config = {
       rainbow_bomb: {
-        speed: 30,
+        speed: 15,
         animation_file: 'animations/bullets/rainbow_bomb.json',
         first_frame: 'bullets/rainbow_bomb/rainbow_bomb1',
         collision_category: currentScene.matter.world.nextCategory(),
         collides_with: Enemy.collisionCategory
       },
       floppy: {
-        speed: -20,
+        speed: -10,
         animation_file: 'animations/bullets/floppy.json',
         first_frame: 'bullets/floppy/floppy1',
         collision_category: currentScene.matter.world.nextCategory(),

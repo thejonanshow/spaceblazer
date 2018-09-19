@@ -211,6 +211,10 @@ class Enemy {
 
   destroy() {
     let deadId = this.id;
+    
+    if ([1].sample() == 1) {
+      new PowerUp(this);
+    }
     new Explosion(this);
 
     this.sprite.destroy();
@@ -232,9 +236,11 @@ class Enemy {
         let enemy = bodyA.parent.gameObject.wrapper;
         let bullet = bodyB.parent.gameObject.wrapper;
 
-        bullet.owner.scoreEvent('destroy_enemy');
-        bullet.destroy();
-        enemy.destroy();
+        if ((enemy instanceof Enemy) && (bullet instanceof Bullet)) {
+          bullet.owner.scoreEvent('destroy_enemy');
+          bullet.destroy();
+          enemy.destroy();
+        }
       }
       else {
       }

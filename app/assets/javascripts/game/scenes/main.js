@@ -27,6 +27,7 @@ class MainScene extends Phaser.Scene {
     this.load.json('shapes');
     this.load.audio('sfx', 'audio/playerstart.wav');
     this.load.audio('theme', 'audio/neoishiki.mp3');
+    this.load.animation('cloud', 'animations/powerups/cloud/cloud.json'); 
 
     Player.load(this);
     Enemy.load(this);
@@ -38,10 +39,12 @@ class MainScene extends Phaser.Scene {
     addKeyboardControls(this);
 
     this.matter.world.on('collisionstart', function(event, bodyA, bodyB) {
-      if (bodyA.parent && bodyA.parent.gameObject) {
+      if (bodyA.parent && bodyA.parent.gameObject && bodyA.parent.gameObject.wrapper) {
+        console.log(bodyA);
+        console.log(bodyB);
         bodyA.parent.gameObject.wrapper.collision(bodyA, bodyB);
       }
-      else if (bodyB.parent && bodyB.parent.gameObject) {
+      else if (bodyB.parent && bodyB.parent.gameObject && bodyB.parent.gameObject.wrapper) {
         bodyB.parent.gameObject.wrapper.collision(bodyB, bodyA);
       }
       else {

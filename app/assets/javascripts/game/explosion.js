@@ -7,8 +7,9 @@ class Explosion {
       scale = options.scale;
     };
 
-    let explosion = doomed.scene.add.sprite(doomed.sprite.x, doomed.sprite.y, 'animations/explosions/server/explosion1');
-    explosion.setScale(scale);
-    explosion.play('server_explosion');
+    this.sprite = doomed.scene.add.sprite(doomed.sprite.x, doomed.sprite.y, 'animations/explosions/server/explosion1');
+
+    this.sprite.setScale(scale);
+    this.sprite.play('server_explosion');
   }
 }

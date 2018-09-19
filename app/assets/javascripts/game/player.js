@@ -10,6 +10,7 @@ class Player {
     this.speed = spaceblazerConfig("default_player_speed");
     this.shape = this.scene.shapes['astro_blue1'];
     this.firstFrame = Player.firstFrameName(this.avatarName);
+    this.level = 0;
 
     this.sprite = this.scene.matter.add.sprite(
       this.spawn.x,
@@ -30,7 +31,7 @@ class Player {
     this.bulletOffset = { x: 50, y: 20 };
 
     this.score = 0;
-    this.scoreText = scene.add.text(this.scoreX(), this.scoreY(), this.score, { fontSize: '18px', fill: '#fff' });
+    this.scoreText = scene.add.text(this.scoreX(), this.scoreY(), ("Score: " + this.score + "\nLevel: " + this.level), { fontSize: '18px', fill: '#fff' });
 
     Player.activePlayers[this.id] = this;
 
@@ -92,14 +93,22 @@ class Player {
     return ("players/" + avatarName.replace("_", "/") + "/" + avatarName + "1");
   }
 
+  levelUp() {
+    if (this.level < 5) {
+      this.scoreEvent("level_up");
+      this.level += 1;
+      this.updateText();
+    }
+  }
+
   scoreX() {
     //left side of sprite
-    return this.sprite.x - (this.sprite.width * this.sprite.originX);
+    return this.sprite.x - (this.sprite.width * this.sprite.originX) - 40;
   }
 
   scoreY() {
     // just above center vertically
-    return this.sprite.y - (this.sprite.height * .1);
+    return this.sprite.y - (this.sprite.height * .1) - 40;
   }
 
   mayday() {
@@ -131,7 +140,7 @@ class Player {
   }
 
   fire() {
-    if (this.bullets.length > 0) {
+    if (this.bullets.length > (0 + this.level)) {
       return;
     }
 
@@ -156,14 +165,11 @@ class Player {
         this.scoreEvent("touch_enemy");
         this.flicker();
       }
+      else if (bodyB.parent.gameObject.wrapper instanceof PowerUp) {
+        bodyB.parent.gameObject.wrapper.get(this);
+      }
     }
     else {
-      if (bodyA.gameObject) {
-        let player = bodyA.gameObject.wrapper;
-        player.bounce();
-      }
-      else if (bodyB.gameObject) {
-      }
     }
   }
 
@@ -195,7 +201,14 @@ class Player {
   }
 
   scoreEvent(eventType) {
+    if ((eventType == 'touch_enemy' || eventType == 'touch_bullet')) {
+      this.level = 0;
+    }
     this.updateScore(Player.scores[eventType]);
+  }
+
+  updateText() {
+    this.scoreText.setText("Score: " + this.score + "\nLevel: " + this.level);
   }
 
   updateScore(amount) {
@@ -205,7 +218,7 @@ class Player {
       this.score = 0;
     }
 
-    this.scoreText.setText(this.score);
+    this.updateText();
   }
 };
 
@@ -218,5 +231,6 @@ Player.scores = {
   destroy_enemy: 50,
   destroy_bullet: 20,
   touch_enemy: -40,
-  touch_bullet: -50
+  touch_bullet: -50,
+  level_up: 30
 }
