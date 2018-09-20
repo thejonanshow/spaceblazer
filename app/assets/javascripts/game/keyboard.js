@@ -37,6 +37,9 @@ function echo_command(id, command) {
 };
 
 function addKeyboardControls(scene) {
+  if (spaceblazerConfig('disable_keyboard')) {
+    return;
+  }
   scene.input.keyboard.on('keydown', function(event) {
     debugLog(event);
   });

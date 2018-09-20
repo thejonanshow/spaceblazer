@@ -1,8 +1,10 @@
 {
-  "minimum_players" : 8,
+  "minimum_players" : 4,
   "default_player_speed" : 8,
   "default_player_bullet_speed" : 10,
   "default_enemy_speed" : 7,
   "default_enemy_bullet_speed" : 10,
-  "game_timer" : 60
+  "game_start_countdown" : 10,
+  "game_timer" : 60,
+  "disable_keyboard" : true
 }

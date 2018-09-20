@@ -45,8 +45,6 @@ class MainScene extends Phaser.Scene {
     this.startX = screen.width / 2;
     this.startY = screen.height / 3;
 
-    addKeyboardControls(this);
-
     this.matter.world.on('collisionstart', function(event, bodyA, bodyB) {
       if (bodyA.parent && bodyA.parent.gameObject && bodyA.parent.gameObject.wrapper) {
         bodyA.parent.gameObject.wrapper.collision(bodyA, bodyB);
@@ -70,6 +68,7 @@ class MainScene extends Phaser.Scene {
   }
 
   create() {
+    addKeyboardControls(this);
     new_game();
 
     this.logoVisible = true;
@@ -129,7 +128,7 @@ class MainScene extends Phaser.Scene {
       this.waitingText.destroy();
       this.countdownStarted = true;
 
-      const COUNTDOWN_MS = 3000;
+      const COUNTDOWN_MS = 10000;
       this.COUNTDOWN_TEXT = COUNTDOWN_MS / 1000;
 
       this.countdownText = this.add.text(this.centerX, this.textY, this.COUNTDOWN_TEXT, { fontSize: '256px', fill: '#fff' })
