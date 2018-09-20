@@ -1,0 +1,50 @@
+{
+  "name": "spaceblazer",
+  "scripts": {
+  },
+  "env": {
+    "AWS_KEY": {
+      "required": true
+    },
+    "AWS_SECRET": {
+      "required": true
+    },
+    "FASTLY_API_KEY": {
+      "required": true
+    },
+    "FASTLY_CDN_URL": {
+      "required": true
+    },
+    "FASTLY_SERVICE_ID": {
+      "required": true
+    },
+    "REDIS_CHANNEL": {
+      "required": true
+    },
+    "REDIS_URL": {
+      "required": true
+    }
+  },
+  "formation": {
+    "worker": {
+      "quantity": 1
+    },
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "fastly",
+    "heroku-postgresql",
+    "heroku-redis",
+    "timber-logging"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    },
+    {
+      "url": "heroku/ruby"
+    }
+  ]
+}
