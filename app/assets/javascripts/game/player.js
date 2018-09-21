@@ -40,6 +40,21 @@ class Player {
     debugLog("New player in scene " + scene.name + ' with ID ' + this.id);
   };
 
+  static init() {
+    Player.activePlayers = {};
+    Player.allPlayers = [];
+    Player.allBullets = [];
+    Player.spawnOffset = { x: 10, y: 10 };
+
+    Player.scores = {
+      destroy_enemy: 50,
+      destroy_bullet: 20,
+      touch_enemy: -40,
+      touch_bullet: -50,
+      level_up: 30
+    }
+  }
+
   static width() {
     return 212;
   };
@@ -227,17 +242,14 @@ class Player {
 
     this.updateText();
   }
+
+  static destroyAllSprites() {
+    if (Player.allPlayers) {
+      Player.allPlayers.forEach(function(player) {
+        if (player.sprite) {
+          player.sprite.destroy();
+        }
+      });
+    }
+  }
 };
-
-Player.activePlayers = {};
-Player.allPlayers = [];
-Player.allBullets = [];
-Player.spawnOffset = { x: 10, y: 10 };
-
-Player.scores = {
-  destroy_enemy: 50,
-  destroy_bullet: 20,
-  touch_enemy: -40,
-  touch_bullet: -50,
-  level_up: 30
-}

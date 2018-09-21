@@ -16,7 +16,10 @@ function handleCommand(data) {
   let player = Player.activePlayers[id]
 
   if (player || command == 's') {
-    if (command == 'online') {
+    if (command == 's' && Spaceblazer.reset) {
+      Spaceblazer.reset = false;
+      Spaceblazer.newGame();
+      Spaceblazer.restart();
     }
     else if (command == 's') {
       if (!Player.activePlayers[id]) {

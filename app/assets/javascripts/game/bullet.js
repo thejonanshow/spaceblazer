@@ -54,6 +54,10 @@ class Bullet {
     Bullet.allBullets.push(this);
   }
 
+  static init() {
+    Bullet.allBullets = [];
+  }
+
   static load(currentScene) {
     Bullet.config = {
       rainbow_bomb: {
@@ -113,5 +117,14 @@ class Bullet {
     this.owner.bullets.remove(this);
     this.sprite.destroy();
   }
+
+  static destroyAllSprites() {
+    if (Bullet.allBullets) {
+      Bullet.allBullets.forEach(function(bullet) {
+        if (bullet.sprite) {
+          bullet.sprite.destroy();
+        }
+      });
+    }
+  }
 }
-Bullet.allBullets = [];

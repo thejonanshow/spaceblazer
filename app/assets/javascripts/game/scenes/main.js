@@ -1,16 +1,55 @@
-function new_game() {
-  App.cable.subscriptions.subscriptions[0].perform(
-    "new_game",
-    {
-      id: game.fingerprint,
-    }
-  );
+class Spaceblazer {
+  static newGame() {
+    Spaceblazer.init();
+
+    App.cable.subscriptions.subscriptions[0].perform(
+      "new_game",
+      {
+        id: game.fingerprint,
+      }
+    );
+  }
+
+  static init() {
+    Player.init();
+    Enemy.init();
+    Bullet.init();
+  }
+
+  static destroySprites() {
+    Player.destroyAllSprites();
+    Enemy.destroyAllSprites();
+    Bullet.destroyAllSprites();
+  }
+
+  static restart() {
+    Spaceblazer.firstGame = false;
+    game.mainScene.reset();
+    game.mainScene.scene.stop();
+    Spaceblazer.destroySprites();
+    game.mainScene.scene.restart();
+    Spaceblazer.init();
+  }
 }
+Spaceblazer.reset = false;
+Spaceblazer.firstGame = true;
+Spaceblazer.GAME_FINISH_COUNTDOWN = 3;
+Spaceblazer.GAME_START_COUNTDOWN_MS = 1000;
 
 class MainScene extends Phaser.Scene {
   constructor() {
     super({ key: 'main', active: true });
     this.name = 'main';
+  }
+
+  reset() {
+    this.GAMETIMER_SEC = "";
+    this.started = false;
+    this.logoVisible = true;
+    this.countdownStarted = false;
+    this.COUNTDOWN_TEXT = '';
+    this.gameTimerText = '';
+    this.waitingText = '';
   }
 
   preload() {
@@ -38,9 +77,11 @@ class MainScene extends Phaser.Scene {
     this.load.audio('theme', 'audio/neoishiki.mp3');
     this.load.animation('cloud', 'animations/powerups/cloud/cloud.json'); 
 
-    Player.load(this);
-    Enemy.load(this);
-    Bullet.load(this);
+    if (Spaceblazer.firstGame) {
+      Player.load(this);
+      Enemy.load(this);
+      Bullet.load(this);
+    }
 
     this.startX = screen.width / 2;
     this.startY = screen.height / 3;
@@ -69,7 +110,7 @@ class MainScene extends Phaser.Scene {
 
   create() {
     addKeyboardControls(this);
-    new_game();
+    Spaceblazer.newGame();
 
     this.logoVisible = true;
 
@@ -108,7 +149,7 @@ class MainScene extends Phaser.Scene {
   }
 
   update() {
-    if (this.started) {
+    if (this.started && !Spaceblazer.reset) {
       if (this.music.isPlaying == false) {
         this.music.play({ loop: true });
       }
@@ -128,8 +169,7 @@ class MainScene extends Phaser.Scene {
       this.waitingText.destroy();
       this.countdownStarted = true;
 
-      const COUNTDOWN_MS = 10000;
-      this.COUNTDOWN_TEXT = COUNTDOWN_MS / 1000;
+      this.COUNTDOWN_TEXT = Spaceblazer.GAME_START_COUNTDOWN_MS / 1000;
 
       this.countdownText = this.add.text(this.centerX, this.textY, this.COUNTDOWN_TEXT, { fontSize: '256px', fill: '#fff' })
         .setOrigin(0.5, 0.5);
@@ -155,7 +195,6 @@ class MainScene extends Phaser.Scene {
   }
 
   finish() {
-    game.scene.pause('main');
     let playerIds = Object.keys(Player.activePlayers);
     let winner = Player.activePlayers[playerIds[0]];;
 
@@ -168,6 +207,7 @@ class MainScene extends Phaser.Scene {
     });
     
     winner.sprite.winner = true;
+
     let overlay = this.add.graphics();
     overlay.fillStyle(0x000000, 1.0);
     overlay.fillRect(0, 0, game.width, game.height);
@@ -186,7 +226,17 @@ class MainScene extends Phaser.Scene {
       "CONGRATULATIONS!",
       { fontSize: '72px', fill: '#fff' }
     ).setOrigin(0.5, 0.5);
+    this.add.text(
+      (game.width / 2),
+      (game.height * 0.9),
+      "(push start to play again)",
+      { fontSize: '50px', fill: '#fff' }
+    ).setOrigin(0.5, 0.5);
     this.gameTimerText.originX = 0.5;
+
+    Spaceblazer.reset = true;
+
+    this.music.stop();
   }
 
   updateGameTimer() {
@@ -198,17 +248,17 @@ class MainScene extends Phaser.Scene {
       this.gameTimerText.setText("");
       this.finish();
     }
-  };
+  }
 
   startGameTimer() {
-    this.GAMETIMER_SEC = 60;
+    this.GAMETIMER_SEC = Spaceblazer.GAME_FINISH_COUNTDOWN;
     this.gameTimer = this.time.addEvent({
       delay: 1000,
       loop: true,
       callback: this.updateGameTimer,
       callbackScope: this
     });
-  };
+  }
 
   updateCountdown() {
     this.COUNTDOWN_TEXT--;
@@ -222,3 +272,4 @@ class MainScene extends Phaser.Scene {
     }
   }
 }
+

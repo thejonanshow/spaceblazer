@@ -43,6 +43,16 @@ class Enemy {
     Enemy.activeEnemies[this.id] = this;
   };
 
+  static init() {
+    Enemy.speed = 10;
+    Enemy.activeEnemies = {};
+    Enemy.allBullets = [];
+    Enemy.allEnemies = [];
+    Enemy.deadEnemies = {};
+    Enemy.spawnOffset = { x: (screen.width - 10), y: 10 };
+    Enemy.directions = ["NE", "SE", "SW", "NW"]
+  }
+
   static generateId() {
     return ("enemy" + (Object.keys(Enemy.activeEnemies).length + 1));
   }
@@ -230,6 +240,16 @@ class Enemy {
     });
   };
 
+  static destroyAllSprites() {
+    if (Enemy.allEnemies) {
+      Enemy.allEnemies.forEach(function(enemy) {
+        if (enemy.sprite) {
+          enemy.sprite.destroy();
+        }
+      });
+    }
+  }
+
   collision(bodyA, bodyB) {
     if (bodyA.parent.gameObject && bodyB.parent.gameObject) {
       if (bodyA.parent.gameObject.wrapper && bodyB.parent.gameObject.wrapper) {
@@ -257,10 +277,3 @@ class Enemy {
     }
   }
 };
-Enemy.speed = 10;
-Enemy.activeEnemies = {};
-Enemy.allBullets = [];
-Enemy.allEnemies = [];
-Enemy.deadEnemies = {};
-Enemy.spawnOffset = { x: (screen.width - 10), y: 10 };
-Enemy.directions = ["NE", "SE", "SW", "NW"]
