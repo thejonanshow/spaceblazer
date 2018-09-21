@@ -13,16 +13,18 @@ gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 4.0'
 gem 'sidekiq', '~> 5.2'
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'webpacker', '~> 3.5'
+gem 'newrelic_rpm'
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'rspec-rails'
+  gem 'pry-byebug', '~> 3.6'
+  gem 'rspec-rails', '~> 3.8'
   gem 'dotenv-rails', '~> 2.5'
 end
 
 group :development do
-  gem 'web-console', '>= 3.3.0'
+  gem 'web-console', '~> 3.7'
   gem 'listen', '>= 3.0.5', '< 3.2'
-  gem 'spring'
+  gem 'spring', '~> 2.0'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
