@@ -33,8 +33,8 @@ class Spaceblazer {
 }
 Spaceblazer.reset = false;
 Spaceblazer.firstGame = true;
-Spaceblazer.GAME_FINISH_COUNTDOWN = 3;
-Spaceblazer.GAME_START_COUNTDOWN_MS = 1000;
+Spaceblazer.GAME_FINISH_COUNTDOWN = 60;
+Spaceblazer.GAME_START_COUNTDOWN_MS = 3000;
 
 class MainScene extends Phaser.Scene {
   constructor() {
