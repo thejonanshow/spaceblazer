@@ -2,6 +2,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.action_cable.url = "ws://localhost:#{ENV['PORT'] || 3000}/cable"
+  config.action_cable.disable_request_forgery_protection = true
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
