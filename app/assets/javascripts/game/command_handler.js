@@ -30,6 +30,14 @@ function handleCommand(data) {
         game.scene.switch('title', 'main');
       }
     }
+    else if (command == 'n') {
+      App.cable.subscriptions.subscriptions[0].perform(
+        "new_game",
+        {
+          id: game.fingerprint,
+        }
+      );
+    }
     else if (command == 'u') {
       moveUp(Player.activePlayers[id]);
     }
