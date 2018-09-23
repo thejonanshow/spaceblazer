@@ -13,6 +13,10 @@ class CommandsChannel < ApplicationCable::Channel
     Game.add_player(data["id"])
   end
 
+  def register_laserbonnet(data)
+    Laserbonnet.register(data["id"])
+  end
+
   def echo_command(data)
     ActionCable.server.broadcast(
       "commands", 

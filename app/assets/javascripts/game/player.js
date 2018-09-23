@@ -87,7 +87,7 @@ class Player {
   static load(currentScene) {
     Player.collisionCategory = currentScene.matter.world.nextCategory();
 
-    let names = ['appy', 'blaze', 'cloudy', 'codey', 'earnie', 'einstein', 'hootie', 'koa', 'astro']
+    let names = ['appy', 'blaze', 'cloudy', 'codey', 'earnie', 'hootie', 'koa', 'astro']
 	names.forEach(function(name) {
 	  currentScene.load.animation(name, './animations/players/' + name + '.json'); 
     });

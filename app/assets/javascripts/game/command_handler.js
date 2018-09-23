@@ -63,24 +63,29 @@ function handleCommand(data) {
 };
 
 function handleSystemCommand(data) {
-  debugLog("System command received: " + data);
+  debugLog("System command: " + data);
 
   let parsed = JSON.parse(data);
 
   if (parsed.notice) {
-    (parsed.notice);
+    debugLog("System command: notice - " + parsed);
   }
   else if (parsed.player_created) {
     Player.create(parsed.player_created, game.mainScene);
-    (parsed.player_created);
+    debugLog("System command: player_created - " + parsed);
   }
   else if (parsed.command == "start_game") {
     scene.started = true;
+    debugLog("System command: start_game - " + parsed);
   }
   else if (parsed.commmand == "stop_game") {
-    debugLog("Received stop_game command.");
+    debugLog("System command: stop_game - " + parsed);
+  }
+  else if (parsed.command == "online") {
+    App.cable.subscriptions.subscriptions[0].perform("register_laserbonnet", parsed)
+    debugLog("System command: online - " + parsed);
   }
   else {
-    debugLog("Unrecognized system command: " + parsed.command);
+    debugLog("System command: unrecognized - " + parsed);
   }
 };
