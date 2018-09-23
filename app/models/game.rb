@@ -37,12 +37,38 @@ class Game < ApplicationRecord
     COLORS.sample
   end
 
+  def self.fetch_game(data)
+    game = Game.current
+
+    player_info = game.players.map do |player|
+      { id: player.client_side_id, avatar: player.avatar_slug, game_id: game.id }
+    end
+
+    message = {
+      id: "system",
+      game_info: {
+        game_id: game.id,
+        players: player_info
+      }
+    }
+    ActionCable.server.broadcast("commands-#{data['id']}", message.to_json)
+  end
+
   def self.new_game
     old_game = Game.current
     old_game.active = false
     old_game.save
 
     Game.create(active: true)
+  end
+
+  def self.finish_game(data)
+    Game.current.update(data: data, active: false)
+    message = {
+      id: "system",
+      game_finished: { game_id: self.id }
+    }
+    ActionCable.server.broadcast("commands-#{data['id']}", message.to_json)
   end
 
   def self.add_player(player_id)
@@ -74,10 +100,6 @@ class Game < ApplicationRecord
     end
 
     players.create(avatar: avatar, color: color, client_side_id: player_id)
-
-    if self.players.length > 4
-      start
-    end
   end
 
   def assigned_avatars

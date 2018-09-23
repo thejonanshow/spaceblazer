@@ -25,3 +25,9 @@ function connectCable(uid) {
     }
   });
 };
+
+class Cable {
+  static send(action, data) {
+    App.cable.subscriptions.subscriptions[0].perform(action, data);
+  }
+}

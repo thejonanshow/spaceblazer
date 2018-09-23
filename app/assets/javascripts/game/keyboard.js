@@ -31,9 +31,7 @@ KEYUP = {
 };
 
 function echo_command(id, command) {
-  App.cable.subscriptions.subscriptions[0].perform(
-    "echo_command", { id: id, command: command }
-  );
+  Cable.send( "echo_command", { id: id, command: command });
 };
 
 function addKeyboardControls(scene) {
@@ -50,6 +48,10 @@ function addKeyboardControls(scene) {
   Object.keys(KEYDOWN).forEach(function(keyname) {
     scene.input.keyboard.on('keydown_' + keyname, function (event) {
       let id = game.fingerprint;
+
+      if (event.shiftKey && Player.roomForMorePlayers()) {
+        id = id + '-' + Player.allPlayers.length;
+      }
 
       if ((keyname == 'ENTER') || (Player.activePlayers[id])) {
         command = KEYDOWN[keyname]

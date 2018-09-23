@@ -1,13 +1,14 @@
 class Spaceblazer {
   static newGame() {
-    Spaceblazer.init();
+    Cable.send('new_game', { id: game.fingerprint });
+  }
 
-    App.cable.subscriptions.subscriptions[0].perform(
-      "new_game",
-      {
-        id: game.fingerprint,
-      }
-    );
+  static fetchGame() {
+    Cable.send('fetch_game', { id: game.fingerprint });
+  }
+
+  static finishGame() {
+    Cable.send('finish_game', { id: game.fingerprint });
   }
 
   static init() {
@@ -110,7 +111,8 @@ class MainScene extends Phaser.Scene {
 
   create() {
     addKeyboardControls(this);
-    Spaceblazer.newGame();
+    Spaceblazer.init();
+    Spaceblazer.fetchGame();
 
     this.logoVisible = true;
 
@@ -165,7 +167,7 @@ class MainScene extends Phaser.Scene {
     let playerCount = Object.keys(Player.activePlayers).length;
     this.waitingText.setText(`Waiting for ${this.NUM_PLAYERS - playerCount} more player(s). Press start to join.`);
 
-    if (playerCount === this.NUM_PLAYERS && !this.countdownStarted) {
+    if (playerCount >= this.NUM_PLAYERS && !this.countdownStarted) {
       this.waitingText.destroy();
       this.countdownStarted = true;
 
@@ -195,6 +197,7 @@ class MainScene extends Phaser.Scene {
   }
 
   finish() {
+    Spaceblazer.finishGame();
     let playerIds = Object.keys(Player.activePlayers);
     let winner = Player.activePlayers[playerIds[0]];;
 

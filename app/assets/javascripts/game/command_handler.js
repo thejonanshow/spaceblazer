@@ -18,12 +18,12 @@ function handleCommand(data) {
   if (player || command == 's') {
     if (command == 's' && Spaceblazer.reset) {
       Spaceblazer.reset = false;
-      Spaceblazer.newGame();
+      Spaceblazer.fetchGame();
       Spaceblazer.restart();
     }
     else if (command == 's') {
       if (!Player.activePlayers[id]) {
-        App.cable.subscriptions.subscriptions[0].perform("register_player",  { id: id })
+        Cable.send("register_player",  { id: id })
       }
 
       if (!game.scene.isActive('main')) {
@@ -31,12 +31,7 @@ function handleCommand(data) {
       }
     }
     else if (command == 'n') {
-      App.cable.subscriptions.subscriptions[0].perform(
-        "new_game",
-        {
-          id: game.fingerprint,
-        }
-      );
+      Cable.send( "new_game", { id: game.fingerprint, });
     }
     else if (command == 'u') {
       moveUp(Player.activePlayers[id]);
@@ -74,16 +69,18 @@ function handleSystemCommand(data) {
     Player.create(parsed.player_created, game.mainScene);
     debugLog("System command: player_created - " + parsed);
   }
+  else if (parsed.game_finished) {
+    debugLog("System command: game_finished - " + parsed);
+  }
+  else if (parsed.game_info) {
+    Player.addPlayers(parsed.game_info.players);
+  }
   else if (parsed.command == "start_game") {
     scene.started = true;
     debugLog("System command: start_game - " + parsed);
   }
   else if (parsed.commmand == "stop_game") {
     debugLog("System command: stop_game - " + parsed);
-  }
-  else if (parsed.command == "online") {
-    App.cable.subscriptions.subscriptions[0].perform("register_laserbonnet", parsed)
-    debugLog("System command: online - " + parsed);
   }
   else {
     debugLog("System command: unrecognized - " + parsed);

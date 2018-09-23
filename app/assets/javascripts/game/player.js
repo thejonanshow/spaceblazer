@@ -65,7 +65,7 @@ class Player {
 
   static getSpawnPoint() {
     let spawnX = Player.spawnOffset.x + (Player.width() / 2);
-    let spawnY = Player.spawnOffset.y + (Player.height() / 2) 
+    let spawnY = Player.spawnOffset.y + (Player.height() / 2);
     let spawnPoint = { x: spawnX, y: spawnY };
 
     debugLog('Player spawn: ' + JSON.stringify(spawnPoint));
@@ -88,15 +88,24 @@ class Player {
     Player.collisionCategory = currentScene.matter.world.nextCategory();
 
     let names = ['appy', 'blaze', 'cloudy', 'codey', 'earnie', 'hootie', 'koa', 'astro']
-	names.forEach(function(name) {
-	  currentScene.load.animation(name, './animations/players/' + name + '.json'); 
+    names.forEach(function(name) {
+      currentScene.load.animation(name, './animations/players/' + name + '.json');
     });
   };
 
   static create(data, currentScene) {
-    let player = new Player(data.id, data.avatar, data.game_id, currentScene);
-    new Enemy(Enemy.generateId(), currentScene);
+    let player = new Player(data["id"], data["avatar"], data["game_id"], currentScene);
+    let enemy = new Enemy(Enemy.generateId(), currentScene);
+
+    Player.allPlayers.push(player);
+    Enemy.allEnemies.push(enemy);
   };
+
+  static addPlayers(players) {
+    players.forEach(function(playerData) {
+      Player.create(playerData, game.mainScene);
+    });
+  }
 
   static update() {
     Object.values(Player.activePlayers).forEach(function(player) {
@@ -106,6 +115,10 @@ class Player {
 
   static firstFrameName(avatarName) {
     return ("players/" + avatarName.replace("_", "/") + "/" + avatarName + "1");
+  }
+
+  static roomForMorePlayers() {
+    return (Player.allPlayers.length < game.mainScene.NUM_PLAYERS);
   }
 
   displayName() {
