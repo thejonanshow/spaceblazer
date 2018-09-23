@@ -23,6 +23,10 @@ class CommandsChannel < ApplicationCable::Channel
     );
   end
 
+  def echo(data)
+    Rails.logger.debug(data)
+  end
+
   def new_game
     Game.new_game
   end
