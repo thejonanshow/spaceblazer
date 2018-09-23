@@ -4,12 +4,13 @@ Rails.application.configure do
   config.web_socket_server_url = "wss://spaceblazer-production.herokuapp.com/cable" 
   config.action_cable.url = "wss://spaceblazer-production.herokuapp.com/cable" 
 
-  config.action_cable.allowed_request_origins = [
-    'https://spaceblazer.cloud',
-    'http://spaceblazer.cloud',
-    'https://spaceblazer-production.herokuapp.com',
-    'http://spaceblazer-production.herokuapp.com'
-  ]
+  # config.action_cable.allowed_request_origins = [
+  #   'https://spaceblazer.cloud',
+  #   'http://spaceblazer.cloud',
+  #   'https://spaceblazer-production.herokuapp.com',
+  #   'http://spaceblazer-production.herokuapp.com'
+  # ]
+  config.action_cable.disable_request_forgery_protection = true
 
   # Code is not reloaded between requests.
   config.cache_classes = true
