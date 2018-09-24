@@ -1,13 +1,13 @@
 class Game < ApplicationRecord
   validates :start, uniqueness: true
-  validates :end, uniqueness: true
+  validates :finish, uniqueness: true
   has_many :players
 
   PLAYER_ANIMATION_FILES = Dir.glob("./app/assets/javascripts/game/animations/players/*.json")
   AVATARS = PLAYER_ANIMATION_FILES.map { |f| f.scan(/\/(\w+)\.json/) }.flatten
 
   def self.current
-    Game.where(end: nil).first || Game.create
+    Game.where(finish: nil).first || Game.create
   end
 
   def start
@@ -26,40 +26,30 @@ class Game < ApplicationRecord
     COLORS.sample
   end
 
+  def info
+    player_info = self.players.map(&:info)
+
+    {
+      game: {
+        id: self.id,
+        start: self.start,
+        finish: self.finish
+      },
+      players: player_info
+    }
+  end
+
   def self.fetch_game(requester_id)
-    game = Game.current
-
-    player_info = game.players.map do |player|
-      { id: player.client_side_id, avatar: player.avatar_slug, game_id: game.id }
-    end
-
-    message = {
-      id: "system",
-      game_info: {
-        game_id: game.id,
-        players: player_info
-      }
-    }
-    ActionCable.server.broadcast("commands-#{requester_id}", message.to_json)
+    Device.find_or_create_by(external_id: requester_id).send_game_info
   end
 
-  def self.new_game
-    old_game = Game.current
-    old_game.active = false
-    old_game.save
-
-    Game.create(active: true)
-  end
-
-  def self.finish_game(data)
+  def self.finish_game(params)
     game = Game.current
-    game.update(data: data, active: false)
-
-    message = {
-      id: "system",
-      game_finished: { game_id: game.id }
-    }
-    ActionCable.server.broadcast("commands-#{data['id']}", message.to_json)
+    game.update(
+      data: params[:game_data],
+      finish: DateTime.now
+    )
+    Device
   end
 
   def self.add_player(player_id)

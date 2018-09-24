@@ -22,4 +22,12 @@ class Player < ApplicationRecord
   def assign_slug
     self.avatar_slug = "astro_blue"
   end
+
+  def info
+    {
+      id: self.id,
+      avatar: self.avatar_slug,
+      game_id: self.game.id
+    }
+  end
 end

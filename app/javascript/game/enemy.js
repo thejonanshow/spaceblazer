@@ -1,3 +1,5 @@
+import config from 'game/config';
+
 class Enemy {
   constructor(id, scene) {
     this.state = {};
@@ -17,7 +19,7 @@ class Enemy {
     this.spawn = Enemy.getSpawnPoint();
     this.bullets = [];
     this.direction = Enemy.directions[Math.floor(Math.random() * Enemy.directions.length)];
-    this.speed = spaceblazerConfig("default_enemy_speed");
+    this.speed = config.default_enemy_speed;
 
     this.sprite = this.scene.matter.add.sprite(
       this.spawn.x,

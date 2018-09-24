@@ -1,21 +1,30 @@
 import createChannel from "cable";
 
-let callback;
+let channel;
 
-const gamesChannel = createChannel("GamesChannel", {
-  connected({ data }) {},
-  received({ data }) {
-    if (callback) callback.call(null, data);
-  },
-  disconnected({ data }) {}
-});
+class GamesChannel {
+  constructor() {
+    this.connection = channel;
+  }
 
-function perform(action, data) {
-  gamesChannel.perform(action, data);
+  connect(subscriber, connectedCallback, receivedCallback, disconnectedCallback) {
+    channel = createChannel(subscriber, "GamesChannel", {
+      connected(params) {
+        if (connectedCallback) connectedCallback.call(null, params);
+      },
+      received(params) {
+        if (receivedCallback) receivedCallback.call(null, params);
+      },
+      disconnected(params) {
+        if (disconnectedCallback) disconnectedCallback.call(null, params);
+      }
+    });
+    return channel;
+  }
+
+  perform(action, data) {
+    channel.perform(action, data);
+  }
 }
 
-function setCallback(fn) {
-  callback = fn;
-}
-
-export { perform, setCallback };
+export default GamesChannel;

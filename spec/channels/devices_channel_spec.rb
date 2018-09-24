@@ -8,7 +8,6 @@ RSpec.describe DevicesChannel, :type => :channel do
 
     it "broadcasts the new player to all online devices" do
       device = Device.create(external_id: SecureRandom.uuid)
-      p device
       channel = build_fake('broadcast_to', described_class)
 
       expect(FakeDevicesChannel).to receive(:broadcast_to).with(

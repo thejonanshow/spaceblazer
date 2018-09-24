@@ -8,7 +8,7 @@ class Player {
     this.spawn = Player.getSpawnPoint();
     this.bullets = [];
     this.rotation = 0;
-    this.speed = spaceblazerConfig("default_player_speed");
+    this.speed = config.default_player_speed;
     this.shape = this.scene.shapes['astro_blue1'];
     this.firstFrame = Player.firstFrameName(this.avatarName);
     this.level = 0;

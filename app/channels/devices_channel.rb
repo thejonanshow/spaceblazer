@@ -1,5 +1,6 @@
 class DevicesChannel < ApplicationCable::Channel
   def subscribed
+    current_device.send_game_info
     stream_for current_device
   end
 

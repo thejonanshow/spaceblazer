@@ -1,6 +1,7 @@
 import { assetPath } from 'helpers/asset_path';
 import config from 'game/config';
 import { addKeyboardControls } from 'game/keyboard';
+import { addSfxMarkers } from 'game/sfx';
 
 import Enemy from 'game/enemy';
 import Player from 'game/player';
@@ -38,8 +39,6 @@ class MainScene extends Phaser.Scene {
 
 
     this.load.path = '/';
-    this.load.json('spaceblazerConfig', '../spaceblazer_config.json');
-
     this.load.path = assetPath();
 
     this.load.multiatlas('multipass', 'multipass.json');
@@ -117,7 +116,7 @@ class MainScene extends Phaser.Scene {
     this.waitingText = this.add.text(this.centerX, this.textY, '', { fontSize: '24px', fill: '#fff' });
     this.waitingText.originX = 0.5;
 
-    this.NUM_PLAYERS = spaceblazerConfig("minimum_players");
+    this.NUM_PLAYERS = config.minimum_players;
   }
 
   update() {

@@ -11,8 +11,8 @@ import "@babel/polyfill";
 import config from 'game/config';
 
 import Phaser from 'phaser';
-let game = new Phaser.Game(config.phaser);
+let phaserGame = new Phaser.Game(config.phaser);
 
 import Spaceblazer from 'spaceblazer';
 let spaceblazer = new Spaceblazer;
-spaceblazer.game = game;
+spaceblazer.phaserGame = phaserGame;

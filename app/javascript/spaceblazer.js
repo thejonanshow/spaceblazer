@@ -1,5 +1,5 @@
-import * as devicesChannel from 'devices_channel';
-import * as gamesChannel from 'games_channel';
+import DevicesChannel from 'devices_channel';
+import GamesChannel from 'games_channel';
 
 import Phaser from 'phaser';
 
@@ -26,10 +26,14 @@ import config from 'game/config';
 
 class Spaceblazer {
   constructor() {
+    if (!Spaceblazer.current) {
+      Spaceblazer.current = this;
+    }
+
     this.state = {};
     this.debug = true;
-    this.devicesChannel = devicesChannel;
-    this.gamesChannel = gamesChannel;
+    this.devicesChannel = new DevicesChannel;
+    this.gamesChannel = new GamesChannel;
     this.assetPath = assetPath();
 
     this.starScene = StarScene;
@@ -40,18 +44,42 @@ class Spaceblazer {
     this.addFullscreenEvent();
 
     config.reset = false;
-  }
 
-  static newGame() {
-    Cable.send('new_game', { id: game.fingerprint });
+    this.devicesSubscription = this.devicesChannel.connect(
+      this,
+      this.devicesConnected,
+      this.devicesReceived,
+      this.devicesDisconnected
+    )
+    this.gamesSubscription = this.gamesChannel.connect(
+      this,
+      this.gamesConnected,
+      this.gamesReceived,
+      this.gamesDisconnected
+    );
+
+    return Spaceblazer.current;
   }
 
   static fetchGame() {
-    Cable.send('fetch_game', { id: game.fingerprint });
+    Spaceblazer.current.fetchGame();
   }
 
-  static finishGame() {
-    Cable.send('finish_game', { id: game.fingerprint });
+  fetchGame() {
+    if (this.gamesSubscription) {
+      this.gamesSubscription.perform('fetch_game', { device_id: this.id });
+    }
+  }
+
+  finishGame() {
+    if (this.gamesSubscription) {
+      this.gamesSubscription.perform('finish_game', {
+        device_id: this.id,
+        game_data: {
+          finishing_device: this.id
+        }
+      });
+    }
   }
 
   static init() {
@@ -73,6 +101,24 @@ class Spaceblazer {
     Spaceblazer.destroySprites();
     game.mainScene.scene.restart();
     Spaceblazer.init();
+  }
+
+  devicesConnected(data) {
+  }
+  devicesReceived(data) {
+    console.log(data);
+  }
+  devicesDisconnected(data) {
+    console.log(data);
+  }
+  gamesConnected(data) {
+    console.log(data);
+  }
+  gamesReceived(data) {
+    console.log(data);
+  }
+  gamesDisconnected(data) {
+    console.log(data);
   }
 
   addFullscreenEvent() {
