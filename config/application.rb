@@ -23,6 +23,8 @@ module Spaceblazer
     config.load_defaults 5.2
     config.assets.paths << Rails.root.join('node_modules')
     config.active_job.queue_adapter = :sidekiq
+    config.generators.helper = false
+    config.generators.javascript_engine = :js
 
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid

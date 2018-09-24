@@ -1,24 +1,13 @@
 class Game < ApplicationRecord
-  after_create :set_data
+  validates :start, uniqueness: true
+  validates :end, uniqueness: true
   has_many :players
 
   PLAYER_ANIMATION_FILES = Dir.glob("./app/assets/javascripts/game/animations/players/*.json")
   AVATARS = PLAYER_ANIMATION_FILES.map { |f| f.scan(/\/(\w+)\.json/) }.flatten
 
   def self.current
-    active_game = Game.where(active: true).first || Game.create(active: true)
-
-    if active_game.players.count > 50
-      Game.where(active: true).update_all(active: false)
-      active_game = Game.create(active: true)
-    end
-
-    active_game
-  end
-
-  def set_data
-    self.data = {}
-    save
+    Game.where(end: nil).first || Game.create
   end
 
   def start

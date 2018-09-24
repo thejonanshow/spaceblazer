@@ -6,12 +6,7 @@ class CommandsChannel < ApplicationCable::Channel
     stream_from "commands"
     stream_from "commands-#{uid}"
 
-    if uid.include? "|"
-      Laserbonnet.register(uid)
-    else
-      # it's a browser, send info about the current game
-      Game.fetch_game(uid)
-    end
+    Device.first_or_create(external_id: uid).send_game
   end
 
   def unsubscribed
