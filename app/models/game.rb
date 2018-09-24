@@ -63,10 +63,12 @@ class Game < ApplicationRecord
   end
 
   def self.finish_game(data)
-    Game.current.update(data: data, active: false)
+    game = Game.current
+    game.update(data: data, active: false)
+
     message = {
       id: "system",
-      game_finished: { game_id: self.id }
+      game_finished: { game_id: game.id }
     }
     ActionCable.server.broadcast("commands-#{data['id']}", message.to_json)
   end
