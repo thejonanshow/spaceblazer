@@ -12,16 +12,15 @@
 
 }).call(this);
 
-function connectCable(uid) {
+function connectCable(deviceId) {
   let cable_url = document.head.querySelector("[name~=action-cable-url][content]").content
 
   this.App = {};
-  App.cable = ActionCable.createConsumer(cable_url + "/?uid=" + uid);
+  App.cable = ActionCable.createConsumer(cable_url + "/?device_id=" + deviceId);
 
-  App.commands = App.cable.subscriptions.create('CommandsChannel', {
-    received: function(data) {
+  App.devicesChannelSubscription = App.cable.subscriptions.create('DevicesChannel', {
+    received: (data) => {
       debugLog(data);
-      handleCommand(data);
     }
   });
 };

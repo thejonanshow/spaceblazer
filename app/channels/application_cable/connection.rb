@@ -3,14 +3,13 @@ module ApplicationCable
     identified_by :current_device
 
     def connect
-      self.device = current_device
-      logger.add_tags 'ActionCable', self.device.id
+      logger.add_tags 'ActionCable', current_device.id
     end
 
     protected
 
     def current_device
-      Device.find_or_create(device_id: params[:device_id])
+      Device.find_or_create_by(external_id: request.params[:device_id])
     end
   end
 end

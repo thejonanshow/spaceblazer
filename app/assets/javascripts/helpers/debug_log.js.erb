@@ -1,9 +1,3 @@
-function debugLog(message) {
-  if (debugging()) {
-    console.log(message);
-  };
-}
-
 function debugging() {
   let env_debug = <%= ENV['DEBUG'] ? true : false %>;
 

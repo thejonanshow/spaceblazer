@@ -30,16 +30,16 @@ let players = {};
 let bullets = {};
 
 new Fingerprint2().get(
-  function(result, components) {
+  (result, components)=> {
     game.fingerprint = result;
     connectCable(game.fingerprint);
   }
 );
 
-window.addEventListener("load", function() {
+window.addEventListener("load", ()=> {
   let gameCanvas = document.getElementsByTagName('canvas')[0];
 
-  gameCanvas.addEventListener("click", function( event ) {
+  gameCanvas.addEventListener("click", ( event )=> {
     screenfull.toggle(this);
   }, false);
 });
