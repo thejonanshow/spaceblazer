@@ -1,6 +1,12 @@
 class Player < ApplicationRecord
   belongs_to :game
-  validates :client_side_id, uniqueness: { scope: :game_id }
+  belongs_to :device
+
+  validates :device_id, presence: true
+  validates :game_id, presence: true
+  validates :avatar_slug, presence: true
+  validates :avatar_slug, uniqueness: { scope: :game_id }
+
   after_create :broadcast_create
 
   def broadcast_create
