@@ -37,7 +37,7 @@ class Game < ApplicationRecord
     COLORS.sample
   end
 
-  def self.fetch_game(data)
+  def self.fetch_game(requester_id)
     game = Game.current
 
     player_info = game.players.map do |player|
@@ -51,7 +51,7 @@ class Game < ApplicationRecord
         players: player_info
       }
     }
-    ActionCable.server.broadcast("commands-#{data['id']}", message.to_json)
+    ActionCable.server.broadcast("commands-#{requester_id}", message.to_json)
   end
 
   def self.new_game

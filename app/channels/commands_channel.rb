@@ -10,7 +10,7 @@ class CommandsChannel < ApplicationCable::Channel
       Laserbonnet.register(uid)
     else
       # it's a browser, send info about the current game
-      Game.send_info(uid)
+      Game.fetch_game(uid)
     end
   end
 
