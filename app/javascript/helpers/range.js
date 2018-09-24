@@ -3,3 +3,4 @@ function* range(start, end) {
 	yield i;
   }
 }
+export { range };

@@ -1,16 +1,17 @@
-// frontend/client/chat.js
 import createChannel from "cable";
 
-let callback; // declaring a variable that will hold a function later
+let callback;
 
-const chat = createChannel("DevicesChannel", {
+const devicesChannel = createChannel("DevicesChannel", {
+  connected({ data }) {},
   received({ data }) {
     if (callback) callback.call(null, data);
-  }
+  },
+  disconnected({ data }) {}
 });
 
 function perform(action, data) {
-  chat.perform(action, data);
+  devicesChannel.perform(action, data);
 }
 
 function setCallback(fn) {

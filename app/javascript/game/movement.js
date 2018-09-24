@@ -26,3 +26,4 @@ function stopX(entity) {
 function stopY(entity) {
   entity.sprite.setVelocityY(0);
 };
+export { moveUp, moveDown, moveLeft, moveRight, stop, stopX, stopY };

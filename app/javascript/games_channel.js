@@ -2,14 +2,16 @@ import createChannel from "cable";
 
 let callback;
 
-const devicesChannel = createChannel("DevicesChannel", {
+const gamesChannel = createChannel("GamesChannel", {
+  connected({ data }) {},
   received({ data }) {
     if (callback) callback.call(null, data);
-  }
+  },
+  disconnected({ data }) {}
 });
 
 function perform(action, data) {
-  chat.perform(action, data);
+  gamesChannel.perform(action, data);
 }
 
 function setCallback(fn) {

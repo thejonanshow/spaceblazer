@@ -27,3 +27,4 @@ class PowerUp {
     });
   }
 }
+export default PowerUp;

@@ -1,41 +1,12 @@
-class Spaceblazer {
-  static newGame() {
-    Cable.send('new_game', { id: game.fingerprint });
-  }
+import { assetPath } from 'helpers/asset_path';
+import config from 'game/config';
+import { addKeyboardControls } from 'game/keyboard';
 
-  static fetchGame() {
-    Cable.send('fetch_game', { id: game.fingerprint });
-  }
+import Enemy from 'game/enemy';
+import Player from 'game/player';
+import Bullet from 'game/bullet';
 
-  static finishGame() {
-    Cable.send('finish_game', { id: game.fingerprint });
-  }
-
-  static init() {
-    Player.init();
-    Enemy.init();
-    Bullet.init();
-  }
-
-  static destroySprites() {
-    Player.destroyAllSprites();
-    Enemy.destroyAllSprites();
-    Bullet.destroyAllSprites();
-  }
-
-  static restart() {
-    Spaceblazer.firstGame = false;
-    game.mainScene.reset();
-    game.mainScene.scene.stop();
-    Spaceblazer.destroySprites();
-    game.mainScene.scene.restart();
-    Spaceblazer.init();
-  }
-}
-Spaceblazer.reset = false;
-Spaceblazer.firstGame = true;
-Spaceblazer.GAME_FINISH_COUNTDOWN = 60;
-Spaceblazer.GAME_START_COUNTDOWN_MS = 3000;
+import Spaceblazer from 'spaceblazer';
 
 class MainScene extends Phaser.Scene {
   constructor() {
@@ -54,14 +25,13 @@ class MainScene extends Phaser.Scene {
   }
 
   preload() {
-    game.mainScene = this;
     this.started = false;
     this.worldCollisionOffset = 0;
     this.GAMETIMER_SEC = "";
 
     this.gameTimerText = this.add.text(
-      (game.width / 2),
-      (game.height / 8),
+      (config.phaser.width / 2),
+      (config.phaser.height / 8),
       this.COUNTDOWN_TEXT,
       { fontSize: '72px', fill: '#fff' }
     ).setOrigin(0.5, 0.5);
@@ -70,7 +40,7 @@ class MainScene extends Phaser.Scene {
     this.load.path = '/';
     this.load.json('spaceblazerConfig', '../spaceblazer_config.json');
 
-    this.load.path = getAssetPath();
+    this.load.path = assetPath();
 
     this.load.multiatlas('multipass', 'multipass.json');
     this.load.json('shapes');
@@ -78,7 +48,7 @@ class MainScene extends Phaser.Scene {
     this.load.audio('theme', 'audio/neoishiki.mp3');
     this.load.animation('cloud', 'animations/powerups/cloud/cloud.json'); 
 
-    if (Spaceblazer.firstGame) {
+    if (config.first_game) {
       Player.load(this);
       Enemy.load(this);
       Bullet.load(this);
@@ -101,8 +71,8 @@ class MainScene extends Phaser.Scene {
     this.matter.world.setBounds(
       -this.worldCollisionOffset,
       -this.worldCollisionOffset,
-      game.width + (2 * this.worldCollisionOffset),
-      game.height + (2 * this.worldCollisionOffset)
+      config.phaser.width + (2 * this.worldCollisionOffset),
+      config.phaser.height + (2 * this.worldCollisionOffset)
     );
 
     this.matter.world.disableGravity();
@@ -141,8 +111,8 @@ class MainScene extends Phaser.Scene {
 
     this.music = this.sound.add('theme');
 
-    this.centerX = game.width / 2;
-    this.textY = game.height * 0.75;
+    this.centerX = config.phaser.width / 2;
+    this.textY = config.phaser.height * 0.75;
 
     this.waitingText = this.add.text(this.centerX, this.textY, '', { fontSize: '24px', fill: '#fff' });
     this.waitingText.originX = 0.5;
@@ -151,7 +121,7 @@ class MainScene extends Phaser.Scene {
   }
 
   update() {
-    if (this.started && !Spaceblazer.reset) {
+    if (this.started && !config.reset) {
       if (this.music.isPlaying == false) {
         this.music.play({ loop: true });
       }
@@ -171,7 +141,7 @@ class MainScene extends Phaser.Scene {
       this.waitingText.destroy();
       this.countdownStarted = true;
 
-      this.COUNTDOWN_TEXT = Spaceblazer.GAME_START_COUNTDOWN_MS / 1000;
+      this.COUNTDOWN_TEXT = config.game_start_countdown_ms / 1000;
 
       this.countdownText = this.add.text(this.centerX, this.textY, this.COUNTDOWN_TEXT, { fontSize: '256px', fill: '#fff' })
         .setOrigin(0.5, 0.5);
@@ -197,7 +167,7 @@ class MainScene extends Phaser.Scene {
   }
 
   finish() {
-    Spaceblazer.finishGame();
+    this.spaceblazer.finishGame();
     let playerIds = Object.keys(Player.activePlayers);
     let winner = Player.activePlayers[playerIds[0]];;
 
@@ -213,31 +183,31 @@ class MainScene extends Phaser.Scene {
 
     let overlay = this.add.graphics();
     overlay.fillStyle(0x000000, 1.0);
-    overlay.fillRect(0, 0, game.width, game.height);
+    overlay.fillRect(0, 0, MainScene.width, MainScene.height);
     overlay.alpha = 0.5;
 
     winner.scoreText.setAlpha(0);
-    winner.sprite.setPosition((game.width / 2), (game.height / 2));
+    winner.sprite.setPosition((MainScene.width / 2), (MainScene.height / 2));
     winner.sprite.setScale(2);
     winner.sprite.setDepth(Infinity);
 
     this.gameTimerText.setDepth(Infinity);
     this.gameTimerText.setText(winner.displayName() + " wins!");
     this.add.text(
-      (game.width / 2),
-      (game.height * 0.8),
+      (MainScene.width / 2),
+      (MainScene.height * 0.8),
       "CONGRATULATIONS!",
       { fontSize: '72px', fill: '#fff' }
     ).setOrigin(0.5, 0.5);
     this.add.text(
-      (game.width / 2),
-      (game.height * 0.9),
+      (MainScene.width / 2),
+      (MainScene.height * 0.9),
       "(push start to play again)",
       { fontSize: '50px', fill: '#fff' }
     ).setOrigin(0.5, 0.5);
     this.gameTimerText.originX = 0.5;
 
-    Spaceblazer.reset = true;
+    MainScene.reset = true;
 
     this.music.stop();
   }
@@ -254,7 +224,7 @@ class MainScene extends Phaser.Scene {
   }
 
   startGameTimer() {
-    this.GAMETIMER_SEC = Spaceblazer.GAME_FINISH_COUNTDOWN;
+    this.GAMETIMER_SEC = MainScene.GAME_FINISH_COUNTDOWN;
     this.gameTimer = this.time.addEvent({
       delay: 1000,
       loop: true,
@@ -275,4 +245,4 @@ class MainScene extends Phaser.Scene {
     }
   }
 }
-
+export default MainScene;

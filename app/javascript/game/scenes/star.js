@@ -1,3 +1,7 @@
+import { assetPath } from 'helpers/asset_path';
+import config from 'game/config';
+import Phaser from 'phaser';
+
 class StarScene extends Phaser.Scene {
   constructor() {
     super({ key: 'stars', active: true });
@@ -7,16 +11,15 @@ class StarScene extends Phaser.Scene {
   }
 
   preload() {
-    game.starScene = this;
-
-    this.load.path = getAssetPath();
+    this.load.path = assetPath();
     this.load.multiatlas('stars', 'multipass.json');
   }
 
   create() {
     let speeds = [6, 8, 10, 12, 14];
-
     let layers = {};
+    let starScene = this;
+
     speeds.forEach(function(speed) {
       layers[speed] = [];
     });
@@ -39,7 +42,7 @@ class StarScene extends Phaser.Scene {
     Object.keys(layers).forEach(function(layerSpeed) {
       layers[layerSpeed].forEach(function(currentStar) {
         let texture = 'stars/' + currentStar.color + '/' + currentStar.contrast;
-        let current = game.starScene.matter.add.sprite(currentStar.x, currentStar.y, 'stars', texture);
+        let current = starScene.matter.add.sprite(currentStar.x, currentStar.y, 'stars', texture);
 
         current.body.plugin.wrap = {
           min: {
@@ -47,8 +50,8 @@ class StarScene extends Phaser.Scene {
             y: 0
           },
           max: {
-            x: game.width,
-            y: game.height
+            x: config.phaser.width,
+            y: config.phaser.height
           }
         }
 
@@ -73,16 +76,17 @@ class StarScene extends Phaser.Scene {
           current.setRotation(currentStar.rotation);
         }
 
-        game.starScene.stars.push(current);
+        starScene.stars.push(current);
       });
     });
 
     let overlay = this.add.graphics();
     overlay.fillStyle(0x000000, 1.0);
-    overlay.fillRect(0, 0, game.width, game.height);
+    overlay.fillRect(0, 0, config.phaser.width, config.phaser.height);
     overlay.alpha = 0.5;
   }
 
   update() {
   }
 }
+export default StarScene;

@@ -13,3 +13,4 @@ class Explosion {
     this.sprite.play('server_explosion');
   }
 }
+export default Explosion;

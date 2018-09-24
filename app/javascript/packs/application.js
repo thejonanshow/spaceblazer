@@ -7,7 +7,12 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-import Game from 'game';
-let game = new Game;
+import "@babel/polyfill";
+import config from 'game/config';
 
-import { perform } from "devices_channel";
+import Phaser from 'phaser';
+let game = new Phaser.Game(config.phaser);
+
+import Spaceblazer from 'spaceblazer';
+let spaceblazer = new Spaceblazer;
+spaceblazer.game = game;

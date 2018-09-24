@@ -1,4 +1,4 @@
-Array.prototype.remove = function() {
+function remove() {
     var what, a = arguments, L = a.length, ax;
     while (L && this.length) {
         what = a[--L];
@@ -8,3 +8,4 @@ Array.prototype.remove = function() {
     }
     return this;
 };
+export { remove };

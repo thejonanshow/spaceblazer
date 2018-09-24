@@ -16,6 +16,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.0.0-0",
+    "@babel/polyfill": "^7.0.0",
     "@rails/webpacker": "https://github.com/rails/webpacker.git",
     "actioncable": "^5.2.1",
     "caniuse-lite": "^1.0.30000697",

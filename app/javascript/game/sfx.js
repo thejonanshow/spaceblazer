@@ -7,3 +7,4 @@ function addSfxMarkers(scene) {
     scene.sfx.addMarker(marker);
   });
 };
+export { addSfxMarkers };

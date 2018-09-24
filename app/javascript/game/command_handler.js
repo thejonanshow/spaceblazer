@@ -86,3 +86,4 @@ function handleSystemCommand(data) {
     debugLog("System command: unrecognized - " + parsed);
   }
 };
+export { handleCommand };

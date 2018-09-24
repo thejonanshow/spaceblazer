@@ -3,3 +3,4 @@ class ServerLogger {
     Cable.send('log_debug', { message: message });
   }
 }
+export default ServerLogger;

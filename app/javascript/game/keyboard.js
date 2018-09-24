@@ -1,4 +1,6 @@
-KEYDOWN = {
+import config from 'game/config';
+
+const KEYDOWN = {
   K: "a",
   L: "b",
   COMMA: "x",
@@ -14,7 +16,7 @@ KEYDOWN = {
   SPACE: "b"
 };
 
-KEYUP = {
+const KEYUP = {
   K: "1",
   L: "2",
   COMMA: "3",
@@ -30,12 +32,12 @@ KEYUP = {
   SPACE: "2"
 };
 
-function echo_command(id, command) {
+function echoCommand(id, command) {
   Cable.send( "echo_command", { id: id, command: command });
 };
 
 function addKeyboardControls(scene) {
-  if (spaceblazerConfig('disable_keyboard')) {
+  if (config.disable_keyboard_controls) {
     return;
   }
   scene.input.keyboard.on('keydown', function(event) {
@@ -55,7 +57,7 @@ function addKeyboardControls(scene) {
 
       if ((keyname == 'ENTER') || (Player.activePlayers[id])) {
         command = KEYDOWN[keyname]
-        echo_command(id, command);
+        echoCommand(id, command);
       }
     });
   });
@@ -65,8 +67,10 @@ function addKeyboardControls(scene) {
 
       if (Player.activePlayers[id]) {
         command = KEYUP[keyname]
-        echo_command(id, command);
+        echoCommand(id, command);
       }
     });
   });
 };
+
+export { echoCommand, addKeyboardControls };
