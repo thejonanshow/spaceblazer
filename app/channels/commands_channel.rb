@@ -1,5 +1,7 @@
 class CommandsChannel < ApplicationCable::Channel
-  def subscribed(*params)
+  def subscribed(params)
+    uid = params["id"]
+
     ActionCableClient.add(uid)
     ActionCable.server.broadcast("commands", { id: "system", notice: "#{ActionCableClient.count} clients connected, #{ActionCableClient.unique} unique." }.to_json)
 
@@ -14,7 +16,10 @@ class CommandsChannel < ApplicationCable::Channel
     end
   end
 
-  def unsubscribed
+  def unsubscribed(params)
+    uid = params["id"]
+    return unless uid
+
     if uid.include? "|"
       Laserbonnet.offline(uid)
     end
