@@ -9,11 +9,8 @@ class CommandsChannel < ApplicationCable::Channel
     Device.first_or_create(external_id: uid).send_game
   end
 
-  def unsubscribed
-    if uid.include? "|"
-      Laserbonnet.offline(uid)
-    end
-
+  def unsubscribed(*params)
+    Device.where(external_id: uid).first.update(online: false)
     ActionCableClient.remove(uid)
   end
 

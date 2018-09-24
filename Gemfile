@@ -13,7 +13,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 4.0'
 gem 'sidekiq', '~> 5.2'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'webpacker', '~> 3.5'
+gem 'webpacker', git: 'https://github.com/rails/webpacker.git'
 gem 'newrelic_rpm'
 
 group :development, :test do
