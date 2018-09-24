@@ -23,7 +23,7 @@ class CommandsChannel < ApplicationCable::Channel
     stream_from "commands"
   end
 
-  def unsubscribed(params)
+  def unsubscribed
     uid = params["id"]
     return unless uid
 
