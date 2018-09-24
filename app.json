@@ -3,21 +3,6 @@
   "scripts": {
   },
   "env": {
-    "AWS_KEY": {
-      "required": true
-    },
-    "AWS_SECRET": {
-      "required": true
-    },
-    "FASTLY_API_KEY": {
-      "required": true
-    },
-    "FASTLY_CDN_URL": {
-      "required": true
-    },
-    "FASTLY_SERVICE_ID": {
-      "required": true
-    },
     "REDIS_CHANNEL": {
       "required": true
     },
@@ -34,7 +19,6 @@
     }
   },
   "addons": [
-    "fastly",
     "heroku-postgresql",
     "heroku-redis",
     "timber-logging"
