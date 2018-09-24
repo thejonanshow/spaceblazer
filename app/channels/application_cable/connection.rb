@@ -1,16 +1,16 @@
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
-    identified_by :uid
+    identified_by :current_device
 
     def connect
-      self.uid = get_connecting_uid
-      logger.add_tags 'ActionCable', uid
+      self.device = current_device
+      logger.add_tags 'ActionCable', self.device.id
     end
 
     protected
 
-    def get_connecting_uid
-      request.params[:uid] if request.params[:uid]
+    def current_device
+      Device.find_or_create(device_id: params[:device_id])
     end
   end
 end

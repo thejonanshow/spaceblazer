@@ -1,9 +1,9 @@
 class DevicesChannel < ApplicationCable::Channel
   def subscribed
-    # stream_from "some_channel"
+    stream_for current_device
   end
 
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
+    current_device.update(online: false)
   end
 end
