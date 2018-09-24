@@ -6,17 +6,17 @@ class CommandsChannel < ApplicationCable::Channel
 
       if (params["id"])
         Rails.logger.debug("CommandsChannel#subscribed: #{params['id']}")
-      end
+        ActionCableClient.add(uid)
+        ActionCable.server.broadcast("commands", { id: "system", notice: "#{ActionCableClient.count} clients connected, #{ActionCableClient.unique} unique." }.to_json)
 
-      ActionCableClient.add(uid)
-      ActionCable.server.broadcast("commands", { id: "system", notice: "#{ActionCableClient.count} clients connected, #{ActionCableClient.unique} unique." }.to_json)
-      stream_from "commands-#{uid}"
+        stream_from "commands-#{uid}"
 
-      if uid.include? "|"
-        Laserbonnet.register(uid)
-      else
-        # it's a browser, send info about the current game
-        Game.fetch_game(uid)
+        if uid.include? "|"
+          Laserbonnet.register(uid)
+        else
+          # it's a browser, send info about the current game
+          Game.fetch_game(uid)
+        end
       end
     end
 
