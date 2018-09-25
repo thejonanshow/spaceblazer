@@ -2,8 +2,6 @@ class GamesChannel < ApplicationCable::Channel
   def subscribed
     if current_device
       Rails.logger.debug current_device.inspect
-    else
-      Rails.logger.debug "*"*80
     end
 
     stream_for current_game
@@ -11,7 +9,7 @@ class GamesChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
+    current_device.update(online: false)
   end
 
   def create_player(params)
@@ -23,8 +21,7 @@ class GamesChannel < ApplicationCable::Channel
   end
 
   def start_game(params)
-    Game.current.start_game({
-    })
+    Game.current.start_game({})
   end
 
   def finish_game(params)

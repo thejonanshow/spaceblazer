@@ -27,9 +27,17 @@ function createChannel(subscriber, channel, callbacks) {
   }
   else {
     getFingerprint((deviceId)=> {
+      let connectionUrl = cableUrl + "/?device_id=" + deviceId;
+      console.log(connectionUrl);
       consumer = cable.createConsumer(cableUrl + "/?device_id=" + deviceId);
       subscriber.id = deviceId;
-      subscription = consumer.subscriptions.create(channel, callbacks);
+      subscription = consumer.subscriptions.create(
+        {
+          channel: channel,
+          device_id: subscriber.id
+        },
+        callbacks
+      );
     });
   }
   return subscription;

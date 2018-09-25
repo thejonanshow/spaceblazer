@@ -7,7 +7,7 @@ class Device < ApplicationRecord
     DevicesChannel.broadcast_to(self, game_json)
   end
 
-  def broadcast_to_all(data)
+  def self.broadcast_to_all(data)
     Device.where(online: true).each do |device|
       DevicesChannel.broadcast_to(device, data)
     end

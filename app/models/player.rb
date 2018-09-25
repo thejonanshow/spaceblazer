@@ -15,7 +15,6 @@ class Player < ApplicationRecord
   end
 
   def broadcast_create
-    p self.device
     DevicesChannel.broadcast_to(self.device, self)
   end
 
