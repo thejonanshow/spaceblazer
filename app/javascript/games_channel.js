@@ -9,13 +9,13 @@ class GamesChannel {
 
   connect(subscriber, connectedCallback, receivedCallback, disconnectedCallback) {
     channel = createChannel(subscriber, "GamesChannel", {
-      connected(params) {
+      connected({}) {
         if (connectedCallback) connectedCallback.call(null, params);
       },
-      received(params) {
+      received({}) {
         if (receivedCallback) receivedCallback.call(null, params);
       },
-      disconnected(params) {
+      disconnected({}) {
         if (disconnectedCallback) disconnectedCallback.call(null, params);
       }
     });

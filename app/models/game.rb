@@ -10,11 +10,11 @@ class Game < ApplicationRecord
     Game.where(finish: nil).first || Game.create
   end
 
-  def start
+  def start_game
     Device.broadcast_to_all({ start_game: self.id });
   end
 
-  def stop
+  def stop_game
     Device.broadcast_to_all({ finish_game: self.id });
   end
 

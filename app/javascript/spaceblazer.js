@@ -104,21 +104,26 @@ class Spaceblazer {
   }
 
   devicesConnected(data) {
+    console.log("Spaceblazer#devicesConnected: " + JSON.stringify(data));
   }
   devicesReceived(data) {
-    console.log(data);
+    console.log("Spaceblazer#devicesReceived: " + JSON.stringify(data));
   }
   devicesDisconnected(data) {
     console.log(data);
+    console.log("Spaceblazer#devicesDisconnected: " + JSON.stringify(data));
   }
   gamesConnected(data) {
     console.log(data);
+    console.log("Spaceblazer#gamesConnected: " + JSON.stringify(data));
   }
   gamesReceived(data) {
     console.log(data);
+    console.log("Spaceblazer#gamesReceived: " + JSON.stringify(data));
   }
   gamesDisconnected(data) {
     console.log(data);
+    console.log("Spaceblazer#gamesDisconnected: " + JSON.stringify(data));
   }
 
   addFullscreenEvent() {

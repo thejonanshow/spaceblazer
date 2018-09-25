@@ -9,7 +9,9 @@ module ApplicationCable
     protected
 
     def current_device
-      Device.find_or_create_by(external_id: request.params[:device_id])
+      device = Device.find_or_create_by(external_id: request.params[:device_id])
+      byebug unless device
+      device
     end
   end
 end
