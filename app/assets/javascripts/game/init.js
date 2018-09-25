@@ -7,7 +7,7 @@ const gameConfig = {
   type: Phaser.AUTO,
   width: window.innerWidth,
   height: window.innerHeight,
-  backgroundColor: "FFFFFF",
+  backgroundColor: "000000",
   physics: {
     default: 'matter',
     matter: {
