@@ -5,4 +5,10 @@ class Device < ApplicationRecord
   def send_game_info
     DevicesChannel.broadcast_to(self, Game.current.info)
   end
+
+  def broadcast_to_all(data)
+    Device.where(online: true).each do |device|
+      DevicesChannel.broadcast_to(device, data)
+    end
+  end
 end

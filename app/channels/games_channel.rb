@@ -15,6 +15,11 @@ class GamesChannel < ApplicationCable::Channel
     Game.current.fetch_game(params[:device_id]);
   end
 
+  def start_game(params)
+    Game.current.start_game({
+    })
+  end
+
   def finish_game(params)
     Game.current.finish_game({
       game_data: params[:game_data]

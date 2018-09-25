@@ -11,11 +11,11 @@ class Game < ApplicationRecord
   end
 
   def start
-    ActionCable.server.broadcast("commands", { id: "system", command: "start_game" }.to_json)
+    Device.broadcast_to_all({ start_game: self.id });
   end
 
   def stop
-    ActionCable.server.broadcast("commands", { id: "system", command: "stop_game" }.to_json)
+    Device.broadcast_to_all({ finish_game: self.id });
   end
 
   def random_avatar
