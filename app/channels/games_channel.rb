@@ -1,6 +1,13 @@
 class GamesChannel < ApplicationCable::Channel
   def subscribed
-    # stream_from "some_channel"
+    if current_device
+      Rails.logger.debug current_device.inspect
+    else
+      Rails.logger.debug "*"*80
+    end
+
+    stream_for current_game
+    current_device.update(online: true)
   end
 
   def unsubscribed

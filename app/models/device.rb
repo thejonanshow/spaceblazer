@@ -3,7 +3,8 @@ class Device < ApplicationRecord
   validates :online, presence: true
 
   def send_game_info
-    DevicesChannel.broadcast_to(self, Game.current.info)
+    game_json = Game.current.to_json(include: :players)
+    DevicesChannel.broadcast_to(self, game_json)
   end
 
   def broadcast_to_all(data)

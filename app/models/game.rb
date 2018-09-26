@@ -26,19 +26,6 @@ class Game < ApplicationRecord
     COLORS.sample
   end
 
-  def info
-    player_info = self.players.map(&:info)
-
-    {
-      game: {
-        id: self.id,
-        start: self.start,
-        finish: self.finish
-      },
-      players: player_info
-    }
-  end
-
   def self.fetch_game(requester_id)
     Device.find_or_create_by(external_id: requester_id).send_game_info
   end
