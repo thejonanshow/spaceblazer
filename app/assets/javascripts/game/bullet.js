@@ -68,7 +68,7 @@ class Bullet {
         collides_with: Enemy.collisionCategory
       },
       floppy: {
-        speed: -10,
+        speed: -7,
         animation_file: 'animations/bullets/floppy.json',
         first_frame: 'bullets/floppy/floppy1',
         collision_category: currentScene.matter.world.nextCategory(),

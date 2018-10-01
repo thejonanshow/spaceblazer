@@ -10,7 +10,8 @@ class Player {
     this.speed = spaceblazerConfig("default_player_speed");
     this.shape = this.scene.shapes['astro_blue1'];
     this.firstFrame = Player.firstFrameName(this.avatarName);
-    this.level = 0;
+    this.level = 2;
+    this.maximum_level = 7;
 
     this.sprite = this.scene.matter.add.sprite(
       this.spawn.x,
@@ -129,7 +130,7 @@ class Player {
   }
 
   levelUp() {
-    if (this.level < 5) {
+    if (this.level < this.maximum_level) {
       this.scoreEvent("level_up");
       this.level += 1;
       this.updateText();

@@ -1,6 +1,6 @@
 {
   "minimum_players" : 4,
   "default_player_speed" : 8,
-  "default_enemy_speed" : 7,
+  "default_enemy_speed" : 5,
   "disable_keyboard" : true
 }
