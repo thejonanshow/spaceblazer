@@ -238,7 +238,9 @@ class Player {
 
   scoreEvent(eventType) {
     if ((eventType == 'touch_enemy' || eventType == 'touch_bullet')) {
-      this.level = 0;
+      if (this.level > 0) {
+        this.level = this.level - 1;
+      }
     }
     this.updateScore(Player.scores[eventType]);
   }
