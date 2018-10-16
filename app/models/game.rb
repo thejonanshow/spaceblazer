@@ -1,32 +1,21 @@
 class Game < ApplicationRecord
-  after_create :set_data
+  validates :start, uniqueness: true
+  validates :finish, uniqueness: true
   has_many :players
 
   PLAYER_ANIMATION_FILES = Dir.glob("./app/assets/javascripts/game/animations/players/*.json")
   AVATARS = PLAYER_ANIMATION_FILES.map { |f| f.scan(/\/(\w+)\.json/) }.flatten
 
   def self.current
-    active_game = Game.where(active: true).first || Game.create(active: true)
-
-    if active_game.players.count > 50
-      Game.where(active: true).update_all(active: false)
-      active_game = Game.create(active: true)
-    end
-
-    active_game
+    Game.where(finish: nil).first || Game.create
   end
 
-  def set_data
-    self.data = {}
-    save
+  def start_game
+    Device.broadcast_to_all({ start_game: self.id });
   end
 
-  def start
-    ActionCable.server.broadcast("commands", { id: "system", command: "start_game" }.to_json)
-  end
-
-  def stop
-    ActionCable.server.broadcast("commands", { id: "system", command: "stop_game" }.to_json)
+  def stop_game
+    Device.broadcast_to_all({ finish_game: self.id });
   end
 
   def random_avatar
@@ -38,39 +27,16 @@ class Game < ApplicationRecord
   end
 
   def self.fetch_game(requester_id)
-    game = Game.current
-
-    player_info = game.players.map do |player|
-      { id: player.client_side_id, avatar: player.avatar_slug, game_id: game.id }
-    end
-
-    message = {
-      id: "system",
-      game_info: {
-        game_id: game.id,
-        players: player_info
-      }
-    }
-    ActionCable.server.broadcast("commands-#{requester_id}", message.to_json)
+    Device.find_or_create_by(external_id: requester_id).send_game_info
   end
 
-  def self.new_game
-    old_game = Game.current
-    old_game.active = false
-    old_game.save
-
-    Game.create(active: true)
-  end
-
-  def self.finish_game(data)
+  def self.finish_game(params)
     game = Game.current
-    game.update(data: data, active: false)
-
-    message = {
-      id: "system",
-      game_finished: { game_id: game.id }
-    }
-    ActionCable.server.broadcast("commands-#{data['id']}", message.to_json)
+    game.update(
+      data: params[:game_data],
+      finish: DateTime.now
+    )
+    Device
   end
 
   def self.add_player(player_id)

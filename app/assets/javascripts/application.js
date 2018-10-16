@@ -14,7 +14,4 @@
 //= require activestorage
 //= require phaser/dist/phaser
 //= require screenfull/dist/screenfull
-//= require_tree ./helpers
-//= require_tree ./game
-//= require_tree ./channels
 //= require_tree .

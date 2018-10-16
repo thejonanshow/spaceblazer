@@ -1,5 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  context "#finish_game" do
+    it "sets the end time on the game"
+  end
 end
