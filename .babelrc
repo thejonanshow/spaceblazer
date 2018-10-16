@@ -3,10 +3,10 @@
     ["@babel/preset-env", {
       "modules": "commonjs",
         "targets": {
-          "browsers": "> 1%",
-          "uglify": true
+          "browsers": "> 1%"
         },
-        "useBuiltIns": "usage"
+        "useBuiltIns": "usage",
+        "forceAllTransforms": true
     }]
   ],
 

@@ -9,24 +9,29 @@
     ],
     "moduleDirectories": [
       "node_modules",
-      "app/javascript/packs"
+      "app/javascript/packs",
+      "app/javascript"
     ]
   },
   "name": "spaceblazer",
   "private": true,
   "dependencies": {
-    "@babel/core": "^7.0.0-0",
     "@babel/polyfill": "^7.0.0",
     "@rails/webpacker": "https://github.com/rails/webpacker.git",
     "actioncable": "^5.2.1",
     "caniuse-lite": "^1.0.30000697",
     "fingerprintjs2": "^1.8.1",
+    "jest-cli": "^23.6.0",
     "phaser": "^3.12.0",
     "screenfull": "^3.3.3",
     "webpack": "^4.19.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.2",
     "@babel/preset-env": "7.1.0",
-    "jest": "^23.6.0"
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "jest": "^23.6.0",
+    "regenerator-runtime": "^0.12.1"
   }
 }

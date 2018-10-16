@@ -4,10 +4,46 @@ import Player from 'game/player'
 class Bullet {
   constructor(owner, options) {
     this.state = {};
+    this.worldCollisionCategory = 1;
+  };
+
+  static init() {
+    Bullet.allBullets = [];
+  };
+
+  static load(currentScene) {
+    Bullet.config = {
+      rainbow_bomb: {
+        speed: 15,
+        animation_file: 'animations/bullets/rainbow_bomb.json',
+        first_frame: 'bullets/rainbow_bomb/rainbow_bomb1',
+        collision_category: currentScene.matter.world.nextCategory(),
+        collides_with: Enemy.collisionCategory
+      },
+      floppy: {
+        speed: -7,
+        animation_file: 'animations/bullets/floppy.json',
+        first_frame: 'bullets/floppy/floppy1',
+        collision_category: currentScene.matter.world.nextCategory(),
+        collides_with: Player.collisionCategory
+      }
+    }
+
+    Object.keys(Bullet.config).forEach(function(type) {
+      currentScene.load.animation(type, Bullet.config[type].animation_file);
+    });
+  };
+
+  static update() {
+    Bullet.allBullets.forEach(function(bullet) {
+      bullet.update();
+    });
+  };
+
+  spawn() {
     this.scene = owner.scene;
     this.owner = owner;
     this.type = this.owner.bulletType;
-    this.worldCollisionCategory = 1;
 
     this.config = Bullet.config[this.type];
 
@@ -56,43 +92,10 @@ class Bullet {
     this.sprite.setVelocityX(this.speed);
 
     Bullet.allBullets.push(this);
-  }
-
-  static init() {
-    Bullet.allBullets = [];
-  }
-
-  static load(currentScene) {
-    Bullet.config = {
-      rainbow_bomb: {
-        speed: 15,
-        animation_file: 'animations/bullets/rainbow_bomb.json',
-        first_frame: 'bullets/rainbow_bomb/rainbow_bomb1',
-        collision_category: currentScene.matter.world.nextCategory(),
-        collides_with: Enemy.collisionCategory
-      },
-      floppy: {
-        speed: -7,
-        animation_file: 'animations/bullets/floppy.json',
-        first_frame: 'bullets/floppy/floppy1',
-        collision_category: currentScene.matter.world.nextCategory(),
-        collides_with: Player.collisionCategory
-      }
-    }
-
-    Object.keys(Bullet.config).forEach(function(type) {
-      currentScene.load.animation(type, Bullet.config[type].animation_file);
-    });
-  }
-
-  static update() {
-    Bullet.allBullets.forEach(function(bullet) {
-      bullet.update();
-    });
-  }
+  };
 
   update() {
-  }
+  };
 
   collision(bodyA, bodyB) {
     if (bodyA.parent.gameObject.wrapper instanceof Bullet) {
@@ -110,17 +113,17 @@ class Bullet {
         player.damage();
       }
     }
-  }
+  };
 
   explode() {
     new Explosion(this, { scale: 0.5 });
     this.destroy();
-  }
+  };
 
   destroy() {
     this.owner.bullets.remove(this);
     this.sprite.destroy();
-  }
+  };
 
   static destroyAllSprites() {
     if (Bullet.allBullets) {
@@ -130,6 +133,6 @@ class Bullet {
         }
       });
     }
-  }
+  };
 }
 export default Bullet;

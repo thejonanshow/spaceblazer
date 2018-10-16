@@ -1,50 +1,11 @@
-import config from 'game/config';
-
 class Enemy {
   constructor(id, scene) {
-    this.state = {};
-    this.scene = scene;
-
-    if (typeof(id) === "undefined") {
-      this.id = Enemy.generateId();
-    } else if (id === null) {
-      return;
-    } else {
-      debugLog("Revived " + id);
-      this.id = id;
-    }
-
     this.avatarName = 'server';
-    this.shape = this.scene.shapes['server1'];
-    this.spawn = Enemy.getSpawnPoint();
+    this.state = {};
     this.bullets = [];
-    this.direction = Enemy.directions[Math.floor(Math.random() * Enemy.directions.length)];
-    this.speed = config.default_enemy_speed;
-
-    this.sprite = this.scene.matter.add.sprite(
-      this.spawn.x,
-      this.spawn.y,
-      'multipass',
-      this.firstFrame,
-      { shape: this.shape }
-    );
-
-    this.sprite.originX = 0.5;
-    this.sprite.originY = 0.5;
-
-    debugLog("New enemy in scene " + scene.name + ' with ID ' + this.id);
-
-    this.sprite.play(this.avatarName);
-    this.sprite.wrapper = this;
-    this.sprite.setCollisionCategory(Enemy.collisionCategory);
-    this.sprite.setFriction(0, 0, 0);
-    this.sprite.setFixedRotation(0);
-
     this.bulletType = 'floppy';
     this.bulletOffset = { x: -30, y: 0 };
-
-    Enemy.activeEnemies[this.id] = this;
-  }
+  };
 
   static init() {
     Enemy.speed = 10;
@@ -54,11 +15,11 @@ class Enemy {
     Enemy.deadEnemies = {};
     Enemy.spawnOffset = { x: (screen.width - 10), y: 10 };
     Enemy.directions = ["NE", "SE", "SW", "NW"]
-  }
+  };
 
   static generateId() {
     return ("enemy" + (Object.keys(Enemy.activeEnemies).length + 1));
-  }
+  };
 
   static width() {
     return 105;
@@ -71,14 +32,14 @@ class Enemy {
   static getSpawnPoint() {
     let spawnX = Enemy.spawnOffset.x - (Enemy.width() / 2);
     let spawnY = Enemy.spawnOffset.y + (Enemy.height() / 2);
-    let spawnPoint = { x: spawnX, y: spawnY };
+    let newSpawnPoint = { x: spawnX, y: spawnY };
 
-    debugLog('Enemy spawn: ' + JSON.stringify(spawnPoint));
+    debugLog('Enemy spawn: ' + JSON.stringify(newSpawnPoint));
 
-    if (screen.height > (spawnPoint.y + (Enemy.height() * 2) + 50)) {
+    if (screen.height > (newSpawnPoint.y + (Enemy.height() * 2) + 50)) {
       Enemy.spawnOffset.y += (Enemy.height() + 10);
     }
-    else if (screen.availWidth > (spawnPoint.x - (Enemy.width() + 10))) {
+    else if (screen.availWidth > (newSpawnPoint.x - (Enemy.width() + 10))) {
       Enemy.spawnOffset.x -= (Enemy.width() + 10);
       Enemy.spawnOffset.y = 10;
     }
@@ -86,7 +47,7 @@ class Enemy {
       Enemy.spawnOffset = { x: (screen.width - 10), y: 10 };
     }
 
-    return spawnPoint;;
+    return newSpawnPoint;
   };
 
   static load(currentScene) {
@@ -124,12 +85,9 @@ class Enemy {
     }
   };
 
-  update() {
-  }
-
   static firstFrameName(avatarName) {
     return ("enemies/" + avatarName + "1");
-  }
+  };
 
   startMoving() {
     if (this.direction == "NE") {
@@ -148,6 +106,47 @@ class Enemy {
       moveUp(this);
       moveLeft(this);
     }
+  };
+
+  spawn() {
+    if (typeof(id) === "undefined") {
+      this.id = Enemy.generateId();
+    } else if (id === null) {
+      return;
+    } else {
+      debugLog("Revived " + id);
+      this.id = id;
+    }
+
+    this.spawnPoint = Enemy.getSpawnPoint();
+    this.scene = scene;
+    this.shape = this.scene.shapes['server1'];
+    this.direction = Enemy.directions[Math.floor(Math.random() * Enemy.directions.length)];
+    this.speed = config.default_enemy_speed;
+
+    this.sprite = this.scene.matter.add.sprite(
+      this.spawnPoint.x,
+      this.spawnPoint.y,
+      'multipass',
+      this.firstFrame,
+      { shape: this.shape }
+    );
+
+    this.sprite.originX = 0.5;
+    this.sprite.originY = 0.5;
+
+    debugLog("New enemy in scene " + scene.name + ' with ID ' + this.id);
+
+    this.sprite.play(this.avatarName);
+    this.sprite.wrapper = this;
+    this.sprite.setCollisionCategory(Enemy.collisionCategory);
+    this.sprite.setFriction(0, 0, 0);
+    this.sprite.setFixedRotation(0);
+
+    Enemy.activeEnemies[this.id] = this;
+  };
+
+  update() {
   };
 
   bounce() {
@@ -251,7 +250,7 @@ class Enemy {
         }
       });
     }
-  }
+  };
 
   collision(bodyA, bodyB) {
     if (bodyA.parent.gameObject && bodyB.parent.gameObject) {
@@ -278,6 +277,6 @@ class Enemy {
     }
     else {
     }
-  }
+  };
 }
 export default Enemy;
