@@ -43,7 +43,7 @@ class Player {
     let spawnY = Player.spawnOffset.y + (Player.height() / 2);
     let newSpawnPoint = { x: spawnX, y: spawnY };
 
-    debugLog('Player spawn: ' + JSON.stringify(newSpawnPoint));
+    Spaceblazer.current.debugLog('Player spawn: ' + JSON.stringify(newSpawnPoint));
 
     if (screen.height > (newSpawnPoint.y + (Player.height() * 2) + 50)) {
       Player.spawnOffset.y += (Player.height() + 10);
@@ -123,7 +123,7 @@ class Player {
 
     scene.sfx.play('newplayer');
 
-    debugLog("New player in scene " + scene.name + ' with ID ' + this.id);
+    Spaceblazer.current.debugLog("New player in scene " + scene.name + ' with ID ' + this.id);
   };
 
   displayName() {

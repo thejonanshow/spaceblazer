@@ -34,7 +34,7 @@ class Enemy {
     let spawnY = Enemy.spawnOffset.y + (Enemy.height() / 2);
     let newSpawnPoint = { x: spawnX, y: spawnY };
 
-    debugLog('Enemy spawn: ' + JSON.stringify(newSpawnPoint));
+    Spaceblazer.current.debugLog('Enemy spawn: ' + JSON.stringify(newSpawnPoint));
 
     if (screen.height > (newSpawnPoint.y + (Enemy.height() * 2) + 50)) {
       Enemy.spawnOffset.y += (Enemy.height() + 10);
@@ -74,7 +74,7 @@ class Enemy {
 
             if (Enemy.activeEnemies[deadEnemyId] == null) {
               if (deadEnemyId != null) {
-                debugLog("Reviving dead enemy: " + deadEnemyId);
+                Spaceblazer.current.debugLog("Reviving dead enemy: " + deadEnemyId);
                 Enemy.deadEnemies[timeOfDeath] = null;
                 new Enemy(deadEnemyId, currentScene);
               }
@@ -114,7 +114,7 @@ class Enemy {
     } else if (id === null) {
       return;
     } else {
-      debugLog("Revived " + id);
+      Spaceblazer.current.debugLog("Revived " + id);
       this.id = id;
     }
 
@@ -135,7 +135,7 @@ class Enemy {
     this.sprite.originX = 0.5;
     this.sprite.originY = 0.5;
 
-    debugLog("New enemy in scene " + scene.name + ' with ID ' + this.id);
+    Spaceblazer.current.debugLog("New enemy in scene " + scene.name + ' with ID ' + this.id);
 
     this.sprite.play(this.avatarName);
     this.sprite.wrapper = this;

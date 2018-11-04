@@ -1,5 +1,5 @@
 function handleCommand(data) {
-  debugLog("Command received: " + data);
+  Spaceblazer.current.debugLog("Command received: " + data);
 
   let parsed = JSON.parse(data);
   let id = parsed.id;
@@ -11,7 +11,7 @@ function handleCommand(data) {
 
   let command = parsed.command;
 
-  debugLog(command);
+  Spaceblazer.current.debugLog(command);
 
   let player = Player.activePlayers[id]
 
@@ -58,32 +58,32 @@ function handleCommand(data) {
 };
 
 function handleSystemCommand(data) {
-  debugLog("System command: " + data);
+  Spaceblazer.current.debugLog("System command: " + data);
 
   let parsed = JSON.parse(data);
 
   if (parsed.notice) {
-    debugLog("System command: notice - " + parsed);
+    Spaceblazer.current.debugLog("System command: notice - " + parsed);
   }
   else if (parsed.player_created) {
     Player.create(parsed.player_created, game.mainScene);
-    debugLog("System command: player_created - " + parsed);
+    Spaceblazer.current.debugLog("System command: player_created - " + parsed);
   }
   else if (parsed.game_finished) {
-    debugLog("System command: game_finished - " + parsed);
+    Spaceblazer.current.debugLog("System command: game_finished - " + parsed);
   }
   else if (parsed.game_info) {
     Player.addPlayers(parsed.game_info.players);
   }
   else if (parsed.command == "start_game") {
     scene.started = true;
-    debugLog("System command: start_game - " + parsed);
+    Spaceblazer.current.debugLog("System command: start_game - " + parsed);
   }
   else if (parsed.commmand == "stop_game") {
-    debugLog("System command: stop_game - " + parsed);
+    Spaceblazer.current.debugLog("System command: stop_game - " + parsed);
   }
   else {
-    debugLog("System command: unrecognized - " + parsed);
+    Spaceblazer.current.debugLog("System command: unrecognized - " + parsed);
   }
 };
 export { handleCommand };

@@ -41,10 +41,10 @@ function addKeyboardControls(scene) {
     return;
   }
   scene.input.keyboard.on('keydown', function(event) {
-    debugLog(event);
+    Spaceblazer.current.debugLog(event);
   });
   scene.input.keyboard.on('keyup', function(event) {
-    debugLog(event);
+    Spaceblazer.current.debugLog(event);
   });
 
   Object.keys(KEYDOWN).forEach(function(keyname) {
