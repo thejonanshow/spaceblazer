@@ -12,8 +12,8 @@ export default {
 
   phaser: {
     type: Phaser.AUTO,
-    width: window.width,
-    height: window.height,
+    width: 1600,
+    height: 900,
     backgroundColor: "000000",
     physics: {
       default: 'matter',
@@ -21,7 +21,7 @@ export default {
         debug: false
       }
     },
-    scene: [StarScene, MainScene],
+    scene: [new StarScene, new MainScene],
     audio: {
       disableWebAudio: true
     }
