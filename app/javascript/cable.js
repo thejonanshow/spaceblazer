@@ -22,24 +22,18 @@ function getFingerprint(createChannelCallback) {
 }
 
 function createChannel(subscriber, channel, callbacks) {
-  if (consumer) {
-    subscription = consumer.subscriptions.create(channel, callbacks);
-  }
-  else {
-    getFingerprint((deviceId)=> {
-      let connectionUrl = cableUrl + "/?device_id=" + deviceId;
-      console.log(connectionUrl);
-      consumer = cable.createConsumer(cableUrl + "/?device_id=" + deviceId);
-      subscriber.id = deviceId;
-      subscription = consumer.subscriptions.create(
-        {
-          channel: channel,
-          device_id: subscriber.id
-        },
-        callbacks
-      );
-    });
-  }
+  getFingerprint((deviceId)=> {
+    consumer = consumer || cable.createConsumer(cableUrl + "/?device_id=" + deviceId);
+    subscriber.id = deviceId;
+    subscription = consumer.subscriptions.create(
+      {
+        channel: channel,
+        device_id: subscriber.id
+      },
+      callbacks
+    );
+  });
+
   return subscription;
 }
 

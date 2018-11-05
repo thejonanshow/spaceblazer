@@ -1,4 +1,5 @@
 import config from 'game/config';
+import ConsoleLogger from 'game/console_logger';
 
 const KEYDOWN = {
   K: "a",
@@ -41,10 +42,10 @@ function addKeyboardControls(scene) {
     return;
   }
   scene.input.keyboard.on('keydown', function(event) {
-    Spaceblazer.current.debugLog(event);
+    (event);
   });
   scene.input.keyboard.on('keyup', function(event) {
-    Spaceblazer.current.debugLog(event);
+    ConsoleLogger.debug(event);
   });
 
   Object.keys(KEYDOWN).forEach(function(keyname) {

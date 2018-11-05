@@ -1,3 +1,5 @@
+import ConsoleLogger from 'game/console_logger';
+
 import DevicesChannel from 'devices_channel';
 import GamesChannel from 'games_channel';
 
@@ -31,7 +33,7 @@ class Spaceblazer {
     }
 
     this.state = {};
-    this.debug = true;
+    this.debug = false;
     this.devicesChannel = new DevicesChannel;
     this.gamesChannel = new GamesChannel;
     this.assetPath = assetPath();
@@ -104,26 +106,22 @@ class Spaceblazer {
   }
 
   devicesConnected(data) {
-    console.log("Spaceblazer#devicesConnected: " + JSON.stringify(data));
+    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " connected to device channel.");
   }
   devicesReceived(data) {
-    console.log("Spaceblazer#devicesReceived: " + JSON.stringify(data));
+    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " received data on device channel: " + JSON.stringify(data));
   }
   devicesDisconnected(data) {
-    console.log(data);
-    console.log("Spaceblazer#devicesDisconnected: " + JSON.stringify(data));
+    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " disconnected from device channel.");
   }
   gamesConnected(data) {
-    console.log(data);
-    console.log("Spaceblazer#gamesConnected: " + JSON.stringify(data));
+    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " connected to game channel.");
   }
   gamesReceived(data) {
-    console.log(data);
-    console.log("Spaceblazer#gamesReceived: " + JSON.stringify(data));
+    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " received data on game channel: " + JSON.stringify(data));
   }
   gamesDisconnected(data) {
-    console.log(data);
-    console.log("Spaceblazer#gamesDisconnected: " + JSON.stringify(data));
+    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " disconnected from game channel.");
   }
 
   addFullscreenEvent() {
@@ -134,12 +132,6 @@ class Spaceblazer {
         screenfull.toggle(this);
       }, false);
     });
-  }
-
-  debugLog(message) {
-    if (this.debug) {
-      console.log(message);
-    };
   }
 }
 export default Spaceblazer;
