@@ -25,6 +25,7 @@ function createChannel(subscriber, channel, callbacks) {
   getFingerprint((deviceId)=> {
     consumer = consumer || cable.createConsumer(cableUrl + "/?device_id=" + deviceId);
     subscriber.id = deviceId;
+	game.id = deviceId;
     subscription = consumer.subscriptions.create(
       {
         channel: channel,

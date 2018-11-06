@@ -1,4 +1,5 @@
 import config from 'game/config';
+import Player from 'game/player';
 import ConsoleLogger from 'game/console_logger';
 
 const KEYDOWN = {
@@ -34,7 +35,8 @@ const KEYUP = {
 };
 
 function echoCommand(id, command) {
-  Cable.send( "echo_command", { id: id, command: command });
+  console.log("Echoing - id: " + id + ", command: " + command);
+  App.cable.subscriptions.subscriptions[0].perform( "echo_command", { id: id, command: command });
 };
 
 function addKeyboardControls(scene) {
@@ -50,21 +52,25 @@ function addKeyboardControls(scene) {
 
   Object.keys(KEYDOWN).forEach(function(keyname) {
     scene.input.keyboard.on('keydown_' + keyname, function (event) {
-      let id = game.fingerprint;
+      let id = game.id;
 
       if (event.shiftKey && Player.roomForMorePlayers()) {
         id = id + '-' + Player.allPlayers.length;
       }
 
+      console.log(id);
+      console.log(keyname);
+      console.log(Player.activePlayers);
+
       if ((keyname == 'ENTER') || (Player.activePlayers[id])) {
-        command = KEYDOWN[keyname]
+        let command = KEYDOWN[keyname]
         echoCommand(id, command);
       }
     });
   });
   Object.keys(KEYUP).forEach(function(keyname) {
     scene.input.keyboard.on('keyup_' + keyname, function (event) {
-      let id = game.fingerprint;
+      let id = game.id;
 
       if (Player.activePlayers[id]) {
         command = KEYUP[keyname]
