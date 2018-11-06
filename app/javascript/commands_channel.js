@@ -1,14 +1,12 @@
 import createSubscription from "cable";
 
-let subscription;
-
-class GamesChannel {
+class CommandsChannel {
   constructor() {
-    this.connection = subscription;
+    this.subscription = null;
   }
 
   subscribe(subscriber, connectedCallback, receivedCallback, disconnectedCallback) {
-    subscription = createSubscription(subscriber, "GamesChannel", {
+    createSubscription(subscriber, "CommandsChannel", {
       connected(params) {
         if (connectedCallback) connectedCallback.call(null, params);
       },
@@ -19,12 +17,7 @@ class GamesChannel {
         if (disconnectedCallback) disconnectedCallback.call(null, params);
       }
     });
-    return subscription;
-  }
-
-  perform(action, data) {
-    subscription.perform(action, data);
   }
 }
 
-export default GamesChannel;
+export default CommandsChannel;

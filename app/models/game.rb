@@ -4,26 +4,10 @@ class Game < ApplicationRecord
   has_many :players
 
   PLAYER_ANIMATION_FILES = Dir.glob("./app/assets/javascripts/game/animations/players/*.json")
-  AVATARS = PLAYER_ANIMATION_FILES.map { |f| f.scan(/\/(\w+)\.json/) }.flatten
+  CHARACTERS = PLAYER_ANIMATION_FILES.map { |f| f.scan(/\/(\w+)\.json/) }.flatten
 
   def self.current
     Game.where(finish: nil).first || Game.create
-  end
-
-  def start_game
-    Device.broadcast_to_all({ start_game: self.id });
-  end
-
-  def stop_game
-    Device.broadcast_to_all({ finish_game: self.id });
-  end
-
-  def random_avatar
-    AVATARS.sample
-  end
-
-  def random_color
-    COLORS.sample
   end
 
   def self.fetch_game(requester_id)
@@ -41,6 +25,42 @@ class Game < ApplicationRecord
 
   def self.add_player(player_id)
     self.current.add_player(player_id)
+  end
+
+  def self.get_colors
+    JSON.parse(File.read(Game::PLAYER_ANIMATION_FILES.first))["anims"].map do |anim|
+      anim["frames"]
+    end.flatten.map do |f|
+      f["frame"]
+    end.map do |path|
+      path.split("_").last[0..-2]
+    end.uniq
+  end
+  COLORS = Game.get_colors
+
+  def self.get_avatars
+    Game::CHARACTERS.map do |character|
+      Game::COLORS.map do |color|
+        "#{character}_#{color}"
+      end
+    end.flatten
+  end
+  ALL_AVATARS = Game.get_avatars
+
+  def start_game
+    Device.broadcast_to_all({ start_game: self.id });
+  end
+
+  def stop_game
+    Device.broadcast_to_all({ finish_game: self.id });
+  end
+
+  def random_avatar
+    CHARACTERS.sample
+  end
+
+  def random_color
+    COLORS.sample
   end
 
   def new_player?(player_id)
@@ -64,7 +84,7 @@ class Game < ApplicationRecord
     while self.players.where(avatar: avatar, color: color).any?
       avatar = random_avatar
       color = random_color
-      break if players.length >=(AVATARS.length * COLORS.length)
+      break if players.length >=(CHARACTERS.length * COLORS.length)
     end
 
     players.create(avatar: avatar, color: color, client_side_id: player_id)
@@ -77,15 +97,4 @@ class Game < ApplicationRecord
   def assigned_colors
     players.map { |p| p.color }
   end
-
-  def self.get_colors
-    JSON.parse(File.read(Game::PLAYER_ANIMATION_FILES.first))["anims"].map do |anim|
-      anim["frames"]
-    end.flatten.map do |f|
-      f["frame"]
-    end.map do |path|
-      path.split("_").last[0..-2]
-    end.uniq
-  end
-  COLORS = Game.get_colors
 end

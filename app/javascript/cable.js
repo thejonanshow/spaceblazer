@@ -5,28 +5,28 @@ let cableUrl = document.head.querySelector("[name~=action-cable-url][content]").
 let consumer;
 let subscription;
 
-function getFingerprint(createChannelCallback) {
+function getFingerprint(createSubscriptionCallback) {
   if (window.requestIdleCallback) {
 	requestIdleCallback(()=> {
 	  new Fingerprint2().get((result, components)=> {
-        createChannelCallback(result);
+        createSubscriptionCallback(result);
 	  })  
 	})
   } else {
 	setTimeout(()=> {
 	  new Fingerprint2().get((result, components)=> {
-        createChannelCallback(result);
+        createSubscriptionCallback(result);
 	  })  
 	}, 500)
   }
 }
 
-function createChannel(subscriber, channel, callbacks) {
+function createSubscription(subscriber, channel, callbacks) {
   getFingerprint((deviceId)=> {
     consumer = consumer || cable.createConsumer(cableUrl + "/?device_id=" + deviceId);
     subscriber.id = deviceId;
 	game.id = deviceId;
-    subscription = consumer.subscriptions.create(
+    subscriber[channel] = consumer.subscriptions.create(
       {
         channel: channel,
         device_id: subscriber.id
@@ -34,8 +34,6 @@ function createChannel(subscriber, channel, callbacks) {
       callbacks
     );
   });
-
-  return subscription;
 }
 
-export default createChannel;
+export default createSubscription;

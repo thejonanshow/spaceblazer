@@ -1,4 +1,6 @@
 import ConsoleLogger from 'game/console_logger';
+import Player from 'game/player';
+import Spaceblazer from 'spaceblazer';
 
 function handleCommand(data) {
   ConsoleLogger.debug("Command received: " + data);
@@ -25,7 +27,7 @@ function handleCommand(data) {
     }
     else if (command == 's') {
       if (!Player.activePlayers[id]) {
-        Cable.send("register_player",  { id: id })
+        Spaceblazer.current.GamesChannel.perform("create_player",  { external_id: id })
       }
 
       if (!game.scene.isActive('main')) {

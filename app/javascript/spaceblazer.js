@@ -2,6 +2,7 @@ import ConsoleLogger from 'game/console_logger';
 
 import DevicesChannel from 'devices_channel';
 import GamesChannel from 'games_channel';
+import CommandsChannel from 'commands_channel';
 
 import Phaser from 'phaser';
 
@@ -34,12 +35,16 @@ class Spaceblazer {
 
     this.state = {};
     this.debug = false;
+
     this.devicesChannel = new DevicesChannel;
     this.gamesChannel = new GamesChannel;
+    this.commandsChannel = new CommandsChannel;
+
     this.assetPath = assetPath();
 
     this.starScene = StarScene;
     this.mainScene = MainScene;
+
     StarScene.spaceblazer = this;
     MainScene.spaceblazer = this;
 
@@ -47,17 +52,23 @@ class Spaceblazer {
 
     config.reset = false;
 
-    this.devicesSubscription = this.devicesChannel.connect(
+    this.devicesSubscription = this.devicesChannel.subscribe(
       this,
       this.devicesConnected,
       this.devicesReceived,
       this.devicesDisconnected
     )
-    this.gamesSubscription = this.gamesChannel.connect(
+    this.gamesSubscription = this.gamesChannel.subscribe(
       this,
       this.gamesConnected,
       this.gamesReceived,
       this.gamesDisconnected
+    );
+    this.commandsChannel.subscribe(
+      this,
+      this.commandsConnected,
+      this.commandsReceived,
+      this.commandsDisconnected
     );
 
     return Spaceblazer.current;
@@ -122,6 +133,16 @@ class Spaceblazer {
   }
   gamesDisconnected(data) {
     ConsoleLogger.debug("Device " + Spaceblazer.current.id + " disconnected from game channel.");
+  }
+  commandsConnected(data) {
+    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " connected to command channel.");
+  }
+  commandsReceived(data) {
+    handleCommand(data);
+    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " received data on command channel: " + JSON.stringify(data));
+  }
+  commandsDisconnected(data) {
+    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " disconnected from command channel.");
   }
 
   addFullscreenEvent() {

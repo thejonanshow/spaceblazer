@@ -1,14 +1,14 @@
-import createChannel from "cable";
+import createSubscription from "cable";
 
-let channel;
+let subscription;
 
 class DevicesChannel {
   constructor() {
-    this.connection = channel;
+    this.subscription = subscription;
   }
 
-  connect(subscriber, connectedCallback, receivedCallback, disconnectedCallback) {
-    channel = createChannel(subscriber, "DevicesChannel", {
+  subscribe(subscriber, connectedCallback, receivedCallback, disconnectedCallback) {
+    subscription = createSubscription(subscriber, "DevicesChannel", {
       connected(params) {
         if (connectedCallback) connectedCallback.call(null, params);
       },
@@ -19,11 +19,11 @@ class DevicesChannel {
         if (disconnectedCallback) disconnectedCallback.call(null, params);
       }
     });
-    return channel
+    return subscription;
   }
 
   perform(action, data) {
-    channel.perform(action, data);
+    subscription.perform(action, data);
   }
 }
 

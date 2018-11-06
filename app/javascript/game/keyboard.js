@@ -1,6 +1,7 @@
 import config from 'game/config';
 import Player from 'game/player';
 import ConsoleLogger from 'game/console_logger';
+import Spaceblazer from 'spaceblazer';
 
 const KEYDOWN = {
   K: "a",
@@ -35,8 +36,7 @@ const KEYUP = {
 };
 
 function echoCommand(id, command) {
-  console.log("Echoing - id: " + id + ", command: " + command);
-  App.cable.subscriptions.subscriptions[0].perform( "echo_command", { id: id, command: command });
+  Spaceblazer.current.CommandsChannel.perform( "echo_command", { id: id, command: command });
 };
 
 function addKeyboardControls(scene) {
@@ -57,10 +57,6 @@ function addKeyboardControls(scene) {
       if (event.shiftKey && Player.roomForMorePlayers()) {
         id = id + '-' + Player.allPlayers.length;
       }
-
-      console.log(id);
-      console.log(keyname);
-      console.log(Player.activePlayers);
 
       if ((keyname == 'ENTER') || (Player.activePlayers[id])) {
         let command = KEYDOWN[keyname]
