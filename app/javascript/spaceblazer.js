@@ -52,47 +52,15 @@ class Spaceblazer {
 
     config.reset = false;
 
-    this.devicesSubscription = this.devicesChannel.subscribe(
-      this,
-      this.devicesConnected,
-      this.devicesReceived,
-      this.devicesDisconnected
-    )
-    this.gamesSubscription = this.gamesChannel.subscribe(
-      this,
-      this.gamesConnected,
-      this.gamesReceived,
-      this.gamesDisconnected
-    );
-    this.commandsChannel.subscribe(
-      this,
-      this.commandsConnected,
-      this.commandsReceived,
-      this.commandsDisconnected
-    );
+    this.devicesSubscription = this.devicesChannel.subscribe(this);
+    this.gamesSubscription = this.gamesChannel.subscribe(this);
+    this.commandsChannel.subscribe(this);
 
     return Spaceblazer.current;
   }
 
   static fetchGame() {
     Spaceblazer.current.fetchGame();
-  }
-
-  fetchGame() {
-    if (this.gamesSubscription) {
-      this.gamesSubscription.perform('fetch_game', { device_id: this.id });
-    }
-  }
-
-  finishGame() {
-    if (this.gamesSubscription) {
-      this.gamesSubscription.perform('finish_game', {
-        device_id: this.id,
-        game_data: {
-          finishing_device: this.id
-        }
-      });
-    }
   }
 
   static init() {
@@ -116,33 +84,25 @@ class Spaceblazer {
     Spaceblazer.init();
   }
 
-  devicesConnected(data) {
-    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " connected to device channel.");
+  static createPlayer(data) {
+    Player.create(data, this.current.mainScene);
   }
-  devicesReceived(data) {
-    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " received data on device channel: " + JSON.stringify(data));
+
+  fetchGame() {
+    if (this.gamesSubscription) {
+      this.gamesSubscription.perform('fetch_game', { device_id: this.id });
+    }
   }
-  devicesDisconnected(data) {
-    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " disconnected from device channel.");
-  }
-  gamesConnected(data) {
-    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " connected to game channel.");
-  }
-  gamesReceived(data) {
-    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " received data on game channel: " + JSON.stringify(data));
-  }
-  gamesDisconnected(data) {
-    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " disconnected from game channel.");
-  }
-  commandsConnected(data) {
-    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " connected to command channel.");
-  }
-  commandsReceived(data) {
-    handleCommand(data);
-    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " received data on command channel: " + JSON.stringify(data));
-  }
-  commandsDisconnected(data) {
-    ConsoleLogger.debug("Device " + Spaceblazer.current.id + " disconnected from command channel.");
+
+  finishGame() {
+    if (this.gamesSubscription) {
+      this.gamesSubscription.perform('finish_game', {
+        device_id: this.id,
+        game_data: {
+          finishing_device: this.id
+        }
+      });
+    }
   }
 
   addFullscreenEvent() {

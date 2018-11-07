@@ -14,15 +14,6 @@ class Game < ApplicationRecord
     Device.find_or_create_by(external_id: requester_id).send_game_info
   end
 
-  def self.finish_game(params)
-    game = Game.current
-    game.update(
-      data: params[:game_data],
-      finish: DateTime.now
-    )
-    Device
-  end
-
   def self.add_player(player_id)
     self.current.add_player(player_id)
   end
@@ -47,24 +38,23 @@ class Game < ApplicationRecord
   end
   ALL_AVATARS = Game.get_avatars
 
-  def start_game
-    Device.broadcast_to_all({ start_game: self.id });
+  def self.start_game
+    Game.current.update(
+      start: DateTime.now
+    )
+    Device.broadcast_to_all({ start_game: Game.current.id });
   end
 
-  def stop_game
-    Device.broadcast_to_all({ finish_game: self.id });
+  def self.finish_game(params)
+    Game.current.update(
+      data: params["game_data"],
+      finish: DateTime.now
+    )
+    Device.broadcast_to_all({ finish_game: Game.current.id });
   end
 
-  def random_avatar
-    CHARACTERS.sample
-  end
-
-  def random_color
-    COLORS.sample
-  end
-
-  def new_player?(player_id)
-    existing_ids = players.reload.map(&:client_side_id)
+  def new_player?(external_id)
+    existing_ids = players.map(&:client_side_id)
 
     if existing_ids.include? player_id
       Rails.logger.debug("Player ID already exists: #{player_id} (existing: #{existing_ids})")
@@ -75,26 +65,8 @@ class Game < ApplicationRecord
     end
   end
 
-  def add_player(player_id)
-    return unless new_player?(player_id)
-
-    avatar = random_avatar
-    color = random_color
-
-    while self.players.where(avatar: avatar, color: color).any?
-      avatar = random_avatar
-      color = random_color
-      break if players.length >=(CHARACTERS.length * COLORS.length)
-    end
-
-    players.create(avatar: avatar, color: color, client_side_id: player_id)
-  end
-
-  def assigned_avatars
-    players.map { |p| p.avatar }
-  end
-
-  def assigned_colors
-    players.map { |p| p.color }
+  def add_player(external_id)
+    return unless new_player?(external_id)
+    players.create(avatar: avatar, color: color, client_side_id: external_id)
   end
 end

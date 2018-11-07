@@ -12,4 +12,28 @@ class Device < ApplicationRecord
       DevicesChannel.broadcast_to(device, data)
     end
   end
+
+  def online!
+    self.update(online: true)
+
+    DevicesChannel.broadcast_to(
+      "devices",
+      {
+        event: "device_online",
+        device: self
+      }
+    )
+  end
+
+  def offline!
+    self.update(online: false)
+
+    DevicesChannel.broadcast_to(
+      "devices",
+      {
+        event: "device_offline",
+        device: self
+      }
+    )
+  end
 end

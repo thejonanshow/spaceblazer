@@ -4,7 +4,7 @@ class GamesChannel < ApplicationCable::Channel
   end
 
   def create_player(params)
-    device = Device.where(external_id: params[:external_id]).first
+    device = Device.where(external_id: params["external_id"]).first
     current_game.players.create!(device_id: device.id)
   end
 

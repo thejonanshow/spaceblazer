@@ -15,7 +15,11 @@ class Player < ApplicationRecord
   end
 
   def broadcast_create
-    GamesChannel.broadcast_to(self.game, self)
+    GamesChannel.broadcast_to(
+      self.game,
+      event: :player_created,
+      player: self
+    )
   end
 
   def assign_slug

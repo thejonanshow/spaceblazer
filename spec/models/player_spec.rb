@@ -53,6 +53,13 @@ RSpec.describe Player, type: :model do
       end
     end
 
-    it "is unique for a game with fewer than (colors * characters) players"
+    it "is unique for a game with fewer than (colors * characters + 1) players" do
+      (Game::COLORS.count * Game::CHARACTERS.count).times do
+        Player.create(device: device, game: game) 
+      end
+      
+      used_avatars = Player.all.map(&:avatar_slug)
+      expect(used_avatars.length).to eql(used_avatars.uniq.length)
+    end
   end
 end

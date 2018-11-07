@@ -69,7 +69,7 @@ class Player {
   };
 
   static create(data, currentScene) {
-    let player = new Player(data["id"], data["avatar"], data["game_id"], currentScene);
+    let player = new Player(data["id"], data["avatar_slug"], data["game_id"], currentScene);
     let enemy = new Enemy(Enemy.generateId(), currentScene);
 
     Player.allPlayers.push(player);

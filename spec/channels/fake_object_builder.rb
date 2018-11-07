@@ -1,7 +1,10 @@
 module FakeObjectBuilder
   def build_fake(target, klass)
     fake_klass = klass.dup
-    Kernel.const_set("Fake#{klass.to_s}", fake_klass)
+
+    Kernel.silence_warnings do
+      Kernel.const_set("Fake#{klass.to_s}", fake_klass)
+    end
 
     Proc.new do
       fake_klass.class_eval do

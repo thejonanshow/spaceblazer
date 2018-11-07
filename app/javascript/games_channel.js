@@ -1,29 +1,36 @@
 import createSubscription from "cable";
-
-let subscription;
+import Spaceblazer from "spaceblazer";
+import ConsoleLogger from 'game/console_logger';
 
 class GamesChannel {
   constructor() {
-    this.connection = subscription;
+    this.subscription = null;
   }
 
-  subscribe(subscriber, connectedCallback, receivedCallback, disconnectedCallback) {
-    subscription = createSubscription(subscriber, "GamesChannel", {
-      connected(params) {
-        if (connectedCallback) connectedCallback.call(null, params);
+  subscribe(subscriber) {
+    createSubscription(subscriber, "GamesChannel", {
+      connected(data) {
+        ConsoleLogger.debug("Device " + Spaceblazer.current.id + " connected to game channel.");
       },
-      received(params) {
-        if (receivedCallback) receivedCallback.call(null, params);
+      received(data) {
+        switch(data['event']) {
+          case 'player_created':
+            Spaceblazer.createPlayer(data['player']);
+            break;
+          default:
+            break;
+
+        }
+        ConsoleLogger.debug("Device " + Spaceblazer.current.id + " received data on game channel: " + JSON.stringify(data));
       },
-      disconnected(params) {
-        if (disconnectedCallback) disconnectedCallback.call(null, params);
+      disconnected(data) {
+        ConsoleLogger.debug("Device " + Spaceblazer.current.id + " disconnected from game channel.");
       }
     });
-    return subscription;
   }
 
   perform(action, data) {
-    subscription.perform(action, data);
+    this.subscription.perform(action, data);
   }
 }
 
