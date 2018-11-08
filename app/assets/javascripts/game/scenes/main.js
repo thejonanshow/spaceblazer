@@ -214,6 +214,10 @@ class MainScene extends Phaser.Scene {
 
     game_data["time_remaining"] = this.GAMETIMER_SEC;
 
+    if (game_data["time_remaining"] == "") {
+      game_data["time_remaining"] = 60;
+    }
+
     if (sameValues(this.last_save, game_data)) {
     }
     else {
