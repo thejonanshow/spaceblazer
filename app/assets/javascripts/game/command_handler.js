@@ -23,6 +23,7 @@ function handleCommand(data) {
     }
     else if (command == 's') {
       if (!Player.activePlayers[id]) {
+        debugLog("Registering player...");
         Cable.send("register_player",  { id: id })
       }
 
@@ -58,8 +59,6 @@ function handleCommand(data) {
 };
 
 function handleSystemCommand(data) {
-  debugLog("System command: " + data);
-
   let parsed = JSON.parse(data);
 
   if (parsed.notice) {
@@ -74,6 +73,7 @@ function handleSystemCommand(data) {
   }
   else if (parsed.game_info) {
     Player.addPlayers(parsed.game_info.players);
+    Spaceblazer.GAME_FINISH_COUNTDOWN = parsed.game_info.time_remaining
   }
   else if (parsed.command == "start_game") {
     scene.started = true;

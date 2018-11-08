@@ -6,6 +6,7 @@ class Game < ApplicationRecord
   AVATARS = PLAYER_ANIMATION_FILES.map { |f| f.scan(/\/(\w+)\.json/) }.flatten
 
   def self.current
+    Rails.logger.debug("Active games: " + Game.where(active: true).to_a.inspect)
     active_game = Game.where(active: true).first || Game.create(active: true)
 
     if active_game.players.count > 50
@@ -41,17 +42,27 @@ class Game < ApplicationRecord
     game = Game.current
 
     player_info = game.players.map do |player|
-      { id: player.client_side_id, avatar: player.avatar_slug, game_id: game.id }
+      {
+        id: player.client_side_id,
+        avatar: player.avatar_slug,
+        score: game.data.dig("players", player.client_side_id, "score") || 0,
+        level: game.data.dig("players", player.client_side_id, "level") || 2,
+        spawn_x: game.data.dig("players", player.client_side_id, "spawn_x") || 0,
+        spawn_y: game.data.dig("players", player.client_side_id, "spawn_y") || 0,
+        game_id: game.id
+      }
     end
 
     message = {
       id: "system",
       game_info: {
         game_id: game.id,
-        players: player_info
+        game_data: game.data,
+        players: player_info,
+        time_remaining: game.data["time_remaining"] || 60
       }
     }
-    ActionCable.server.broadcast("commands-#{requester_id}", message.to_json)
+    ActionCable.server.broadcast("commands", message.to_json)
   end
 
   def self.new_game
@@ -73,6 +84,10 @@ class Game < ApplicationRecord
     ActionCable.server.broadcast("commands-#{data['id']}", message.to_json)
   end
 
+  def self.save_game(data)
+    Game.current.update(data: data)
+  end
+
   def self.add_player(player_id)
     self.current.add_player(player_id)
   end
@@ -90,18 +105,22 @@ class Game < ApplicationRecord
   end
 
   def add_player(player_id)
-    return unless new_player?(player_id)
-
-    avatar = random_avatar
-    color = random_color
-
-    while self.players.where(avatar: avatar, color: color).any?
+    if new_player?(player_id)
       avatar = random_avatar
       color = random_color
-      break if players.length >=(AVATARS.length * COLORS.length)
-    end
 
-    players.create(avatar: avatar, color: color, client_side_id: player_id)
+      while self.players.where(avatar: avatar, color: color).any?
+        avatar = random_avatar
+        color = random_color
+        break if players.length >=(AVATARS.length * COLORS.length)
+      end
+
+      players.create(avatar: avatar, color: color, client_side_id: player_id)
+    else
+      Player.where(client_side_id: player_id).each do |player|
+        player.broadcast_create
+      end
+    end
   end
 
   def assigned_avatars

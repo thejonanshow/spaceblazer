@@ -1,16 +1,20 @@
 function moveUp(entity) {
+  // return unless game started
   entity.sprite.setVelocityY(-entity.speed);
 };
 
 function moveDown(entity) {
+  // return unless game started
   entity.sprite.setVelocityY(entity.speed);
 };
 
 function moveLeft(entity) {
+  // return unless game started
   entity.sprite.setVelocityX(-entity.speed);
 };
 
 function moveRight(entity) {
+  // return unless game started
   entity.sprite.setVelocityX(entity.speed);
 };
 

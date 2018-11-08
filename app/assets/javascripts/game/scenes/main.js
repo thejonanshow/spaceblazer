@@ -56,6 +56,7 @@ class MainScene extends Phaser.Scene {
   preload() {
     game.mainScene = this;
     this.started = false;
+    this.last_save = { players: {} };
     this.worldCollisionOffset = 0;
     this.GAMETIMER_SEC = "";
 
@@ -187,6 +188,39 @@ class MainScene extends Phaser.Scene {
     Player.update(this);
     Enemy.update(this);
     Bullet.update(this);
+
+    this.save_game();
+  }
+
+  save_game() {
+    let game_data = {
+      action: "save_game",
+      players: {}
+    }
+
+    let player_keys = Object.keys(Player.activePlayers)
+
+    player_keys.forEach(function(key) {
+      let player = Player.activePlayers[key]
+
+      game_data.players[key] = {
+        spawn_x: player.spawn.x,
+        spawn_y: player.spawn.y,
+        score: player.score,
+        level: player.level,
+        avatar_name: player.avatar
+      }
+    });
+
+    game_data["time_remaining"] = this.GAMETIMER_SEC;
+
+    if (sameValues(this.last_save, game_data)) {
+    }
+    else {
+      this.last_save = game_data;
+      Cable.send('save_game', game_data);
+    }
+
   }
 
   start() {
@@ -246,7 +280,9 @@ class MainScene extends Phaser.Scene {
     this.GAMETIMER_SEC--;
     this.gameTimerText.setText(this.GAMETIMER_SEC);
 
-    if (this.GAMETIMER_SEC === 0) {
+    if (this.GAMETIMER_SEC <= 0) {
+      this.GAMETIMER_SEC = Spaceblazer.GAME_FINISH_COUNTDOWN;
+      this.save_game();
       this.gameTimer.destroy();
       this.gameTimerText.setText("");
       this.finish();

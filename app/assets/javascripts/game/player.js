@@ -100,11 +100,17 @@ class Player {
 
     Player.allPlayers.push(player);
     Enemy.allEnemies.push(enemy);
+
+    return player;
   };
 
   static addPlayers(players) {
     players.forEach(function(playerData) {
-      Player.create(playerData, game.mainScene);
+      let player = Player.create(playerData, game.mainScene);
+
+      player.score = playerData["score"];
+      player.level = playerData["level"];
+      player.spawn = { x: playerData["spawn_x"], y: playerData["spawn_y"] };
     });
   }
 
@@ -176,6 +182,7 @@ class Player {
   }
 
   fire() {
+    // return unless game started
     if (this.bullets.length > (0 + this.level)) {
       return;
     }

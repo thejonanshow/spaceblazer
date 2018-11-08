@@ -1,6 +1,5 @@
 class CommandsChannel < ApplicationCable::Channel
   def subscribed
-
     if (params)
       Rails.logger.debug("CommandsChannel#subscribed: #{params.inspect}")
 
@@ -62,5 +61,9 @@ class CommandsChannel < ApplicationCable::Channel
 
   def finish_game(data)
     Game.finish_game(data)
+  end
+
+  def save_game(data)
+    Game.save_game(data)
   end
 end
