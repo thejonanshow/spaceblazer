@@ -5,11 +5,20 @@ RSpec.describe Device, type: :model do
   let(:game) { Game.current }
   let(:external_id) { SecureRandom.uuid }
   let(:device) { Device.create(external_id: external_id) }
+  let!(:player) { Player.create(device: device, game: game) }
 
   context "#send_game_info" do
     it "broadcasts the game info on the devices channel" do
       game_json = Game.current.to_json(include: :players)
       expect(DevicesChannel).to receive(:broadcast_to).with(device, game_json)
+      device.send_game_info
+    end
+
+    it "includes the player information" do
+      allow(DevicesChannel).to receive(:broadcast_to) do |channel, game_json|
+        expect(JSON.parse(game_json)["players"]).to include JSON.parse(player.to_json)
+      end
+
       device.send_game_info
     end
   end
